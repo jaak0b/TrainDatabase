@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Core.ImportService.Z21.TDO
+﻿namespace Core.ConfigurationImport.Z21New.TDO
 {
   internal class VehicleDTO
   {

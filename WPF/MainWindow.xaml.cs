@@ -118,7 +118,7 @@ namespace Shell.WPF
 
     private void MiImportNewDatabase(object sender, RoutedEventArgs e)
     {
-      new Z21Import(ServiceProvider).ShowDialog();
+      new DatabaseImportView(ServiceProvider).ShowDialog();
     }
 
     private void DrawVehicles(IEnumerable<VehicleModel> list)
@@ -196,7 +196,7 @@ namespace Shell.WPF
                                                                         "Datenbank importieren", MessageBoxButton.YesNo,
                                                                         MessageBoxImage.Question))
       {
-        new Z21Import(ServiceProvider).ShowDialog();
+        new DatabaseImportView(ServiceProvider).ShowDialog();
       }
 
       Search();

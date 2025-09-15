@@ -1,4 +1,6 @@
 using Autofac;
+using Core.ConfigurationImport;
+using Core.ConfigurationImport.Z21New;
 using Z21;
 
 namespace Core
@@ -7,6 +9,8 @@ namespace Core
   {
     override protected void Load(ContainerBuilder builder)
     {
+      builder.RegisterType<Z21NewDatabaseImporter>().As<IDatabaseImporter>().SingleInstance();
+
       builder.RegisterType<TrackPowerService>().AsSelf().SingleInstance();
 
       builder.RegisterType<VehicleService>().AsSelf().SingleInstance();

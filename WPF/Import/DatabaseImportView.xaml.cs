@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using Core;
-using Core.ImportService.Z21;
+using Core.ConfigurationImport.Z21New;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
 using Persistence.Database;
@@ -11,13 +11,13 @@ using Persistence.Database;
 namespace Shell.WPF.Import
 {
   /// <summary>
-  /// Interaction logic for Z21.xaml
+  /// Interaction logic for DatabaseImportView.xaml
   /// </summary>
-  public partial class Z21Import : Window, INotifyPropertyChanged
+  public partial class DatabaseImportView : Window, INotifyPropertyChanged
   {
     private readonly Database db;
 
-    public Z21Import(IServiceProvider provider)
+    public DatabaseImportView(IServiceProvider provider)
     {
       DataContext = this;
       InitializeComponent();
@@ -38,7 +38,7 @@ namespace Shell.WPF.Import
 
     private async void BtnGo_Click(object sender, RoutedEventArgs e)
     {
-      Z21ImportService z21 = new(db);
+      Z21NewDatabaseImporter z21 = new(db);
       await z21.ImportAsync(new(Path));
       MessageBox.Show($"Import Successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
       Close();
@@ -54,21 +54,5 @@ namespace Shell.WPF.Import
       TbFileSelector.Text = ofp.FileName;
       Path = ofp.FileName;
     }
-
-    //private FunctionType GetFunctionType(string name)
-    //{
-    //    Dictionary<string, FunctionType> dic = new();
-    //    dic.Add("sound", FunctionType.Sound1);
-    //    dic.Add("light", FunctionType.Light1);
-    //    dic.Add("main_beam", FunctionType.MainBeam);
-    //    dic.Add("main_beam2", FunctionType.LowBeam);
-
-    //    if (dic.TryGetValue(name.ToLower(), out FunctionType func))
-    //        return func;
-    //    else if (Enum.TryParse<FunctionType>(name.Replace("_", ""), true, out var result))
-    //        return result;
-    //    else
-    //        return FunctionType.None;
-    //}
   }
 }
