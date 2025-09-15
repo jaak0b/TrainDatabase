@@ -1,13 +1,8 @@
-﻿using Helper;
+﻿using System;
+using Helper;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Service
+namespace Core
 {
   public class LogEventBus
   {

@@ -1,6 +1,7 @@
-﻿using Persistence;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using Persistence.Models;
+
+namespace Shell.WPF;
 
 public class VehicleBorder : Border
 {

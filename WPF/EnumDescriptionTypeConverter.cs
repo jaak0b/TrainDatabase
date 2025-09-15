@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Reflection;
 
-namespace WPF_Application
+namespace Shell.WPF
 {
   public class EnumDescriptionTypeConverter : EnumConverter
   {

@@ -8,7 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using Persistence.Models;
 
-namespace WPF_Application.TrainControl.FunctionButton
+namespace Shell.WPF.TrainControl.FunctionButton
 {
   internal static class FunctionButton
   {

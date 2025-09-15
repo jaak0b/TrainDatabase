@@ -1,29 +1,16 @@
-﻿using Helper;
-using Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Persistence;
-using OxyPlot.Series;
-using Core;
-using Core.Controller;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Media;
+using Core;
+using Core.Controller;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Persistence.Database;
 using Persistence.Models;
-using TrainDatabase.Extensions;
-using TrainDatabase.JoyStick;
-using WPF_Application.TrainControl;
-using Z21.Model;
 
-namespace TrainDatabase
+namespace Shell.WPF.TrainControl
 {
   /// <summary>
   /// Interaction logic for VehicleController.xaml

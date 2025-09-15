@@ -1,11 +1,10 @@
-﻿using Helper;
-using SharpDX.DirectInput;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using SharpDX.DirectInput;
 
-namespace TrainDatabase.JoyStick
+namespace Shell.WPF.JoyStick
 {
   public class JoyStick
   {

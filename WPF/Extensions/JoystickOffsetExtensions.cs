@@ -1,9 +1,9 @@
-﻿using Helper;
-using SharpDX.DirectInput;
-using System;
+﻿using System;
+using Helper;
 using Persistence.Extensions;
+using SharpDX.DirectInput;
 
-namespace TrainDatabase.Extensions
+namespace Shell.WPF.Extensions
 {
   public static class JoystickOffsetExtensions
   {

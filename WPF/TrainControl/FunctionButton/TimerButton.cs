@@ -3,7 +3,7 @@ using System;
 using System.Threading.Tasks;
 using Persistence.Models;
 
-namespace WPF_Application.TrainControl.FunctionButton
+namespace Shell.WPF.TrainControl.FunctionButton
 {
   internal class TimerButton : FunctionBase
   {

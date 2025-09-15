@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using Z21.Enums;
 
-namespace WPF_Application.Converter
+namespace Shell.WPF.Converter
 {
   internal class TrackPowerToBoolConverter : IValueConverter
   {

@@ -1,10 +1,9 @@
-﻿using Helper;
-using Persistence;
-using SharpDX.DirectInput;
-using System;
+﻿using System;
+using Helper;
 using Persistence.Models;
+using SharpDX.DirectInput;
 
-namespace TrainDatabase.Extensions
+namespace Shell.WPF.Extensions
 {
   public static class FunctionTypeExtensions
   {

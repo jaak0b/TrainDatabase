@@ -1,9 +1,8 @@
-﻿using Persistence;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Persistence.Models;
 
-namespace TrainDatabase.Extensions
+namespace Shell.WPF.Extensions
 {
   public static class IEnumerableExtensions
   {

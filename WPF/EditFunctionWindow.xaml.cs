@@ -1,16 +1,14 @@
-﻿using Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using Persistence;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Database;
 using Persistence.Models;
 
-namespace TrainDatabase
+namespace Shell.WPF
 {
   /// <summary>
   /// Interaction logic for EditFunctionWindow.xaml

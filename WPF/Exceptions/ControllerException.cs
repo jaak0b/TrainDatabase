@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using Z21;
 
-namespace TrainDatabase.Exceptions
+namespace Shell.WPF.Exceptions
 {
   public class ControllerException : Exception
   {

@@ -1,10 +1,4 @@
-﻿using Helper;
-using Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Win32;
-using Persistence;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -14,12 +8,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Helper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Win32;
 using Persistence.Database;
 using Persistence.Extensions;
 using Persistence.Models;
-using TrainDatabase.Extensions;
+using Shell.WPF.Extensions;
 
-namespace TrainDatabase
+namespace Shell.WPF
 {
   /// <summary>
   /// Interaction logic for VehicleManagement.xaml

@@ -1,27 +1,14 @@
-﻿using Helper;
-using Infrastructure;
-using Microsoft.Data.Sqlite;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Win32;
-using Persistence;
+﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows;
 using Core;
 using Core.ImportService.Z21;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Net;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Win32;
 using Persistence.Database;
 
-namespace Importer
+namespace Shell.WPF.Import
 {
   /// <summary>
   /// Interaction logic for Z21.xaml

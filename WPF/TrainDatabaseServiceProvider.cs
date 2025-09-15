@@ -5,17 +5,15 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Autofac.Extras.CommonServiceLocator;
 using CommonServiceLocator;
-using Infrastructure;
+using Core;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Database;
 using Serilog;
-using Core;
-using Wpf_Application;
 using Z21;
 
-namespace WPF_Application
+namespace Shell.WPF
 {
   [UsedImplicitly]
   public class TrainDatabaseServiceProvider()

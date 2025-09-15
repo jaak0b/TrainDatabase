@@ -1,10 +1,10 @@
-﻿using SharpDX.DirectInput;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using SharpDX.DirectInput;
 
-namespace TrainDatabase.JoyStick
+namespace Shell.WPF.JoyStick
 {
   /// <summary>
   /// Interaction logic for JoyStickButtonSelection.xaml

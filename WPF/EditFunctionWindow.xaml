@@ -1,4 +1,4 @@
-﻿<Window x:Class="TrainDatabase.EditFunctionWindow"
+﻿<Window x:Class="Shell.WPF.EditFunctionWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,6 +7,7 @@
         xmlns:model="clr-namespace:Persistence;assembly=Persistence"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:models="clr-namespace:Persistence.Models;assembly=Persistence"
+        xmlns:wpf1="clr-namespace:Shell.WPF"
         mc:Ignorable="d"
         Title="EditFunctionWindow" SizeToContent="WidthAndHeight" MinWidth="250" MinHeight="210" Height="210" Name="ew">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -46,7 +47,7 @@
             <Label Content="Function" Grid.Row="3" Grid.Column="0" />
             <ComboBox Grid.Row="3" Grid.Column="1"
                       SelectedItem="{Binding Function.EnumType, UpdateSourceTrigger=PropertyChanged}"
-                      ItemsSource="{Binding Source={wpf:EnumBindingSource {x:Type models:FunctionType} }}" Padding="5"
+                      ItemsSource="{Binding Source={wpf1:EnumBindingSource {x:Type models:FunctionType} }}" Padding="5"
                       Margin="5" IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False" />
 
             <CheckBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"

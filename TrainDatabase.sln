@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32408.312
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPF Application", "WPF\WPF Application.csproj", "{AEB176C2-14E7-488C-BB3A-1BA664BB049B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shell.WPF", "WPF\Shell.WPF.csproj", "{AEB176C2-14E7-488C-BB3A-1BA664BB049B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "Persistence\Persistence.csproj", "{F4B61145-CFA9-4D8B-A0C8-DD22F1842F7C}"
 EndProject
@@ -12,7 +12,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{FFB906C8-22B9-4374-A70B-BD649F9330D6}"
 	ProjectSection(ProjectDependencies) = postProject
 		{3E4A6837-231D-403B-8EA4-AF61C231E777} = {3E4A6837-231D-403B-8EA4-AF61C231E777}
-		{C835F402-5C60-402C-9201-708A12E0D5F7} = {C835F402-5C60-402C-9201-708A12E0D5F7}
 		{F4B61145-CFA9-4D8B-A0C8-DD22F1842F7C} = {F4B61145-CFA9-4D8B-A0C8-DD22F1842F7C}
 	EndProjectSection
 EndProject

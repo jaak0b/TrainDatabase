@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Controls.Primitives;
 using Persistence.Models;
 
-namespace WPF_Application.TrainControl.FunctionButton
+namespace Shell.WPF.TrainControl.FunctionButton
 {
   internal class SwitchButton : ToggleButton
   {

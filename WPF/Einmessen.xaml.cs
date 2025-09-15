@@ -1,27 +1,19 @@
-﻿using Helper;
-using Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Persistence;
-using OxyPlot;
-using Core.Controller;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
 using System.Management;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
+using Core.Controller;
+using Helper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Persistence.Database;
 using Persistence.Models;
-using WPF_Application.TimeCapture;
-using LinearAxis = OxyPlot.Axes.LinearAxis;
-using LineSeries = OxyPlot.Series.LineSeries;
+using Shell.WPF.TimeCapture;
 
-namespace TrainDatabase
+namespace Shell.WPF
 {
   public class ComPortsComboBox : ComboBox
   {

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows;
 
-namespace WPF_Application.Extensions
+namespace Shell.WPF.Extensions
 {
   internal static class WindowExtension
   {

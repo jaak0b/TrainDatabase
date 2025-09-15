@@ -12,10 +12,10 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
 using Autofac.Extensions.DependencyInjection;
-using WPF_Application;
+using Shell.WPF;
 using Z21;
 
-namespace Wpf_Application
+namespace Shell.WPF
 {
   /// <summary>
   /// Interaction logic for App.xaml

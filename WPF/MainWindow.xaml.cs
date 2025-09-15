@@ -1,18 +1,10 @@
-﻿using Helper;
-using Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Persistence;
-using Core;
-using SharpDX.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,13 +12,15 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
+using Core;
+using Helper;
+using Microsoft.Extensions.DependencyInjection;
 using Persistence.Database;
 using Persistence.Models;
-using TrainDatabase;
-using WPF_Application;
+using Shell.WPF.Import;
 using Z21;
 
-namespace Wpf_Application
+namespace Shell.WPF
 {
   /// <summary>
   /// Interaction logic for MainWindow.xaml
@@ -110,7 +104,7 @@ namespace Wpf_Application
       if (e.ClickCount == 2 && sender is VehicleBorder border)
       {
         await Task.Delay(150);
-        TrainControl.CreatTrainControlWindow(ServiceProvider, border.Vehicle);
+        TrainControl.TrainControl.CreatTrainControlWindow(ServiceProvider, border.Vehicle);
       }
     }
 
@@ -124,7 +118,7 @@ namespace Wpf_Application
 
     private void MiImportNewDatabase(object sender, RoutedEventArgs e)
     {
-      new Importer.Z21Import(ServiceProvider).ShowDialog();
+      new Z21Import(ServiceProvider).ShowDialog();
     }
 
     private void DrawVehicles(IEnumerable<VehicleModel> list)
@@ -187,7 +181,7 @@ namespace Wpf_Application
 
         VehicleMenuItem mi = new(
                                  item, "Fahrzeug steuern",
-                                 (a) => TrainControl.CreatTrainControlWindow(ServiceProvider, a));
+                                 (a) => TrainControl.TrainControl.CreatTrainControlWindow(ServiceProvider, a));
         border.ContextMenu.Items.Add(mi);
 
         border.MouseDown += Border_MouseDown;
@@ -202,7 +196,7 @@ namespace Wpf_Application
                                                                         "Datenbank importieren", MessageBoxButton.YesNo,
                                                                         MessageBoxImage.Question))
       {
-        new Importer.Z21Import(ServiceProvider).ShowDialog();
+        new Z21Import(ServiceProvider).ShowDialog();
       }
 
       Search();

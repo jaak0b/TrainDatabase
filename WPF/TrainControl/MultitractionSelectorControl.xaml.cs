@@ -18,9 +18,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Persistence.Database;
 using Persistence.Models;
-using WPF_Application.TimeCapture;
+using Shell.WPF.TimeCapture;
 
-namespace WPF_Application.TrainControl
+namespace Shell.WPF.TrainControl
 {
   /// <summary>
   /// Interaction logic for Multitraction.xaml
