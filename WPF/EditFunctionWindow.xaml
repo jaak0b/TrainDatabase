@@ -29,10 +29,10 @@
 
             <Label Content="Name" Grid.Row="0" Grid.Column="0" />
             <TextBox Grid.Row="0" Grid.Column="1" Padding="5" Margin="5"
-                     Text="{Binding ElementName=ew,Path=Function.Name, UpdateSourceTrigger=PropertyChanged}" />
+                     Text="{Binding ElementName=ew,Path=FunctionModel.Name, UpdateSourceTrigger=PropertyChanged}" />
 
-            <Label Content="Function" Grid.Row="1" Grid.Column="0" />
-            <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" Padding="5" Margin="5" Value="{Binding ElementName=ew,Path=Function.Address, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Content="FunctionModel" Grid.Row="1" Grid.Column="0" />
+            <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" Padding="5" Margin="5" Value="{Binding ElementName=ew,Path=FunctionModel.Address, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label Content="Type:" Grid.Row="2" Grid.Column="0" />
             <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left"
@@ -45,17 +45,17 @@
                              Click="TypeRadioButton_Click" Tag="{x:Static enums:ButtonType.Timer}" />
             </StackPanel>
 
-            <Label Content="Function" Grid.Row="3" Grid.Column="0" />
+            <Label Content="FunctionModel" Grid.Row="3" Grid.Column="0" />
             <ComboBox Grid.Row="3" Grid.Column="1"
-                      SelectedItem="{Binding Function.EnumType, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding FunctionModel.EnumType, UpdateSourceTrigger=PropertyChanged}"
                       ItemsSource="{Binding Source={wpf1:EnumBindingSource {x:Type models:FunctionType} }}" Padding="5"
                       Margin="5" IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False" />
 
             <CheckBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
-                      IsChecked="{Binding ElementName=ew,Path=Function.IsActive, UpdateSourceTrigger=PropertyChanged}"
+                      IsChecked="{Binding ElementName=ew,Path=FunctionModel.IsActive, UpdateSourceTrigger=PropertyChanged}"
                       Content="Active" Margin="5" />
             <CheckBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
-                      IsChecked="{Binding ElementName=ew,Path=Function.ShowFunctionNumber, UpdateSourceTrigger=PropertyChanged}"
+                      IsChecked="{Binding ElementName=ew,Path=FunctionModel.ShowFunctionNumber, UpdateSourceTrigger=PropertyChanged}"
                       Content="Adresse anzeigen" Margin="5" />
         </Grid>
     </ScrollViewer>

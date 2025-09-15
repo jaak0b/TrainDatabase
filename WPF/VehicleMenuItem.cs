@@ -7,13 +7,13 @@ namespace Shell.WPF
 {
   public class VehicleMenuItem : MenuItem
   {
-    public VehicleMenuItem(VehicleModel vehicle, string content, Action<VehicleModel> onClick)
+    public VehicleMenuItem(VehicleEntity vehicle, string content, Action<VehicleEntity> onClick)
     {
       Vehicle = vehicle;
       Header = content;
       Click += (a, b) => onClick(Vehicle);
     }
 
-    public VehicleModel Vehicle { get; set; } = default!;
+    public VehicleEntity Vehicle { get; set; } = default!;
   }
 }

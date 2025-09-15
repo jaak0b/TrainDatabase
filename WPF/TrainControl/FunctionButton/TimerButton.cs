@@ -7,14 +7,14 @@ namespace Shell.WPF.TrainControl.FunctionButton
 {
   internal class TimerButton : FunctionBase
   {
-    public TimerButton(IServiceProvider serviceProvider, FunctionModel functionModel) : base(
+    public TimerButton(IServiceProvider serviceProvider, VehicleFunctionEntity vehicleFunctionEntity) : base(
                                                                                              serviceProvider,
-                                                                                             functionModel)
+                                                                                             vehicleFunctionEntity)
     {
       PreviewMouseDown += async (sender, e) =>
                           {
                             VehicleFunction.SetState(true);
-                            await Task.Delay(new TimeSpan(0, 0, functionModel.Time));
+                            await Task.Delay(new TimeSpan(0, 0, vehicleFunctionEntity.Time));
                             VehicleFunction.SetState(false);
                           };
       VehicleFunction.StateChanged += (a, state) => Dispatcher.Invoke(() => IsEnabled = !state);

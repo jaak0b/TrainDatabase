@@ -8,7 +8,7 @@ using Z21;
 
 namespace Persistence.Models
 {
-  public partial class VehicleModel : IEquatable<VehicleModel>, IComparable
+  public partial class VehicleEntity : IEquatable<VehicleEntity>, IComparable
   {
     public int Id { get; set; }
 
@@ -40,7 +40,7 @@ namespace Persistence.Models
 
     public bool? Dummy { get; set; } = false;
 
-    public List<FunctionModel> Functions { get; set; } = new();
+    public List<VehicleFunctionEntity> Functions { get; set; } = new();
 
     public decimal?[] TractionForward { get; set; } = new decimal?[Client.maxDccStep + 1];
 
@@ -53,7 +53,7 @@ namespace Persistence.Models
       return Id.CompareTo(obj);
     }
 
-    public bool Equals(VehicleModel other)
+    public bool Equals(VehicleEntity other)
     {
       return Id == other?.Id;
     }

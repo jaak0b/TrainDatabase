@@ -17,14 +17,14 @@ namespace Core.Controller
 {
   public class TimeCaptureController
   {
-    public TimeCaptureController(IServiceProvider serviceProvider, VehicleModel vehicleModel)
+    public TimeCaptureController(IServiceProvider serviceProvider, VehicleEntity vehicleEntity)
     {
       ServiceProvider = serviceProvider;
-      VehicleModel = vehicleModel;
+      VehicleEntity = vehicleEntity;
       Z21Client = ServiceProvider.GetService<Client>()!;
       Database = ServiceProvider.GetService<Database>()!;
       LogService = ServiceProvider.GetService<LogEventBus>()!;
-      Vehicle = new(ServiceProvider, vehicleModel);
+      Vehicle = new(ServiceProvider, vehicleEntity);
     }
 
     /// <summary>
@@ -64,7 +64,7 @@ namespace Core.Controller
 
     private VehiclePresenter Vehicle { get; } = default!;
 
-    private VehicleModel VehicleModel { get; }
+    private VehicleEntity VehicleEntity { get; }
 
     private Client Z21Client { get; } = default!;
 
@@ -173,8 +173,8 @@ namespace Core.Controller
 
     private async Task SaveChanges()
     {
-      VehicleModel? temp = Database.Vehicles.FirstOrDefault(e => e.Id == VehicleModel.Id) ??
-                           throw new($"Fahrzeug mit Adresse '{VehicleModel.Address}' nicht gefunden!");
+      VehicleEntity? temp = Database.Vehicles.FirstOrDefault(e => e.Id == VehicleEntity.Id) ??
+                           throw new($"Fahrzeug mit Adresse '{VehicleEntity.Address}' nicht gefunden!");
       temp.TractionBackward = TractionBackward;
       temp.TractionForward = TractionForward;
       await Database.SaveChangesAsync();

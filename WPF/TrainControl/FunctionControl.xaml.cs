@@ -28,7 +28,7 @@ namespace Shell.WPF.TrainControl
   /// </summary>
   public partial class FunctionControl : UserControl
   {
-    public FunctionControl(IServiceProvider serviceProvider, VehicleModel vehicle)
+    public FunctionControl(IServiceProvider serviceProvider, VehicleEntity vehicle)
     {
       InitializeComponent();
 
@@ -41,12 +41,12 @@ namespace Shell.WPF.TrainControl
 
     private IServiceProvider ServiceProvider { get; }
 
-    private VehicleModel Vehicle { get; }
+    private VehicleEntity Vehicle { get; }
 
     private Database Db { get; }
 
     /// <summary>
-    /// Functions draws every single Function of a vehicle for the user to click on. 
+    /// Functions draws every single FunctionModel of a vehicle for the user to click on. 
     /// </summary>
     private void DrawAllFunctions()
     {
@@ -54,7 +54,7 @@ namespace Shell.WPF.TrainControl
                              () =>
                              {
                                FunctionGrid.Children.Clear();
-                               foreach (FunctionModel? item in Vehicle.Functions.OrderBy(e => e.Address))
+                               foreach (VehicleFunctionEntity? item in Vehicle.Functions.OrderBy(e => e.Address))
                                {
                                  switch (item.ButtonType)
                                  {

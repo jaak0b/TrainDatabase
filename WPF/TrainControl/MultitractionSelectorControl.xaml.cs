@@ -27,7 +27,7 @@ namespace Shell.WPF.TrainControl
   /// </summary>
   public partial class MultitractionSelectorControl : UserControl
   {
-    public MultitractionSelectorControl(IServiceProvider serviceProvider, VehicleModel vehicle)
+    public MultitractionSelectorControl(IServiceProvider serviceProvider, VehicleEntity vehicle)
     {
       InitializeComponent();
       ServiceProvider = serviceProvider;
@@ -44,13 +44,13 @@ namespace Shell.WPF.TrainControl
 
     private IServiceProvider ServiceProvider { get; }
 
-    private VehicleModel Vehicle { get; }
+    private VehicleEntity Vehicle { get; }
 
     private VehicleService VehicleService { get; }
 
-    private void DrawAllVehicles(IEnumerable<VehicleModel> vehicles)
+    private void DrawAllVehicles(IEnumerable<VehicleEntity> vehicles)
     {
-      List<VehicleModel> tractionVehicles = vehicles.Where(f => Vehicle.TractionVehicleIds.Any(e => e == f.Id))
+      List<VehicleEntity> tractionVehicles = vehicles.Where(f => Vehicle.TractionVehicleIds.Any(e => e == f.Id))
                                                     .OrderBy(e => e.Position).ToList();
       if (tractionVehicles.Any())
       {
@@ -63,9 +63,9 @@ namespace Shell.WPF.TrainControl
                                   .OrderBy(e => e.Position));
     }
 
-    private void AddListToStackPanel(IEnumerable<VehicleModel> vehicles)
+    private void AddListToStackPanel(IEnumerable<VehicleEntity> vehicles)
     {
-      foreach (VehicleModel vehicle in vehicles.Where(e => e.Id != Vehicle.Id))
+      foreach (VehicleEntity vehicle in vehicles.Where(e => e.Id != Vehicle.Id))
       {
         CheckBox c = new()
                      {
@@ -76,14 +76,14 @@ namespace Shell.WPF.TrainControl
                      };
         c.Unchecked += (sender, e) =>
                        {
-                         if ((sender as CheckBox)?.Tag is VehicleModel vehicle)
+                         if ((sender as CheckBox)?.Tag is VehicleEntity vehicle)
                          {
                            VehicleService.RemoveTractionVehilce(vehicle, Vehicle);
                          }
                        };
         c.Checked += (sender, e) =>
                      {
-                       if (sender is CheckBox c && c.Tag is VehicleModel v)
+                       if (sender is CheckBox c && c.Tag is VehicleEntity v)
                        {
                          VehicleService.AddTractionVehilce(v, Vehicle);
                        }

@@ -20,36 +20,36 @@ namespace Shell.WPF
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    private FunctionModel function = new();
+    private VehicleFunctionEntity vehicleFunctionEntity = new();
 
-    public FunctionModel Function
+    public VehicleFunctionEntity FunctionModel
     {
-      get => function;
+      get => vehicleFunctionEntity;
       set
       {
-        function = value;
+        vehicleFunctionEntity = value;
         OnPropertyChanged();
       }
     }
 
-    public EditFunctionWindow(Database _db, FunctionModel function)
+    public EditFunctionWindow(Database _db, VehicleFunctionEntity vehicleFunction)
     {
       DataContext = this;
       InitializeComponent();
       db = _db ?? throw new ApplicationException($"Paramter '{nameof(_db)}' darf nicht null sein!");
 
-      if (function is null)
+      if (vehicleFunction is null)
       {
-        throw new ApplicationException($"Paramter '{nameof(function)}' darf nicht null sein!");
+        throw new ApplicationException($"Paramter '{nameof(vehicleFunction)}' darf nicht null sein!");
       }
 
-      Function =
-        db.Functions.Include(m => m.Vehicle).ThenInclude(m => m.Functions).FirstOrDefault(e => e.Id == function.Id) ??
-        throw new ApplicationException($"Funktion  mit der ID '{function.Id} konnte nicht geöffnet werden!");
+      FunctionModel =
+        db.Functions.Include(m => m.Vehicle).ThenInclude(m => m.Functions).FirstOrDefault(e => e.Id == vehicleFunction.Id) ??
+        throw new ApplicationException($"Funktion  mit der ID '{vehicleFunction.Id} konnte nicht geöffnet werden!");
 
-      Title = Function.Name ?? "";
+      Title = FunctionModel.Name ?? "";
 
-      switch (Function.ButtonType)
+      switch (FunctionModel.ButtonType)
       {
         case ButtonType.PushButton:
           RbPushButton.IsChecked = true;
@@ -70,7 +70,7 @@ namespace Shell.WPF
 
     private void TypeRadioButton_Click(object sender, RoutedEventArgs e)
     {
-      Function.ButtonType = (ButtonType)Enum.Parse(typeof(ButtonType), (sender as RadioButton)!.Tag!.ToString()!);
+      FunctionModel.ButtonType = (ButtonType)Enum.Parse(typeof(ButtonType), (sender as RadioButton)!.Tag!.ToString()!);
     }
   }
 }

@@ -4,11 +4,11 @@ using Persistence.Enums;
 
 namespace Persistence.Models
 {
-  public partial class FunctionModel
+  public partial class VehicleFunctionEntity
   {
     public int Id { get; set; }
 
-    public VehicleModel Vehicle { get; set; }
+    public VehicleEntity Vehicle { get; set; }
 
     public int VehicleId { get; set; }
 
@@ -34,7 +34,7 @@ namespace Persistence.Models
 
     override public bool Equals(object obj)
     {
-      return obj is FunctionModel function && Id == function?.Id;
+      return obj is VehicleFunctionEntity function && Id == function?.Id;
     }
 
     override public string ToString()

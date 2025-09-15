@@ -64,7 +64,7 @@ namespace Shell.WPF
   /// </summary>
   public partial class Einmessen : Window, INotifyPropertyChanged
   {
-    private VehicleModel? _vehicle = default!;
+    private VehicleEntity? _vehicle = default!;
 
     public Einmessen(IServiceProvider serviceProvider)
     {
@@ -83,7 +83,7 @@ namespace Shell.WPF
 
     public Database Db { get; } = default!;
 
-    private VehicleModel? Vehicle
+    private VehicleEntity? Vehicle
     {
       get => _vehicle;
       set
@@ -106,7 +106,7 @@ namespace Shell.WPF
     private async void CmbAllVehicles_Loaded(object sender, RoutedEventArgs e)
     {
       CmbAllVehicles.Items.Clear();
-      foreach (VehicleModel vehicle in await Db.Vehicles.Where(e => e.Type == VehicleType.Lokomotive)
+      foreach (VehicleEntity vehicle in await Db.Vehicles.Where(e => e.Type == VehicleType.Lokomotive)
                                                .OrderBy(e => e.Address).ToListAsync())
       {
         CmbAllVehicles.Items.Add(
@@ -121,8 +121,8 @@ namespace Shell.WPF
 
     private void CmbAllVehicles_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      TcMeasure.IsEnabled = CmbAllVehicles.SelectedItem is not VehicleModel;
-      if (CmbAllVehicles.SelectedItem is not ComboBoxItem cbi || cbi.Tag is not VehicleModel vehicle)
+      TcMeasure.IsEnabled = CmbAllVehicles.SelectedItem is not VehicleEntity;
+      if (CmbAllVehicles.SelectedItem is not ComboBoxItem cbi || cbi.Tag is not VehicleEntity vehicle)
       {
         return;
       }

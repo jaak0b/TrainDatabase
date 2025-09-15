@@ -6,9 +6,9 @@ namespace Shell.WPF.TrainControl.FunctionButton
 {
   internal class PushButton : FunctionBase
   {
-    public PushButton(IServiceProvider serviceProvider, FunctionModel functionModel) : base(
+    public PushButton(IServiceProvider serviceProvider, VehicleFunctionEntity vehicleFunctionEntity) : base(
                                                                                             serviceProvider,
-                                                                                            functionModel)
+                                                                                            vehicleFunctionEntity)
     {
       PreviewMouseDown += (sender, e) => VehicleFunction.SetState(true);
       PreviewMouseUp += (sender, e) => VehicleFunction.SetState(false);

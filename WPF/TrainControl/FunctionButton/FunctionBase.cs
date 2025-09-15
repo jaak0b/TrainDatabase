@@ -9,18 +9,18 @@ namespace Shell.WPF.TrainControl.FunctionButton
 {
   abstract internal class FunctionBase : Button
   {
-    public FunctionBase(IServiceProvider serviceProvider, FunctionModel functionModel)
+    public FunctionBase(IServiceProvider serviceProvider, VehicleFunctionEntity vehicleFunctionEntity)
     {
       ServiceProvider = serviceProvider;
-      FunctionModel = functionModel;
+      FunctionModel = vehicleFunctionEntity;
       FunctionButton.ApplyStyle(this, FunctionModel);
 
-      VehicleFunction = new(ServiceProvider, functionModel);
+      VehicleFunction = new(ServiceProvider, vehicleFunctionEntity);
     }
 
     private IServiceProvider ServiceProvider { get; }
 
-    private FunctionModel FunctionModel { get; }
+    private VehicleFunctionEntity FunctionModel { get; }
 
     internal VehicleFunctionPresenter VehicleFunction { get; }
   }

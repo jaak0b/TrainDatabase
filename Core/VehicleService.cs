@@ -15,7 +15,7 @@ namespace Core
 
     public Database Db { get; set; }
 
-    public void AddTractionVehilce(VehicleModel vehicle1, VehicleModel vehicle2)
+    public void AddTractionVehilce(VehicleEntity vehicle1, VehicleEntity vehicle2)
     {
       vehicle1.TractionVehicleIds.Add(vehicle2.Id);
       vehicle2.TractionVehicleIds.Add(vehicle1.Id);
@@ -23,7 +23,7 @@ namespace Core
       Db.Update(vehicle2);
     }
 
-    public void RemoveTractionVehilce(VehicleModel vehicle1, VehicleModel vehicle2)
+    public void RemoveTractionVehilce(VehicleEntity vehicle1, VehicleEntity vehicle2)
     {
       vehicle1.TractionVehicleIds.Remove(vehicle2.Id);
       vehicle2.TractionVehicleIds.Remove(vehicle1.Id);

@@ -13,25 +13,25 @@ namespace Shell.WPF.TrainControl.FunctionButton
 {
   internal class SwitchButton : ToggleButton
   {
-    public SwitchButton(IServiceProvider serviceProvider, FunctionModel functionModel)
+    public SwitchButton(IServiceProvider serviceProvider, VehicleFunctionEntity vehicleFunctionEntity)
     {
-      if (functionModel.ButtonType is not ButtonType.Switch)
+      if (vehicleFunctionEntity.ButtonType is not ButtonType.Switch)
       {
-        throw new ApplicationException($"Button is type {functionModel.ButtonType} but should be {ButtonType.Switch}");
+        throw new ApplicationException($"Button is type {vehicleFunctionEntity.ButtonType} but should be {ButtonType.Switch}");
       }
 
       ServiceProvider = serviceProvider;
-      FunctionModel = functionModel;
+      FunctionModel = vehicleFunctionEntity;
       FunctionButton.ApplyStyle(this, FunctionModel);
 
-      VehicleFunction = new(ServiceProvider, functionModel);
+      VehicleFunction = new(ServiceProvider, vehicleFunctionEntity);
       VehicleFunction.StateChanged += (a, state) => Dispatcher.Invoke(() => IsChecked = state);
       Click += (a, b) => VehicleFunction.SetState(IsChecked ?? false);
     }
 
     private IServiceProvider ServiceProvider { get; }
 
-    private FunctionModel FunctionModel { get; }
+    private VehicleFunctionEntity FunctionModel { get; }
 
     private VehicleFunctionPresenter VehicleFunction { get; }
   }

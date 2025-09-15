@@ -26,9 +26,9 @@ namespace Persistence.Database
 
     public event EventHandler CollectionChanged;
 
-    public virtual DbSet<FunctionModel> Functions => Set<FunctionModel>();
+    public virtual DbSet<VehicleFunctionEntity> Functions => Set<VehicleFunctionEntity>();
 
-    public virtual DbSet<VehicleModel> Vehicles => Set<VehicleModel>();
+    public virtual DbSet<VehicleEntity> Vehicles => Set<VehicleEntity>();
 
     override public EntityEntry<TEntity> Add<TEntity>(TEntity obj) where TEntity : class
     {
@@ -132,9 +132,9 @@ namespace Persistence.Database
                                                                                                             a,
                                                                                                             i.GetHashCode())),
                                                                 v => v.ToArray());
-      modelBuilder.Entity<VehicleModel>().Property(e => e.TractionForward).HasConversion(decimArrayToStringConverter)
+      modelBuilder.Entity<VehicleEntity>().Property(e => e.TractionForward).HasConversion(decimArrayToStringConverter)
                   .Metadata.SetValueComparer(decimalArrayValueComparer);
-      modelBuilder.Entity<VehicleModel>().Property(e => e.TractionBackward).HasConversion(decimArrayToStringConverter)
+      modelBuilder.Entity<VehicleEntity>().Property(e => e.TractionBackward).HasConversion(decimArrayToStringConverter)
                   .Metadata.SetValueComparer(decimalArrayValueComparer);
 
       ValueConverter<List<int>, string> intListConverter = new(
@@ -153,7 +153,7 @@ namespace Persistence.Database
                                                                                                       a,
                                                                                                       i.GetHashCode())),
                                                           v => v.ToList());
-      modelBuilder.Entity<VehicleModel>().Property(e => e.TractionVehicleIds).HasConversion(intListConverter).Metadata
+      modelBuilder.Entity<VehicleEntity>().Property(e => e.TractionVehicleIds).HasConversion(intListConverter).Metadata
                   .SetValueComparer(intListValueComparer);
 
       OnModelCreatingPartial(modelBuilder);

@@ -14,14 +14,14 @@ namespace Core.Presenters
 {
   public class VehicleFunctionPresenter
   {
-    public VehicleFunctionPresenter(IServiceProvider serviceProvider, FunctionModel functionModel)
+    public VehicleFunctionPresenter(IServiceProvider serviceProvider, VehicleFunctionEntity vehicleFunctionEntity)
     {
       ServiceProvider = serviceProvider;
       Db = ServiceProvider.GetService<Database>()!;
       Client = ServiceProvider.GetService<Client>()!;
 
-      FunctionModel = Db.Functions.Include(e => e.Vehicle).FirstOrDefault(e => e.Id == functionModel.Id) ??
-                      throw new ApplicationException($"Function '{functionModel}' was not found!");
+      FunctionModel = Db.Functions.Include(e => e.Vehicle).FirstOrDefault(e => e.Id == vehicleFunctionEntity.Id) ??
+                      throw new ApplicationException($"Function '{vehicleFunctionEntity}' was not found!");
 
       Client.OnGetLocoInfo += Z21Client_OnGetLocoInfo;
     }
@@ -39,7 +39,7 @@ namespace Core.Presenters
 
     public event EventHandler<bool>? StateChanged;
 
-    public FunctionModel FunctionModel { get; }
+    public VehicleFunctionEntity FunctionModel { get; }
 
     private void Z21Client_OnGetLocoInfo(object? sender, GetLocoInfoEventArgs e)
     {
@@ -60,11 +60,11 @@ namespace Core.Presenters
     {
       if (FunctionModel.EnumType != FunctionType.None)
       {
-        List<FunctionModel> functions = FunctionModel.Vehicle.TractionVehicleIds
+        List<VehicleFunctionEntity> functions = FunctionModel.Vehicle.TractionVehicleIds
                                                      .Select(
                                                              e => Db.Vehicles.Include(e => e.Functions)
                                                                     .FirstOrDefault(f => f.Id == e))
-                                                     .SelectMany(e => e?.Functions ?? new List<FunctionModel>())
+                                                     .SelectMany(e => e?.Functions ?? new List<VehicleFunctionEntity>())
                                                      .Where(
                                                             e => e.EnumType == FunctionModel.EnumType &&
                                                                  e.ButtonType == FunctionModel.ButtonType).ToList();

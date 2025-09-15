@@ -5,5 +5,5 @@ namespace Shell.WPF;
 
 public class VehicleBorder : Border
 {
-  public VehicleModel Vehicle { get; set; } = default!;
+  public VehicleEntity Vehicle { get; set; } = default!;
 }

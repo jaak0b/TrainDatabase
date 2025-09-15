@@ -113,10 +113,10 @@ namespace Shell.WPF
       databaseImportView.ShowDialogOrActivate();
     }
 
-    private void DrawVehicles(IEnumerable<VehicleModel> list)
+    private void DrawVehicles(IEnumerable<VehicleEntity> list)
     {
       VehicleGrid.Children.Clear();
-      foreach (VehicleModel item in list.OrderBy(e => e.Position))
+      foreach (VehicleEntity item in list.OrderBy(e => e.Position))
       {
         StackPanel sp = new()
                         {
@@ -282,7 +282,7 @@ namespace Shell.WPF
 
     private void Search()
     {
-      List<VehicleModel>? vehicles = Db.Vehicles.Where(e => e.IsActive).ToList();
+      List<VehicleEntity>? vehicles = Db.Vehicles.Where(e => e.IsActive).ToList();
       foreach (string? item in tbSearch.Text.Split(" ", StringSplitOptions.RemoveEmptyEntries))
       {
         vehicles = vehicles.Where(i => i.IsActive && $"{i.Name} {i.FullName} {i.Type} {i.Address} {i.Railway}".ToLower().Contains(item.ToLower().Trim())).ToList();

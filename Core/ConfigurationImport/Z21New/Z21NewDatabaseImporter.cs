@@ -52,7 +52,7 @@ namespace Core.ConfigurationImport.Z21New
     private async Task MapFunctionsAsync(SqliteConnection con, bool removeEmptyFunctions)
     {
       List<FunctionDTO> f = con.Query<FunctionDTO>("Select * from functions").ToList();
-      List<FunctionModel> functions = f.Select(functionDto => new FunctionModel()
+      List<VehicleFunctionEntity> functions = f.Select(functionDto => new VehicleFunctionEntity()
                                                               {
                                                                 Id = (int)functionDto.id,
                                                                 Vehicle = Database.Vehicles.FirstOrDefault(v => v.Id == (int)functionDto.vehicle_id),
@@ -78,7 +78,7 @@ namespace Core.ConfigurationImport.Z21New
     private async Task MapVehiclesAsync(SqliteConnection con)
     {
       List<VehicleDTO> v = con.Query<VehicleDTO>("Select * from vehicles").ToList();
-      List<VehicleModel> vehicles = v.Select(vehicleDto => new VehicleModel()
+      List<VehicleEntity> vehicles = v.Select(vehicleDto => new VehicleEntity()
                                                            {
                                                              Id = (int)vehicleDto.id,
                                                              Name = vehicleDto.name,

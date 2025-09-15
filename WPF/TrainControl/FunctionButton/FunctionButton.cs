@@ -12,7 +12,7 @@ namespace Shell.WPF.TrainControl.FunctionButton
 {
   internal static class FunctionButton
   {
-    internal static void ApplyStyle<T>(T button, FunctionModel functionModel) where T : ButtonBase
+    internal static void ApplyStyle<T>(T button, VehicleFunctionEntity vehicleFunctionEntity) where T : ButtonBase
     {
       button.Height = 50;
       button.Width = 95;
@@ -33,18 +33,18 @@ namespace Shell.WPF.TrainControl.FunctionButton
                          TextAlignment = TextAlignment.Center
                        };
 
-      Run firstLine = new(ShortenString(functionModel.Name))
+      Run firstLine = new(ShortenString(vehicleFunctionEntity.Name))
                       {
                         Foreground = Brushes.Black
                       };
       para.Inlines.Add(firstLine);
 
-      if (functionModel.ShowFunctionNumber)
+      if (vehicleFunctionEntity.ShowFunctionNumber)
       {
         LineBreak lineBreak = new();
         para.Inlines.Add(lineBreak);
 
-        Run secondLine = new($"F{functionModel.Address}")
+        Run secondLine = new($"F{vehicleFunctionEntity.Address}")
                          {
                            FontSize = 12,
                            Foreground = Brushes.Gray
@@ -57,8 +57,8 @@ namespace Shell.WPF.TrainControl.FunctionButton
       textBox.Document = doc;
 
       button.Content = textBox;
-      button.Tag = functionModel;
-      button.ToolTip = functionModel.ToString();
+      button.Tag = vehicleFunctionEntity;
+      button.ToolTip = vehicleFunctionEntity.ToString();
       button.Margin = new(10);
       button.Padding = new(2);
       button.BorderThickness = new Thickness(0);

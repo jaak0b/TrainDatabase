@@ -19,7 +19,7 @@ namespace Shell.WPF.TrainControl
   /// </summary>
   public partial class TrainControl : Window, INotifyPropertyChanged
   {
-    public TrainControl(IServiceProvider serviceProvider, VehicleModel _vehicle)
+    public TrainControl(IServiceProvider serviceProvider, VehicleEntity _vehicle)
     {
       try
       {
@@ -64,7 +64,7 @@ namespace Shell.WPF.TrainControl
     /// <summary>
     /// The <see cref="Vehicle"/> the application is trying to controll
     /// </summary>
-    public VehicleModel Vehicle { get; private set; } = default!;
+    public VehicleEntity Vehicle { get; private set; } = default!;
 
     public VehicleService VehicleService { get; } = default!;
 
@@ -88,7 +88,7 @@ namespace Shell.WPF.TrainControl
     /// <param name="vehicle"></param>
     /// <param name="client"></param>
     /// <param name="db"></param>
-    public static void CreatTrainControlWindow(IServiceProvider serviceProvider, VehicleModel vehicle)
+    public static void CreatTrainControlWindow(IServiceProvider serviceProvider, VehicleEntity vehicle)
     {
       if (Application.Current.Windows.OfType<TrainControl>().FirstOrDefault(e => e.Vehicle.Id == vehicle?.Id) is
           TrainControl trainControl)

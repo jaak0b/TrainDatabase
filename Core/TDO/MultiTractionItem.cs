@@ -6,7 +6,7 @@ namespace Core.TDO
 {
   public struct MultiTractionItem
   {
-    public MultiTractionItem(VehicleModel vehicle)
+    public MultiTractionItem(VehicleEntity vehicle)
     {
       Vehicle = vehicle;
       TractionForward = GetSortedSet(vehicle?.TractionForward!);
@@ -17,7 +17,7 @@ namespace Core.TDO
 
     public SortedSet<FunctionPoint> TractionForward { get; private set; }
 
-    public VehicleModel Vehicle { get; }
+    public VehicleEntity Vehicle { get; }
 
     /// <summary>
     /// Converts the paramter <paramref name="tractionArray"/> to a <see cref="LineSeries"/> object.

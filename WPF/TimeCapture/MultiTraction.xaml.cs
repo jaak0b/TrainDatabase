@@ -21,7 +21,7 @@ namespace Shell.WPF.TimeCapture
   /// </summary>
   public partial class MultiTraction : UserControl, INotifyPropertyChanged
   {
-    public MultiTraction(IServiceProvider serviceProvider, VehicleModel? vehicleModel = null)
+    public MultiTraction(IServiceProvider serviceProvider, VehicleEntity? vehicleModel = null)
     {
       ServiceProvider = serviceProvider;
       VehicleModel = vehicleModel;
@@ -54,7 +54,7 @@ namespace Shell.WPF.TimeCapture
 
     public TimeCaptureController? TimeCapture { get; }
 
-    private VehicleModel? VehicleModel { get; }
+    private VehicleEntity? VehicleModel { get; }
 
     public LogEventBus LogService { get; private set; }
 

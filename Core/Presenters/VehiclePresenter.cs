@@ -20,20 +20,20 @@ namespace Core.Presenters
     private LokInfoData? liveData = default!;
     private int speed;
 
-    public VehiclePresenter(IServiceProvider serviceProvider, VehicleModel vehicleModel)
+    public VehiclePresenter(IServiceProvider serviceProvider, VehicleEntity vehicleEntity)
     {
       ServiceProvider = serviceProvider;
       Db = ServiceProvider.GetService<Database>()!;
       Z21Client = ServiceProvider.GetService<Client>()!;
-      SetVehicleModel(vehicleModel);
+      SetVehicleModel(vehicleEntity);
 
       Z21Client.OnGetLocoInfo += Z21Client_OnGetLocoInfo;
 
-      Db.ChangeTracker.StateChanged += (a, b) => SetVehicleModel(VehicleModel!);
+      Db.ChangeTracker.StateChanged += (a, b) => SetVehicleModel(VehicleEntity!);
 
-      Z21Client.GetLocoInfo(new(VehicleModel.Address));
+      Z21Client.GetLocoInfo(new(VehicleEntity.Address));
 
-      Z21Client.ClientReachabilityChanged += (a, b) => Z21Client.GetLocoInfo(new(VehicleModel.Address));
+      Z21Client.ClientReachabilityChanged += (a, b) => Z21Client.GetLocoInfo(new(VehicleEntity.Address));
     }
 
     /// <summary>
@@ -47,7 +47,7 @@ namespace Core.Presenters
     /// <remarks>
     /// To switch direction call <see cref="SwitchDirection"/>.
     /// </remarks>
-    public bool Direction => GetDrivingDirection(VehicleModel, LiveData?.DrivingDirection ?? true);
+    public bool Direction => GetDrivingDirection(VehicleEntity, LiveData?.DrivingDirection ?? true);
 
     /// <summary>
     /// Holds the date and time when the user last interacted with the controls. 
@@ -104,9 +104,9 @@ namespace Core.Presenters
 
     private IServiceProvider ServiceProvider { get; }
 
-    private VehicleModel SlowestVehicleInTractionList { get; set; } = default!;
+    private VehicleEntity SlowestVehicleInTractionList { get; set; } = default!;
 
-    private VehicleModel VehicleModel { get; set; } = default!;
+    private VehicleEntity VehicleEntity { get; set; } = default!;
 
     private Client Z21Client { get; } = default!;
 
@@ -126,7 +126,7 @@ namespace Core.Presenters
       await SetLocoDrive(drivingDirection: !LiveData?.DrivingDirection);
     }
 
-    private static LokInfoData GetLocoInfoData(int speedstep, bool direction, bool inUse, VehicleModel Vehicle)
+    private static LokInfoData GetLocoInfoData(int speedstep, bool direction, bool inUse, VehicleEntity Vehicle)
     {
       return new()
              {
@@ -184,18 +184,18 @@ namespace Core.Presenters
                                             (next.TractionForward?.GetYValue(Client.maxDccStep) ??
                                              int.MaxValue)
                                               ? cur
-                                              : next).Vehicle ?? VehicleModel;
+                                              : next).Vehicle ?? VehicleEntity;
                        }
                        else
                        {
-                         SlowestVehicleInTractionList = VehicleModel;
+                         SlowestVehicleInTractionList = VehicleEntity;
                        }
                      });
     }
 
-    private bool GetDrivingDirection(VehicleModel vehicle, bool direction)
+    private bool GetDrivingDirection(VehicleEntity vehicle, bool direction)
     {
-      return vehicle.Id != VehicleModel.Id ? vehicle.InvertTraction ? !direction : direction : direction;
+      return vehicle.Id != VehicleEntity.Id ? vehicle.InvertTraction ? !direction : direction : direction;
     }
 
     /// <summary>
@@ -279,12 +279,12 @@ namespace Core.Presenters
     /// <summary>
     /// Sets the vehiclemodel property of this object.
     /// </summary>
-    /// <param name="vehicleModel"></param>
+    /// <param name="vehicleEntity"></param>
     /// <exception cref="ApplicationException"></exception>
-    private async void SetVehicleModel(VehicleModel vehicleModel)
+    private async void SetVehicleModel(VehicleEntity vehicleEntity)
     {
-      VehicleModel = Db.Vehicles.Include(e => e.Functions).FirstOrDefault(e => e.Id == vehicleModel.Id) ??
-                     throw new ApplicationException($"Could not find vehicle '{vehicleModel}'.");
+      VehicleEntity = Db.Vehicles.Include(e => e.Functions).FirstOrDefault(e => e.Id == vehicleEntity.Id) ??
+                     throw new ApplicationException($"Could not find vehicle '{vehicleEntity}'.");
       UpdateMultiTractionList();
       await DeterminSlowestVehicleInList();
       OnStateChanged();
@@ -294,21 +294,21 @@ namespace Core.Presenters
     {
       MultiTractionItems.Clear();
       MultiTractionItems.AddRange(
-                                  VehicleModel.TractionVehicleIds
+                                  VehicleEntity.TractionVehicleIds
                                               .Select(
                                                       e => new MultiTractionItem(
                                                                                  Db.Vehicles.FirstOrDefault(
                                                                                                             f =>
                                                                                                               f.Id == e)
                                                                                  !)).Where(e => e.Vehicle is not null));
-      MultiTractionItems.Add(new(VehicleModel));
+      MultiTractionItems.Add(new(VehicleEntity));
     }
 
     private void Z21Client_OnGetLocoInfo(object? sender, GetLocoInfoEventArgs e)
     {
-      if (e.Data.Adresse.Value == VehicleModel.Address)
+      if (e.Data.Adresse.Value == VehicleEntity.Address)
       {
-        //if (VehicleModel.InvertTraction)
+        //if (VehicleEntity.InvertTraction)
         //    e.Data.DrivingDirection = !e.Data.DrivingDirection;
         LiveData = e.Data;
         OnStateChanged();

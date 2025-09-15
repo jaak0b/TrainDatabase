@@ -28,17 +28,17 @@ namespace Shell.WPF
 
     public Database Db { get; }
 
-    public ObservableCollection<FunctionModel> SelectedVehicleFunctions { get; set; } = new();
+    public ObservableCollection<VehicleFunctionEntity> SelectedVehicleFunctions { get; set; } = new();
 
-    public FunctionModel? SelectedFunction { get; set; } = default!;
+    public VehicleFunctionEntity? SelectedFunction { get; set; } = default!;
 
-    public VehicleModel? SelectedVehicle { get; set; } = default!;
+    public VehicleEntity? SelectedVehicle { get; set; } = default!;
 
     public bool VehicleSelected => SelectedVehicle is not null;
 
     public bool FunctionSelected => SelectedFunction is not null;
 
-    public ObservableCollection<VehicleModel> Vehicles { get; private set; } = new();
+    public ObservableCollection<VehicleEntity> Vehicles { get; private set; } = new();
 
     public IServiceProvider ServiceProvider { get; }
 
@@ -72,7 +72,7 @@ namespace Shell.WPF
       {
         BtnNew.IsEnabled = false;
         await Db.AddAsync(
-                          new VehicleModel()
+                          new VehicleEntity()
                           { Position = Db.Vehicles.Any() ? Db.Vehicles.Max(e => e.Position) + 1 : 1 });
         await ReloadVehicles();
       }
@@ -87,7 +87,7 @@ namespace Shell.WPF
       try
       {
         BtnDeleteVehicle.IsEnabled = false;
-        if (DgVehicles.SelectedItem is not VehicleModel vehicle)
+        if (DgVehicles.SelectedItem is not VehicleEntity vehicle)
         {
           return;
         }
@@ -131,7 +131,7 @@ namespace Shell.WPF
       }
 
       await Db.AddAsync(
-                        new FunctionModel()
+                        new VehicleFunctionEntity()
                         {
                           Vehicle = SelectedVehicle, IsActive = true, ShowFunctionNumber = true,
                           Position = SelectedVehicle.Functions.Any()
@@ -166,7 +166,7 @@ namespace Shell.WPF
 
       Vehicles.Clear();
 
-      foreach (VehicleModel item in Db.Vehicles.Include(e => e.Functions).OrderBy(e => e.Position))
+      foreach (VehicleEntity item in Db.Vehicles.Include(e => e.Functions).OrderBy(e => e.Position))
       {
         Vehicles.Add(item);
       }
@@ -186,8 +186,8 @@ namespace Shell.WPF
       await Db.SaveChangesAsync();
       SelectedVehicleFunctions.Clear();
 
-      foreach (FunctionModel function in SelectedVehicle?.Functions.OrderBy(e => e.Position).ToList() ??
-                                         new List<FunctionModel>())
+      foreach (VehicleFunctionEntity function in SelectedVehicle?.Functions.OrderBy(e => e.Position).ToList() ??
+                                         new List<VehicleFunctionEntity>())
       {
         SelectedVehicleFunctions.Add(function);
       }
