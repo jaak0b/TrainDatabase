@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
 using Persistence.Database;
 
-namespace Shell.WPF.Import
+namespace Shell.WPF.DatabaseImport
 {
   /// <summary>
   /// Interaction logic for DatabaseImportView.xaml
