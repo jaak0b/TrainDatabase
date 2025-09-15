@@ -1,7 +1,7 @@
 ﻿using Persistence;
 using System;
 using System.Windows.Controls;
-using Persistence.Models;
+using Persistence.Entities;
 
 namespace Shell.WPF
 {

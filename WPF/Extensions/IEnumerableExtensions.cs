@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Persistence.Models;
+using Persistence.Entities;
 
 namespace Shell.WPF.Extensions
 {

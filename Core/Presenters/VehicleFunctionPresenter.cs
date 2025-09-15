@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Database;
-using Persistence.Models;
+using Persistence.Entities;
 using Z21;
 using Z21.Enums;
 using Z21.Events;

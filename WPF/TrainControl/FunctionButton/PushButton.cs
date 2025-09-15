@@ -1,6 +1,6 @@
 ﻿using Persistence;
 using System;
-using Persistence.Models;
+using Persistence.Entities;
 
 namespace Shell.WPF.TrainControl.FunctionButton
 {

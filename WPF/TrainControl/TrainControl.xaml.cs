@@ -9,8 +9,8 @@ using Core.Presenters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Database;
+using Persistence.Entities;
 using Persistence.Enums;
-using Persistence.Models;
 
 namespace Shell.WPF.TrainControl
 {

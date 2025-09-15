@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using Persistence.Enums;
 using Z21;
 
-namespace Persistence.Models
+namespace Persistence.Entities
 {
   public partial class VehicleEntity : IEquatable<VehicleEntity>, IComparable
   {

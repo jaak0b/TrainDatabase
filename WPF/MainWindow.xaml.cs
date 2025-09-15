@@ -17,7 +17,7 @@ using Helper;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Persistence.Database;
-using Persistence.Models;
+using Persistence.Entities;
 using Shell.WPF.DatabaseImport;
 using Shell.WPF.Extensions;
 using Z21;

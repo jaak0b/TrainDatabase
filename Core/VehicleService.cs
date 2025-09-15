@@ -2,7 +2,7 @@
 using Persistence;
 using System;
 using Persistence.Database;
-using Persistence.Models;
+using Persistence.Entities;
 
 namespace Core
 {

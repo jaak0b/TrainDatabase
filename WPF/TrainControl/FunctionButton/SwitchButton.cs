@@ -6,8 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls.Primitives;
 using Core.Presenters;
+using Persistence.Entities;
 using Persistence.Enums;
-using Persistence.Models;
 
 namespace Shell.WPF.TrainControl.FunctionButton
 {

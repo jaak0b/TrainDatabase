@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
-using Persistence.Models;
+using Persistence.Entities;
 using Z21;
 
 namespace Shell.WPF.TimeCapture

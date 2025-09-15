@@ -1,6 +1,6 @@
 ﻿using System;
 using Helper;
-using Persistence.Models;
+using Persistence.Entities;
 using SharpDX.DirectInput;
 
 namespace Shell.WPF.Extensions

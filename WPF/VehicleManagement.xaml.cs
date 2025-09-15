@@ -13,8 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
 using Persistence.Database;
+using Persistence.Entities;
 using Persistence.Extensions;
-using Persistence.Models;
 using Shell.WPF.Extensions;
 
 namespace Shell.WPF

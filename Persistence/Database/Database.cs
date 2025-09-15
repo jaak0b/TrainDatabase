@@ -9,8 +9,8 @@ using Helper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Persistence.Entities;
 using Persistence.Extensions;
-using Persistence.Models;
 
 namespace Persistence.Database
 {

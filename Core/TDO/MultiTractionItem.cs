@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Persistence.Models;
+using Persistence.Entities;
 using Z21;
 
 namespace Core.TDO

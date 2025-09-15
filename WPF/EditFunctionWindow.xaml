@@ -6,9 +6,9 @@
         xmlns:wpf="clr-namespace:TrainDatabase"
         xmlns:model="clr-namespace:Persistence;assembly=Persistence"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        xmlns:models="clr-namespace:Persistence.Models;assembly=Persistence"
         xmlns:wpf1="clr-namespace:Shell.WPF"
         xmlns:enums="clr-namespace:Persistence.Enums;assembly=Persistence"
+        xmlns:models="clr-namespace:Persistence.Entities;assembly=Persistence"
         mc:Ignorable="d"
         Title="EditFunctionWindow" SizeToContent="WidthAndHeight" MinWidth="250" MinHeight="210" Height="210" Name="ew">
     <ScrollViewer VerticalScrollBarVisibility="Auto">

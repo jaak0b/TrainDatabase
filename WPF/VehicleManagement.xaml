@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:model="clr-namespace:Persistence;assembly=Persistence"
-        xmlns:models="clr-namespace:Persistence.Models;assembly=Persistence"
         xmlns:enums="clr-namespace:Persistence.Enums;assembly=Persistence"
         mc:Ignorable="d"
         Title="Fahrzeuge verwalten" Height="450" Width="800" Name="Vm" MinHeight="500" MinWidth="800"

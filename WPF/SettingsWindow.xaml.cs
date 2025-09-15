@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using Helper;
-using Persistence.Models;
+using Persistence.Entities;
 using SharpDX.DirectInput;
 using Shell.WPF.Extensions;
 using Shell.WPF.JoyStick;

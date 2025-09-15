@@ -17,7 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Persistence.Database;
-using Persistence.Models;
+using Persistence.Entities;
 using Shell.WPF.TimeCapture;
 
 namespace Shell.WPF.TrainControl

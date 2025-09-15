@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Presenters;
 using Persistence.Database;
-using Persistence.Models;
+using Persistence.Entities;
 using Z21;
 
 namespace Core.Controller

@@ -2,7 +2,7 @@
 
 using Persistence.Enums;
 
-namespace Persistence.Models
+namespace Persistence.Entities
 {
   public partial class VehicleFunctionEntity
   {

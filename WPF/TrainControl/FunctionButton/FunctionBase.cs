@@ -3,7 +3,7 @@ using Core.Controller;
 using System;
 using System.Windows.Controls;
 using Core.Presenters;
-using Persistence.Models;
+using Persistence.Entities;
 
 namespace Shell.WPF.TrainControl.FunctionButton
 {
