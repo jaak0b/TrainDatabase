@@ -1,9 +1,8 @@
-﻿using Persistence;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Persistence.Models;
 using Z21;
 
-namespace Service.Viewmodel
+namespace Core.TDO
 {
   public struct MultiTractionItem
   {

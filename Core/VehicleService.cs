@@ -4,7 +4,7 @@ using System;
 using Persistence.Database;
 using Persistence.Models;
 
-namespace Service
+namespace Core
 {
   public class VehicleService
   {

@@ -3,7 +3,7 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence;
-using Service;
+using Core;
 using SharpDX.Win32;
 using System;
 using System.Collections.Generic;

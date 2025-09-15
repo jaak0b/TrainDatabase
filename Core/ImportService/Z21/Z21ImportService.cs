@@ -1,23 +1,21 @@
-﻿using Dapper;
-using Helper;
-using Infrastructure;
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
-using Persistence;
-using Serilog;
-using Service.ImportService.Z21.TDO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.ImportService.Z21.TDO;
+using Dapper;
+using Helper;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Database;
 using Persistence.Extensions;
 using Persistence.Models;
+using Serilog;
 
-namespace Service.ImportService.Z21
+namespace Core.ImportService.Z21
 {
   public class Z21ImportService
   {

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Database;
 using Serilog;
-using Service;
+using Core;
 using Wpf_Application;
 using Z21;
 

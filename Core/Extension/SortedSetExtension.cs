@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Service.Viewmodel;
+using Core.TDO;
 
-namespace Service.Extension
+namespace Core.Extension
 {
   public static class SortedSetExtension
   {

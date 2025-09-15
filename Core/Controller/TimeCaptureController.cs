@@ -12,7 +12,7 @@ using Persistence.Database;
 using Persistence.Models;
 using Z21;
 
-namespace Service.Controller
+namespace Core.Controller
 {
   public class TimeCaptureController
   {

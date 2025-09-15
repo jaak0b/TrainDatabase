@@ -8,7 +8,7 @@ using Z21;
 using Z21.Enums;
 using Z21.Events;
 
-namespace Service
+namespace Core
 {
   public class TrackPowerService
   {

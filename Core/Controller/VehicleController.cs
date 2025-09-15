@@ -12,10 +12,10 @@ using Persistence.Models;
 using Z21;
 using Z21.Model;
 using Z21.Events;
-using Service.Viewmodel;
-using Service.Extension;
+using Core.Extension;
+using Core.TDO;
 
-namespace Service.Controller
+namespace Core.Controller
 {
   public class VehicleController
   {

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence;
 using OxyPlot;
-using Service.Controller;
+using Core.Controller;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

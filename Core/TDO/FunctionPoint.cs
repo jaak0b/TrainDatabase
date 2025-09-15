@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Service.Viewmodel
+namespace Core.TDO
 {
   public struct FunctionPoint : IComparable<FunctionPoint>
   {

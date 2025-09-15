@@ -1,7 +1,7 @@
 ﻿using Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence;
-using Service;
+using Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;

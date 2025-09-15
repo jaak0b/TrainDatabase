@@ -1,5 +1,5 @@
 ﻿using Persistence;
-using Service.Controller;
+using Core.Controller;
 using System;
 using System.Windows.Controls;
 using Persistence.Models;

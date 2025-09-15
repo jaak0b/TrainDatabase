@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using Persistence.Database;
 using Persistence.Models;
 
-namespace Service.Controller
+namespace Core.Controller
 {
   public class FunctionController
   {

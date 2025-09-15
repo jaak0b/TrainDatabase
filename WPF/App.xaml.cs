@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
-using Service;
+using Core;
 using System;
 using System.Diagnostics;
 using System.IO;

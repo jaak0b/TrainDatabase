@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Service.ImportService.Z21.TDO
+namespace Core.ImportService.Z21.TDO
 {
   [Table("functions")]
   internal class FunctionDTO
