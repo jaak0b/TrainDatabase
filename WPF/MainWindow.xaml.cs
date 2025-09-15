@@ -212,9 +212,9 @@ namespace Shell.WPF
 
     private void Mw_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
     {
-      if (IsActive && !tbSearch.IsFocused)
+      if (IsActive && !TbSearch.IsFocused)
       {
-        tbSearch.Focus();
+        TbSearch.Focus();
       }
     }
 
@@ -283,7 +283,7 @@ namespace Shell.WPF
     private void Search()
     {
       List<VehicleEntity>? vehicles = Db.Vehicles.Where(e => e.IsActive).ToList();
-      foreach (string? item in tbSearch.Text.Split(" ", StringSplitOptions.RemoveEmptyEntries))
+      foreach (string? item in TbSearch.Text.Split(" ", StringSplitOptions.RemoveEmptyEntries))
       {
         vehicles = vehicles.Where(i => i.IsActive && $"{i.Name} {i.FullName} {i.Type} {i.Address} {i.Railway}".ToLower().Contains(item.ToLower().Trim())).ToList();
       }

@@ -6,6 +6,9 @@
         mc:Ignorable="d"
         Title="Einstellungen" Name="settingsw" MinHeight="170" MinWidth="400" Height="280" Width="451"
         Closed="settingsw_Closed">
+    <Window.Style>
+        <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
+    </Window.Style>
     <Grid>
         <TabControl>
             <TabItem Header="Controller">

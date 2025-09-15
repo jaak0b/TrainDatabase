@@ -4,12 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Datenbank" MinHeight="550" Height="550" MinWidth="870" Width="870" Name="mw" Closing="Mw_Closing"
+        Title="Datenbank" MinHeight="550" Height="550" MinWidth="870" Width="870" Name="Mw" Closing="Mw_Closing"
         SizeChanged="Mw_SizeChanged" PreviewKeyDown="Mw_PreviewKeyDown" Loaded="Mw_Loaded">
+    <Window.Style>
+        <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
+    </Window.Style>
     <Grid x:Name="MwGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="20" Name="RMenu" />
-            <RowDefinition Height="30" Name="RSearchbar" />
+            <RowDefinition Height="AUTO" />
+            <RowDefinition Height="AUTO" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="White">
@@ -24,8 +27,8 @@
             <MenuItem Header="Optionen" Click="Settings_Click" />
         </Menu>
         <DockPanel Grid.Row="1" Height="AUTO" Margin="5,5,5,5">
-            <Label Content="Suche: " Height="AUTO" Width="AUTO" Padding="0,0,0,0" />
-            <TextBox x:Name="tbSearch" Height="AUTO" Width="AUTO" TextChanged="TbSearch_TextChanged"
+            <Label Content="Suche: " Height="AUTO" Width="AUTO" Padding="0,0,0,0" VerticalContentAlignment="Center" />
+            <TextBox x:Name="TbSearch" Height="AUTO" Width="AUTO" TextChanged="TbSearch_TextChanged"
                      VerticalAlignment="Stretch" />
         </DockPanel>
         <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="2">

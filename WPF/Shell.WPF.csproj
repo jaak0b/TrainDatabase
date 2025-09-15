@@ -37,6 +37,8 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="AdonisUI" Version="1.17.1" />
+        <PackageReference Include="AdonisUI.ClassicTheme" Version="1.17.1" />
         <PackageReference Include="Autofac" Version="8.3.0"/>
         <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="10.0.0"/>
         <PackageReference Include="Autofac.Extras.CommonServiceLocator" Version="6.1.0"/>

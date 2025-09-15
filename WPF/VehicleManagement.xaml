@@ -9,6 +9,9 @@
         mc:Ignorable="d"
         Title="Fahrzeuge verwalten" Height="450" Width="800" Name="Vm" MinHeight="500" MinWidth="800"
         Closing="Vm_Closing">
+    <Window.Style>
+        <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
+    </Window.Style>
     <Window.Resources>
         <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type enums:VehicleType}" x:Key="StatusEnumValues">
             <ObjectDataProvider.MethodParameters>

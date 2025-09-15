@@ -6,6 +6,9 @@
         mc:Ignorable="d"
         Title="JoyStick Button auswählen" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Name="jsbsWindow"
         Closing="jsbsWindow_Closing">
+    <Window.Style>
+        <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
+    </Window.Style>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100" />
