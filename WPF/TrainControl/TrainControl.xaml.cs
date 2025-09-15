@@ -5,9 +5,11 @@ using System.Windows;
 using System.Windows.Input;
 using Core;
 using Core.Controller;
+using Core.Presenters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Database;
+using Persistence.Enums;
 using Persistence.Models;
 
 namespace Shell.WPF.TrainControl
@@ -76,7 +78,7 @@ namespace Shell.WPF.TrainControl
                                                 ? Visibility.Visible
                                                 : Visibility.Collapsed;
 
-    public VehicleController VehicleViewmodel { get; private set; } = default!;
+    public VehiclePresenter VehicleViewmodel { get; private set; } = default!;
 
     public Z21.Client Z21Client { get; } = default!;
 

@@ -10,6 +10,7 @@ using Helper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Database;
+using Persistence.Enums;
 using Persistence.Models;
 using Shell.WPF.TimeCapture;
 

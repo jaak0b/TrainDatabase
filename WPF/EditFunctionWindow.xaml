@@ -8,6 +8,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:models="clr-namespace:Persistence.Models;assembly=Persistence"
         xmlns:wpf1="clr-namespace:Shell.WPF"
+        xmlns:enums="clr-namespace:Persistence.Enums;assembly=Persistence"
         mc:Ignorable="d"
         Title="EditFunctionWindow" SizeToContent="WidthAndHeight" MinWidth="250" MinHeight="210" Height="210" Name="ew">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -37,11 +38,11 @@
             <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left"
                         VerticalAlignment="Center">
                 <RadioButton x:Name="RbSwitch" GroupName="type" IsChecked="True" Content="Schalter" Margin="0,0,5,0"
-                             Click="TypeRadioButton_Click" Tag="{x:Static models:ButtonType.Switch}" />
+                             Click="TypeRadioButton_Click" Tag="{x:Static enums:ButtonType.Switch}" />
                 <RadioButton x:Name="RbPushButton" GroupName="type" Content="Taster" Margin="0,0,5,0"
-                             Click="TypeRadioButton_Click" Tag="{x:Static models:ButtonType.PushButton}" />
+                             Click="TypeRadioButton_Click" Tag="{x:Static enums:ButtonType.PushButton}" />
                 <RadioButton x:Name="RbTimer" GroupName="type" Content="Zeit" IsEnabled="False"
-                             Click="TypeRadioButton_Click" Tag="{x:Static models:ButtonType.Timer}" />
+                             Click="TypeRadioButton_Click" Tag="{x:Static enums:ButtonType.Timer}" />
             </StackPanel>
 
             <Label Content="Function" Grid.Row="3" Grid.Column="0" />

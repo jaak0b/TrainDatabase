@@ -1,4 +1,4 @@
-﻿namespace Persistence.Models
+﻿namespace Persistence.Enums
 {
   public enum VehicleType
   {

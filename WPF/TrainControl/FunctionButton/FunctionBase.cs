@@ -2,6 +2,7 @@
 using Core.Controller;
 using System;
 using System.Windows.Controls;
+using Core.Presenters;
 using Persistence.Models;
 
 namespace Shell.WPF.TrainControl.FunctionButton
@@ -14,13 +15,13 @@ namespace Shell.WPF.TrainControl.FunctionButton
       FunctionModel = functionModel;
       FunctionButton.ApplyStyle(this, FunctionModel);
 
-      Function = new(ServiceProvider, functionModel);
+      VehicleFunction = new(ServiceProvider, functionModel);
     }
 
     private IServiceProvider ServiceProvider { get; }
 
     private FunctionModel FunctionModel { get; }
 
-    internal FunctionController Function { get; }
+    internal VehicleFunctionPresenter VehicleFunction { get; }
   }
 }

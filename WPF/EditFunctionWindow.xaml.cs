@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Database;
+using Persistence.Enums;
 using Persistence.Models;
 
 namespace Shell.WPF

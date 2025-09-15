@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Controls.Primitives;
+using Core.Presenters;
+using Persistence.Enums;
 using Persistence.Models;
 
 namespace Shell.WPF.TrainControl.FunctionButton
@@ -22,15 +24,15 @@ namespace Shell.WPF.TrainControl.FunctionButton
       FunctionModel = functionModel;
       FunctionButton.ApplyStyle(this, FunctionModel);
 
-      Function = new(ServiceProvider, functionModel);
-      Function.StateChanged += (a, state) => Dispatcher.Invoke(() => IsChecked = state);
-      Click += (a, b) => Function.SetState(IsChecked ?? false);
+      VehicleFunction = new(ServiceProvider, functionModel);
+      VehicleFunction.StateChanged += (a, state) => Dispatcher.Invoke(() => IsChecked = state);
+      Click += (a, b) => VehicleFunction.SetState(IsChecked ?? false);
     }
 
     private IServiceProvider ServiceProvider { get; }
 
     private FunctionModel FunctionModel { get; }
 
-    private FunctionController Function { get; }
+    private VehicleFunctionPresenter VehicleFunction { get; }
   }
 }

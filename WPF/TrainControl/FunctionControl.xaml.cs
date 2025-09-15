@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Persistence.Database;
+using Persistence.Enums;
 using Persistence.Models;
 using Shell.WPF.TrainControl.FunctionButton;
 

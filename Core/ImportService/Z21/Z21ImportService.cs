@@ -11,6 +11,7 @@ using Helper;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Database;
+using Persistence.Enums;
 using Persistence.Extensions;
 using Persistence.Models;
 using Serilog;

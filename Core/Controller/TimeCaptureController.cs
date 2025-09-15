@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Presenters;
 using Persistence.Database;
 using Persistence.Models;
 using Z21;
@@ -61,7 +62,7 @@ namespace Core.Controller
 
     private IServiceProvider ServiceProvider { get; }
 
-    private VehicleController Vehicle { get; } = default!;
+    private VehiclePresenter Vehicle { get; } = default!;
 
     private VehicleModel VehicleModel { get; }
 

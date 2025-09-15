@@ -1,0 +1,30 @@
+TrainDatabase.sln
+│
+├── TrainDatabase.Core/                 # Domain logic, ports, presenters
+│   ├── Models/                         # Train, Layout, Function, etc.
+│   ├── Services/                       # Stateless logic (e.g., speed sync)
+│   ├── Ports/                          # Interfaces: ITrainClient, ITrainRepository
+│   └── Presenters/                     # TrainPresenter, LayoutPresenter, etc.
+│
+├── TrainDatabase.Persistence/          # EF Core infrastructure
+│   ├── Models/                         # EF entities (e.g., TrainEntity)
+│   ├── DbContext/                      # TrainDbContext
+│   └── Repositories/                   # ITrainRepository implementation
+│
+├── TrainDatabase.Client/               # NuGet train communication adapter
+│   └── TrainClientAdapter.cs           # Implements ITrainClient, raises events
+│
+├── TrainDatabase.SharedUI/             # Optional reusable UI components
+│   ├── Controls/                       # TrainSlider, FunctionToggle, etc.
+│   └── Converters/                     # DirectionToIconConverter, etc.
+│
+├── TrainDatabase.Shell.WPF/            # WPF-specific UI layer
+│   ├── Views/                          # TrainDatabaseView.xaml, etc.
+│   ├── ViewModels/                     # TrainDatabaseViewModel.cs
+│   └── App.xaml.cs                     # DI setup and startup
+│
+└── TrainDatabase.Tests/                 # Unit tests
+    ├── Presenters/
+    ├── Repositories/
+    ├── Services/
+    └── ViewModels/

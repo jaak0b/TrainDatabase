@@ -1,5 +1,7 @@
 ﻿#nullable disable
 
+using Persistence.Enums;
+
 namespace Persistence.Models
 {
   public partial class FunctionModel

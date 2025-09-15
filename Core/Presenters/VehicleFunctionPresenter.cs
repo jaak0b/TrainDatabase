@@ -1,22 +1,20 @@
-﻿using Infrastructure;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Persistence;
-using Z21;
-using Z21.Model;
-using Z21.Enums;
-using Z21.Events;
-using System;
-using System.Linq;
-using System.Collections.Generic;
 using Persistence.Database;
 using Persistence.Models;
+using Z21;
+using Z21.Enums;
+using Z21.Events;
+using Z21.Model;
 
-namespace Core.Controller
+namespace Core.Presenters
 {
-  public class FunctionController
+  public class VehicleFunctionPresenter
   {
-    public FunctionController(IServiceProvider serviceProvider, FunctionModel functionModel)
+    public VehicleFunctionPresenter(IServiceProvider serviceProvider, FunctionModel functionModel)
     {
       ServiceProvider = serviceProvider;
       Db = ServiceProvider.GetService<Database>()!;

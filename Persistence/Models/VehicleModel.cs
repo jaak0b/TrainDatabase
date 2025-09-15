@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Persistence.Enums;
 using Z21;
 
 namespace Persistence.Models

@@ -1,28 +1,26 @@
-﻿using Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Persistence;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Persistence.Database;
-using Persistence.Models;
-using Z21;
-using Z21.Model;
-using Z21.Events;
 using Core.Extension;
 using Core.TDO;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Persistence.Database;
+using Persistence.Enums;
+using Persistence.Models;
+using Z21;
+using Z21.Events;
+using Z21.Model;
 
-namespace Core.Controller
+namespace Core.Presenters
 {
-  public class VehicleController
+  public class VehiclePresenter
   {
     private LokInfoData? liveData = default!;
     private int speed;
 
-    public VehicleController(IServiceProvider serviceProvider, VehicleModel vehicleModel)
+    public VehiclePresenter(IServiceProvider serviceProvider, VehicleModel vehicleModel)
     {
       ServiceProvider = serviceProvider;
       Db = ServiceProvider.GetService<Database>()!;

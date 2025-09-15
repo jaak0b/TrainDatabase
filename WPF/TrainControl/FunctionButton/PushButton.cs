@@ -10,8 +10,8 @@ namespace Shell.WPF.TrainControl.FunctionButton
                                                                                             serviceProvider,
                                                                                             functionModel)
     {
-      PreviewMouseDown += (sender, e) => Function.SetState(true);
-      PreviewMouseUp += (sender, e) => Function.SetState(false);
+      PreviewMouseDown += (sender, e) => VehicleFunction.SetState(true);
+      PreviewMouseUp += (sender, e) => VehicleFunction.SetState(false);
     }
   }
 }

@@ -13,11 +13,11 @@ namespace Shell.WPF.TrainControl.FunctionButton
     {
       PreviewMouseDown += async (sender, e) =>
                           {
-                            Function.SetState(true);
+                            VehicleFunction.SetState(true);
                             await Task.Delay(new TimeSpan(0, 0, functionModel.Time));
-                            Function.SetState(false);
+                            VehicleFunction.SetState(false);
                           };
-      Function.StateChanged += (a, state) => Dispatcher.Invoke(() => IsEnabled = !state);
+      VehicleFunction.StateChanged += (a, state) => Dispatcher.Invoke(() => IsEnabled = !state);
     }
   }
 }

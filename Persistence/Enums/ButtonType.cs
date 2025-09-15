@@ -1,6 +1,6 @@
 ﻿#nullable disable
 
-namespace Persistence.Models
+namespace Persistence.Enums
 {
   public enum ButtonType
   {
