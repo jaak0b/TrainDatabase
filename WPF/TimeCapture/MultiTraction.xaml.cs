@@ -1,6 +1,6 @@
 ﻿using Helper;
 using Microsoft.Extensions.DependencyInjection;
-using Model;
+using Persistence;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
@@ -21,6 +21,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Persistence.Models;
 using Z21;
 
 namespace WPF_Application.TimeCapture

@@ -1,4 +1,4 @@
-﻿namespace Model
+﻿namespace Persistence.Models
 {
   //[TypeConverter(typeof(EnumDescriptionTypeConverter))]
   public enum FunctionType

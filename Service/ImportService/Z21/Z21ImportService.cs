@@ -1,11 +1,9 @@
 ﻿using Dapper;
-using Extensions;
-using Extensions.Exceptions;
 using Helper;
 using Infrastructure;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Model;
+using Persistence;
 using Serilog;
 using Service.ImportService.Z21.TDO;
 using System;
@@ -15,6 +13,9 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Persistence.Database;
+using Persistence.Extensions;
+using Persistence.Models;
 
 namespace Service.ImportService.Z21
 {
@@ -150,10 +151,10 @@ namespace Service.ImportService.Z21
                               File.Delete(z21Path);
 
                               string firstLayer = Directory.GetDirectories(tempPath).FirstOrDefault() ??
-                                                  throw new MissingDirectoryException(tempPath);
+                                                  throw new InvalidOperationException(tempPath);
 
                               string secondLayer = Directory.GetDirectories(firstLayer).FirstOrDefault() ??
-                                                   throw new MissingDirectoryException(firstLayer);
+                                                   throw new InvalidOperationException(firstLayer);
 
                               List<string> files = Directory.GetFiles(secondLayer).ToList();
 

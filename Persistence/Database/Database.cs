@@ -1,18 +1,18 @@
-﻿using Extensions;
-using Helper;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Model;
+﻿#nullable disable
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Helper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Persistence.Extensions;
+using Persistence.Models;
 
-#nullable disable
-
-namespace Infrastructure
+namespace Persistence.Database
 {
   public partial class Database : DbContext
   {

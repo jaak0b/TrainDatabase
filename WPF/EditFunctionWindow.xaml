@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:wpf="clr-namespace:TrainDatabase"
-        xmlns:model="clr-namespace:Model;assembly=Model"
+        xmlns:model="clr-namespace:Persistence;assembly=Persistence"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:models="clr-namespace:Persistence.Models;assembly=Persistence"
         mc:Ignorable="d"
         Title="EditFunctionWindow" SizeToContent="WidthAndHeight" MinWidth="250" MinHeight="210" Height="210" Name="ew">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -35,17 +36,17 @@
             <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left"
                         VerticalAlignment="Center">
                 <RadioButton x:Name="RbSwitch" GroupName="type" IsChecked="True" Content="Schalter" Margin="0,0,5,0"
-                             Click="TypeRadioButton_Click" Tag="{x:Static model:ButtonType.Switch}" />
+                             Click="TypeRadioButton_Click" Tag="{x:Static models:ButtonType.Switch}" />
                 <RadioButton x:Name="RbPushButton" GroupName="type" Content="Taster" Margin="0,0,5,0"
-                             Click="TypeRadioButton_Click" Tag="{x:Static model:ButtonType.PushButton}" />
+                             Click="TypeRadioButton_Click" Tag="{x:Static models:ButtonType.PushButton}" />
                 <RadioButton x:Name="RbTimer" GroupName="type" Content="Zeit" IsEnabled="False"
-                             Click="TypeRadioButton_Click" Tag="{x:Static model:ButtonType.Timer}" />
+                             Click="TypeRadioButton_Click" Tag="{x:Static models:ButtonType.Timer}" />
             </StackPanel>
 
             <Label Content="Function" Grid.Row="3" Grid.Column="0" />
             <ComboBox Grid.Row="3" Grid.Column="1"
                       SelectedItem="{Binding Function.EnumType, UpdateSourceTrigger=PropertyChanged}"
-                      ItemsSource="{Binding Source={wpf:EnumBindingSource {x:Type model:FunctionType} }}" Padding="5"
+                      ItemsSource="{Binding Source={wpf:EnumBindingSource {x:Type models:FunctionType} }}" Padding="5"
                       Margin="5" IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False" />
 
             <CheckBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"

@@ -1,10 +1,9 @@
-﻿using Extensions;
-using Helper;
+﻿using Helper;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
-using Model;
+using Persistence;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,6 +14,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Persistence.Database;
+using Persistence.Extensions;
+using Persistence.Models;
 using TrainDatabase.Extensions;
 
 namespace TrainDatabase

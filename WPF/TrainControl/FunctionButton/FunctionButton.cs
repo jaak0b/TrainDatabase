@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using Model;
+using Persistence;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
+using Persistence.Models;
 
 namespace WPF_Application.TrainControl.FunctionButton
 {

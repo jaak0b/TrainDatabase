@@ -1,13 +1,15 @@
 ﻿using Helper;
 using Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
-using Model;
+using Persistence;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Persistence.Database;
+using Persistence.Models;
 using Z21;
 
 namespace Service.Controller

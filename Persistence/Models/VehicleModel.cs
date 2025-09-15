@@ -1,12 +1,11 @@
-﻿using System;
+﻿#nullable disable
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Net;
 using Z21;
 
-#nullable disable
-
-namespace Model
+namespace Persistence.Models
 {
   public partial class VehicleModel : IEquatable<VehicleModel>, IComparable
   {

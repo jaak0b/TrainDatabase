@@ -1,5 +1,6 @@
-﻿using Model;
+﻿using Persistence;
 using System.Collections.Generic;
+using Persistence.Models;
 using Z21;
 
 namespace Service.Viewmodel

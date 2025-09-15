@@ -1,10 +1,9 @@
-﻿using Extensions;
-using Helper;
+﻿using Helper;
 using Infrastructure;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
-using Model;
+using Persistence;
 using Service;
 using Service.ImportService.Z21;
 using System;
@@ -20,6 +19,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Persistence.Database;
 
 namespace Importer
 {

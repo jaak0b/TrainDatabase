@@ -1,6 +1,7 @@
-﻿using Model;
+﻿using Persistence;
 using System.Collections.Generic;
 using System.Linq;
+using Persistence.Models;
 
 namespace TrainDatabase.Extensions
 {

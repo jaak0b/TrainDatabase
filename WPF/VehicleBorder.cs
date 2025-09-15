@@ -1,5 +1,6 @@
-﻿using Model;
+﻿using Persistence;
 using System.Windows.Controls;
+using Persistence.Models;
 
 public class VehicleBorder : Border
 {

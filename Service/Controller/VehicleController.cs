@@ -1,12 +1,14 @@
 ﻿using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Model;
+using Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Persistence.Database;
+using Persistence.Models;
 using Z21;
 using Z21.Model;
 using Z21.Events;

@@ -1,7 +1,8 @@
-﻿using Model;
+﻿using Persistence;
 using Service.Controller;
 using System;
 using System.Windows.Controls;
+using Persistence.Models;
 
 namespace WPF_Application.TrainControl.FunctionButton
 {

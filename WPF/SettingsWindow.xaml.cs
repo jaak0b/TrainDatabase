@@ -1,5 +1,5 @@
 ﻿using Helper;
-using Model;
+using Persistence;
 using SharpDX.DirectInput;
 using System;
 using System.ComponentModel;
@@ -7,6 +7,7 @@ using System.Net;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using Persistence.Models;
 using TrainDatabase.Extensions;
 using TrainDatabase.JoyStick;
 

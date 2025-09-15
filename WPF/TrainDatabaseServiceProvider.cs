@@ -9,6 +9,7 @@ using Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Persistence.Database;
 using Serilog;
 using Service;
 using Wpf_Application;

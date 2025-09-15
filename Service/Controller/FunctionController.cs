@@ -1,7 +1,7 @@
 ﻿using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Model;
+using Persistence;
 using Z21;
 using Z21.Model;
 using Z21.Enums;
@@ -9,6 +9,8 @@ using Z21.Events;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using Persistence.Database;
+using Persistence.Models;
 
 namespace Service.Controller
 {

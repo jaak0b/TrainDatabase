@@ -1,6 +1,6 @@
 ﻿using Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
-using Model;
+using Persistence;
 using Service;
 using System;
 using System.Collections.Generic;
@@ -16,6 +16,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Persistence.Database;
+using Persistence.Models;
 using WPF_Application.TrainControl.FunctionButton;
 
 namespace WPF_Application.TrainControl

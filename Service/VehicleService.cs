@@ -1,6 +1,8 @@
 ﻿using Infrastructure;
-using Model;
+using Persistence;
 using System;
+using Persistence.Database;
+using Persistence.Models;
 
 namespace Service
 {

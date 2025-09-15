@@ -1,7 +1,8 @@
 ﻿using Helper;
-using Model;
+using Persistence;
 using SharpDX.DirectInput;
 using System;
+using Persistence.Models;
 
 namespace TrainDatabase.Extensions
 {

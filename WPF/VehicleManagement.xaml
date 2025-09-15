@@ -4,14 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        xmlns:model="clr-namespace:Model;assembly=Model"
+        xmlns:model="clr-namespace:Persistence;assembly=Persistence"
+        xmlns:models="clr-namespace:Persistence.Models;assembly=Persistence"
         mc:Ignorable="d"
         Title="Fahrzeuge verwalten" Height="450" Width="800" Name="Vm" MinHeight="500" MinWidth="800"
         Closing="Vm_Closing">
     <Window.Resources>
-        <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type model:VehicleType}" x:Key="StatusEnumValues">
+        <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type models:VehicleType}" x:Key="StatusEnumValues">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="model:VehicleType" />
+                <x:Type TypeName="models:VehicleType" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </Window.Resources>

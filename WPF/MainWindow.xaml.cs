@@ -2,7 +2,7 @@
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Model;
+using Persistence;
 using Service;
 using SharpDX.Win32;
 using System;
@@ -20,6 +20,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
+using Persistence.Database;
+using Persistence.Models;
 using TrainDatabase;
 using WPF_Application;
 using Z21;

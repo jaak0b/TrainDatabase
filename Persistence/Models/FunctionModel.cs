@@ -1,6 +1,6 @@
 ﻿#nullable disable
 
-namespace Model
+namespace Persistence.Models
 {
   public partial class FunctionModel
   {

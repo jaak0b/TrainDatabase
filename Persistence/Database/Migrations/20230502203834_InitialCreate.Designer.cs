@@ -3,21 +3,25 @@ using System;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Persistence.Database;
 
 #nullable disable
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(Database))]
-    partial class DatabaseModelSnapshot : ModelSnapshot
+    [Migration("20230502203834_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.5");
 
-            modelBuilder.Entity("Model.FunctionModel", b =>
+            modelBuilder.Entity("Persistence.FunctionModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,7 +67,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Functions");
                 });
 
-            modelBuilder.Entity("Model.VehicleModel", b =>
+            modelBuilder.Entity("Persistence.VehicleModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -123,9 +127,9 @@ namespace Infrastructure.Migrations
                     b.ToTable("Vehicles");
                 });
 
-            modelBuilder.Entity("Model.FunctionModel", b =>
+            modelBuilder.Entity("Persistence.FunctionModel", b =>
                 {
-                    b.HasOne("Model.VehicleModel", "Vehicle")
+                    b.HasOne("Persistence.VehicleModel", "Vehicle")
                         .WithMany("Functions")
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -134,7 +138,7 @@ namespace Infrastructure.Migrations
                     b.Navigation("Vehicle");
                 });
 
-            modelBuilder.Entity("Model.VehicleModel", b =>
+            modelBuilder.Entity("Persistence.VehicleModel", b =>
                 {
                     b.Navigation("Functions");
                 });
