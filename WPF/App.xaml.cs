@@ -1,19 +1,16 @@
 ﻿using Helper;
-using Infrastructure;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
-using Core;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows;
-using Autofac.Extensions.DependencyInjection;
+using System.Windows.Threading;
 using Composition;
-using Shell.WPF;
 using Z21;
 
 namespace Shell.WPF
@@ -25,29 +22,22 @@ namespace Shell.WPF
   {
     private IServiceProvider? serviceProvider;
 
-    public App()
-    {
-      AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-
-      string logFilePath = Path.Combine(Configuration.ApplicationData.LogDirectory.FullName, "log.txt");
-      Log.Logger = new LoggerConfiguration().MinimumLevel.Debug()
-                                            .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                                            .Enrich.FromLogContext()
-                                            .WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true)
-                                            .WriteTo.Console(LogEventLevel.Debug, theme: AnsiConsoleTheme.Sixteen)
-                                            .CreateLogger();
-    }
-
-    private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-    {
-      Exception? ex = e.ExceptionObject as Exception;
-      Log.Logger.Error($"{ex?.Message}");
-    }
-
     private void OnStartup(object sender, StartupEventArgs e)
     {
       try
       {
+        DispatcherUnhandledException += OnDispatcherUnhandledException;
+        AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+        TaskScheduler.UnobservedTaskException += TaskScheduler_OnUnobservedTaskException;
+
+        string logFilePath = Path.Combine(Configuration.ApplicationData.LogDirectory.FullName, "log.txt");
+        Log.Logger = new LoggerConfiguration().MinimumLevel.Debug()
+                                              .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                                              .Enrich.FromLogContext()
+                                              .WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true)
+                                              .WriteTo.Console(LogEventLevel.Debug, theme: AnsiConsoleTheme.Sixteen)
+                                              .CreateLogger();
+
         serviceProvider = Bootstrapper.Initialize(new ShellIocModule(), Log.Logger);
 
         if (Configuration.OpenDebugConsoleOnStart || Debugger.IsAttached)
@@ -65,6 +55,26 @@ namespace Shell.WPF
         MessageBox.Show(ex.Message, "Fatal error");
         Environment.Exit(1);
       }
+    }
+
+    private static void TaskScheduler_OnUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
+    {
+      Log.Logger.Fatal(e.Exception, "Unhandled exception: {ExceptionMessage}", e.Exception?.Message);
+      e.SetObserved();
+    }
+
+    private static void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+    {
+      Log.Logger.Fatal(e.Exception, "Unhandled exception: {ExMessage}", e.Exception?.Message);
+      e.Handled = true;
+    }
+
+    private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+    {
+      if (e.ExceptionObject is Exception exception)
+        Log.Logger.Fatal(exception, "Unhandled exception: {ExMessage}", exception?.Message);
+      else
+        Log.Logger.Fatal("Unhandled error: {ErrorMessage}", e.ExceptionObject);
     }
 
     [DllImport("Kernel32")]
