@@ -12,6 +12,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
 using Autofac.Extensions.DependencyInjection;
+using Composition;
 using Shell.WPF;
 using Z21;
 
@@ -22,22 +23,19 @@ namespace Shell.WPF
   /// </summary>
   public partial class App : Application
   {
-    private AutofacServiceProvider ServiceProvider { get; set; }
+    private IServiceProvider? serviceProvider;
 
     public App()
     {
       AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
       string logFilePath = Path.Combine(Configuration.ApplicationData.LogDirectory.FullName, "log.txt");
-      Log.Logger = new LoggerConfiguration()
-                  .MinimumLevel.Debug()
-                  .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                  .Enrich.FromLogContext()
-                  .WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true)
-                  .WriteTo.Console(
-                                   LogEventLevel.Debug,
-                                   theme: AnsiConsoleTheme.Sixteen)
-                  .CreateLogger();
+      Log.Logger = new LoggerConfiguration().MinimumLevel.Debug()
+                                            .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                                            .Enrich.FromLogContext()
+                                            .WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true)
+                                            .WriteTo.Console(LogEventLevel.Debug, theme: AnsiConsoleTheme.Sixteen)
+                                            .CreateLogger();
     }
 
     private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -50,16 +48,16 @@ namespace Shell.WPF
     {
       try
       {
-        ServiceProvider = TrainDatabaseServiceProvider.CreateServiceProvider();
+        serviceProvider = Bootstrapper.Initialize(new ShellIocModule(), Log.Logger);
 
         if (Configuration.OpenDebugConsoleOnStart || Debugger.IsAttached)
         {
           AllocConsole();
         }
 
-        Client client = ServiceProvider.GetService<Client>() ?? throw new ApplicationException();
+        Client client = serviceProvider.GetRequiredService<Client>();
         client.Connect(Configuration.ClientIP);
-        ServiceProvider.GetService<MainWindow>()!.Show();
+        serviceProvider.GetRequiredService<MainWindow>().Show();
       }
       catch (Exception ex)
       {
@@ -70,9 +68,9 @@ namespace Shell.WPF
     }
 
     [DllImport("Kernel32")]
-    public static extern void AllocConsole();
+    public extern static void AllocConsole();
 
     [DllImport("Kernel32")]
-    public static extern void FreeConsole();
+    public extern static void FreeConsole();
   }
 }
