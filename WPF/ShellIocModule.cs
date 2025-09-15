@@ -1,4 +1,5 @@
 using Autofac;
+using Shell.WPF.DatabaseImport;
 
 namespace Shell.WPF
 {
@@ -6,6 +7,8 @@ namespace Shell.WPF
   {
     override protected void Load(ContainerBuilder builder)
     {
+      builder.RegisterType<DatabaseImportView>().AsSelf().SingleInstance();
+      
       builder.RegisterType<MainWindow>()
              .AsSelf()
              .SingleInstance();

@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using Core;
+using Core.ConfigurationImport;
 using Core.ConfigurationImport.Z21New;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
@@ -15,17 +18,14 @@ namespace Shell.WPF.DatabaseImport
   /// </summary>
   public partial class DatabaseImportView : Window, INotifyPropertyChanged
   {
-    private readonly Database db;
+    private readonly IEnumerable<IDatabaseImporter> databaseImporters;
 
-    public DatabaseImportView(IServiceProvider provider)
+    public DatabaseImportView(IEnumerable<IDatabaseImporter> databaseImporters)
     {
+      this.databaseImporters = databaseImporters;
       DataContext = this;
       InitializeComponent();
-      db = provider.GetService<Database>()!;
-      LogService = provider.GetService<LogEventBus>()!;
     }
-
-    public LogEventBus LogService { get; set; }
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -38,7 +38,7 @@ namespace Shell.WPF.DatabaseImport
 
     private async void BtnGo_Click(object sender, RoutedEventArgs e)
     {
-      Z21NewDatabaseImporter z21 = new(db);
+      IDatabaseImporter z21 = databaseImporters.Single(); // TODO refactor this to support multiple importers.
       await z21.ImportAsync(new(Path));
       MessageBox.Show($"Import Successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
       Close();

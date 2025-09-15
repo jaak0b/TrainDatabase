@@ -15,9 +15,11 @@ using System.Windows.Media.Imaging;
 using Core;
 using Helper;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Persistence.Database;
 using Persistence.Models;
 using Shell.WPF.DatabaseImport;
+using Shell.WPF.Extensions;
 using Z21;
 
 namespace Shell.WPF
@@ -27,10 +29,14 @@ namespace Shell.WPF
   /// </summary>
   public partial class MainWindow : Window, INotifyPropertyChanged
   {
+    private readonly DatabaseImportView databaseImportView;
+    private readonly ILogger logger;
     private readonly static Mutex mutex = new(true, "{8F6F0AC4-B9A1-45fd-A8CF-72F04E6BDE8F}");
 
-    public MainWindow(IServiceProvider serviceProvider)
+    public MainWindow(IServiceProvider serviceProvider, DatabaseImportView databaseImportView, ILogger<MainWindow> logger)
     {
+      this.databaseImportView = databaseImportView;
+      this.logger = logger;
       try
       {
         DataContext = this;
@@ -39,7 +45,6 @@ namespace Shell.WPF
         ServiceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
         Db = ServiceProvider.GetService<Database>()!;
         Client = ServiceProvider.GetService<Client>()!;
-        LogService = ServiceProvider.GetService<LogEventBus>()!;
 
         if (!mutex.WaitOne(TimeSpan.Zero, true))
         {
@@ -48,14 +53,12 @@ namespace Shell.WPF
           return;
         }
 
-        Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
         ResizeTimer.Elapsed += ResizeTimer_Elapsed;
       }
-      catch (Exception e)
+      catch (Exception exception)
       {
         Close();
-        LogService.Log(Microsoft.Extensions.Logging.LogLevel.Error, e);
-        MessageBox.Show($"{e}");
+        logger.LogError(exception, "Failed to create {MainWindowName}", nameof(MainWindow));
       }
     }
 
@@ -65,12 +68,9 @@ namespace Shell.WPF
 
     private Client Client { get; } = default!;
 
-    private LogEventBus LogService { get; } = default!;
-
     private Database Db { get; } = default!;
 
-    private System.Timers.Timer ResizeTimer { get; } =
-      new() { Enabled = false, Interval = new TimeSpan(0, 0, 0, 1).TotalMilliseconds, AutoReset = false };
+    private System.Timers.Timer ResizeTimer { get; } = new() { Enabled = false, Interval = new TimeSpan(0, 0, 0, 1).TotalMilliseconds, AutoReset = false };
 
     protected void OnPropertyChanged([CallerMemberName] string name = null!)
     {
@@ -108,17 +108,9 @@ namespace Shell.WPF
       }
     }
 
-    private void Current_DispatcherUnhandledException(object sender,
-                                                      System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
-    {
-      LogService.Log(Microsoft.Extensions.Logging.LogLevel.Error, e.Exception);
-      e.Handled = true;
-      MessageBox.Show("Es ist ein unerwarteter Fehler aufgetreten!");
-    }
-
     private void MiImportNewDatabase(object sender, RoutedEventArgs e)
     {
-      new DatabaseImportView(ServiceProvider).ShowDialog();
+      databaseImportView.ShowDialogOrActivate();
     }
 
     private void DrawVehicles(IEnumerable<VehicleModel> list)
@@ -149,8 +141,7 @@ namespace Shell.WPF
           bitmapImage = LoadPhoto(stream!);
         }
 
-        sp.Children.Add(
-                        new Image()
+        sp.Children.Add(new Image()
                         {
                           Source = bitmapImage,
                           Width = 250,
@@ -158,12 +149,9 @@ namespace Shell.WPF
                           Tag = item
                         });
 
-        sp.Children.Add(
-                        new TextBlock()
+        sp.Children.Add(new TextBlock()
                         {
-                          Text = !string.IsNullOrWhiteSpace(item?.Name) ? item.Name :
-                                 !string.IsNullOrWhiteSpace(item?.FullName) ? item.FullName :
-                                 $"Adresse: {item?.Address}",
+                          Text = !string.IsNullOrWhiteSpace(item?.Name) ? item.Name : !string.IsNullOrWhiteSpace(item?.FullName) ? item.FullName : $"Adresse: {item?.Address}",
                           Background = Brushes.Transparent
                         });
 
@@ -175,13 +163,10 @@ namespace Shell.WPF
                                  Vehicle = item,
                                  Child = sp,
                                  ContextMenu = new(),
-                                 Effect = new DropShadowEffect()
-                                          { Opacity = 0.2, RenderingBias = RenderingBias.Quality }
+                                 Effect = new DropShadowEffect() { Opacity = 0.2, RenderingBias = RenderingBias.Quality }
                                };
 
-        VehicleMenuItem mi = new(
-                                 item, "Fahrzeug steuern",
-                                 (a) => TrainControl.TrainControl.CreatTrainControlWindow(ServiceProvider, a));
+        VehicleMenuItem mi = new(item, "Fahrzeug steuern", (a) => TrainControl.TrainControl.CreatTrainControlWindow(ServiceProvider, a));
         border.ContextMenu.Items.Add(mi);
 
         border.MouseDown += Border_MouseDown;
@@ -191,12 +176,11 @@ namespace Shell.WPF
 
     private void DrawVehiclesIfAnyExist()
     {
-      if (!Db.Vehicles.Any() && MessageBoxResult.Yes == MessageBox.Show(
-                                                                        "Sie haben noch keine Daten in der Datenbank. Möchten Sie jetzt welche importieren?",
-                                                                        "Datenbank importieren", MessageBoxButton.YesNo,
-                                                                        MessageBoxImage.Question))
+      if (!Db.Vehicles.Any()
+          && MessageBoxResult.Yes
+          == MessageBox.Show("Sie haben noch keine Daten in der Datenbank. Möchten Sie jetzt welche importieren?", "Datenbank importieren", MessageBoxButton.YesNo, MessageBoxImage.Question))
       {
-        new DatabaseImportView(ServiceProvider).ShowDialog();
+        databaseImportView.ShowDialogOrActivate();
       }
 
       Search();
@@ -249,8 +233,7 @@ namespace Shell.WPF
 
     private void OpenVehicleManagement_Click(object sender, RoutedEventArgs e)
     {
-      if (Application.Current.Windows.OfType<VehicleManagement>().FirstOrDefault() is VehicleManagement
-          vehicleManagement)
+      if (Application.Current.Windows.OfType<VehicleManagement>().FirstOrDefault() is VehicleManagement vehicleManagement)
       {
         vehicleManagement.WindowState = WindowState.Normal;
         vehicleManagement.Activate();
@@ -263,8 +246,7 @@ namespace Shell.WPF
 
     private void RemoveUnneededImages()
     {
-      Task.Run(
-               () =>
+      Task.Run(() =>
                {
                  try
                  {
@@ -287,8 +269,7 @@ namespace Shell.WPF
 
     private void ResizeTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
     {
-      Dispatcher.Invoke(
-                        () =>
+      Dispatcher.Invoke(() =>
                         {
                           //var menuHeight = RSearchbar.ActualHeight + RMenu.ActualHeight;
                           //int hCount = (int)((Height - (menuHeight)) / 152);
@@ -304,13 +285,7 @@ namespace Shell.WPF
       List<VehicleModel>? vehicles = Db.Vehicles.Where(e => e.IsActive).ToList();
       foreach (string? item in tbSearch.Text.Split(" ", StringSplitOptions.RemoveEmptyEntries))
       {
-        vehicles = vehicles.Where(
-                                  i => i.IsActive && $"{i.Name} {i.FullName} {i.Type} {i.Address} {i.Railway}".ToLower()
-                                                                                                              .Contains(
-                                                                                                                        item
-                                                                                                                         .ToLower()
-                                                                                                                         .Trim()))
-                           .ToList();
+        vehicles = vehicles.Where(i => i.IsActive && $"{i.Name} {i.FullName} {i.Type} {i.Address} {i.Railway}".ToLower().Contains(item.ToLower().Trim())).ToList();
       }
 
       DrawVehicles(vehicles);
@@ -336,9 +311,7 @@ namespace Shell.WPF
 
     private void MiDeleteDatabase(object sender, RoutedEventArgs e)
     {
-      if (MessageBoxResult.Yes == MessageBox.Show(
-                                                  "Sicher dass die Datenbank gelöscht werden soll?",
-                                                  "Datenbank löschen", MessageBoxButton.YesNo, MessageBoxImage.Warning))
+      if (MessageBoxResult.Yes == MessageBox.Show("Sicher dass die Datenbank gelöscht werden soll?", "Datenbank löschen", MessageBoxButton.YesNo, MessageBoxImage.Warning))
       {
         Db.DeleteAll();
       }

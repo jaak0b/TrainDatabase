@@ -1,21 +1,57 @@
-﻿using System;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 
 namespace Shell.WPF.Extensions
 {
   internal static class WindowExtension
   {
-    internal static void OpenOneInstance<T>(this T window) where T : Window, new()
+
+    /// <summary>
+    /// Shows the window if it's not visible, or activates and restores it if already open.
+    /// </summary>
+    public static void ShowOrActivate(this Window? window)
     {
-      if (Application.Current.Windows.OfType<T>().FirstOrDefault() is T settings)
+      if (window == null)
+        return;
+
+      if (window.IsVisible)
       {
-        settings.WindowState = WindowState.Normal;
-        settings.Activate();
+        if (window.WindowState == WindowState.Minimized)
+          window.WindowState = WindowState.Normal;
+
+        window.Activate();
+
+        // Optional: force focus reliably
+        window.Topmost = true;
+        window.Topmost = false;
       }
       else
       {
-        ((T)Activator.CreateInstance(typeof(T))).Show();
+        window.Show();
+      }
+    }
+    
+    /// <summary>
+    /// Shows the window if it's not visible, or activates and restores it if already open.
+    /// </summary>
+    public static void ShowDialogOrActivate(this Window? window)
+    {
+      if (window == null)
+        return;
+
+      if (window.IsVisible)
+      {
+        if (window.WindowState == WindowState.Minimized)
+          window.WindowState = WindowState.Normal;
+
+        window.Activate();
+
+        // Optional: force focus reliably
+        window.Topmost = true;
+        window.Topmost = false;
+      }
+      else
+      {
+        window.ShowDialog();
       }
     }
   }
