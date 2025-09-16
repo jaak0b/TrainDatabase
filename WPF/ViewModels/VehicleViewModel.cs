@@ -1,12 +1,14 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Core.Factories;
+using Core.Presenters;
 using Persistence.Model;
 
 namespace Shell.WPF.ViewModels
 {
   public delegate VehicleViewModel VehicleViewModelFactory(ushort vehicleAddress);
   
-  public class VehicleViewModel(Vehicle vehicle) : INotifyPropertyChanged
+  public class VehicleViewModel(VehiclePresenterFactory presenterFactory, ushort vehicleAddress) : INotifyPropertyChanged
   {
     public event PropertyChangedEventHandler? PropertyChanged;
 

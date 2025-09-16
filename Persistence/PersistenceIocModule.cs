@@ -5,6 +5,8 @@ using Helper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Persistence.Mapping;
+using Persistence.Ports;
+using Persistence.Repositories;
 
 namespace Persistence
 {
@@ -12,6 +14,8 @@ namespace Persistence
   {
     override protected void Load(ContainerBuilder builder)
     {
+      builder.RegisterType<VehicleRepository>().As<IVehicleRepository>().SingleInstance();
+      
       builder.Register(context =>
                        {
                          ILoggerFactory loggerFactory = context.Resolve<ILoggerFactory>();

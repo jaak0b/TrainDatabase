@@ -7,7 +7,7 @@ namespace Shell.WPF.Views
   
   public partial class VehicleTileView : UserControl
   {
-    public VehicleTileView(VehicleViewModel vehicleViewModel)
+    public VehicleTileView(VehicleViewModelFactory presenterFactory, ushort vehicleAddress)
     {
       InitializeComponent();
     }

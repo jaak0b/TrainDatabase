@@ -20,6 +20,7 @@ using Persistence.Database;
 using Persistence.Entities;
 using Shell.WPF.DatabaseImport;
 using Shell.WPF.Extensions;
+using Shell.WPF.Views;
 using Z21;
 
 namespace Shell.WPF
@@ -31,12 +32,14 @@ namespace Shell.WPF
   {
     private readonly DatabaseImportView databaseImportView;
     private readonly ILogger logger;
+    private readonly VehicleTileViewFactory vehicleTileViewFactory;
     private readonly static Mutex mutex = new(true, "{8F6F0AC4-B9A1-45fd-A8CF-72F04E6BDE8F}");
 
-    public MainWindow(IServiceProvider serviceProvider, DatabaseImportView databaseImportView, ILogger<MainWindow> logger)
+    public MainWindow(IServiceProvider serviceProvider, DatabaseImportView databaseImportView, ILogger<MainWindow> logger, VehicleTileViewFactory vehicleTileViewFactory)
     {
       this.databaseImportView = databaseImportView;
       this.logger = logger;
+      this.vehicleTileViewFactory = vehicleTileViewFactory;
       try
       {
         DataContext = this;
@@ -126,7 +129,7 @@ namespace Shell.WPF
                           VerticalAlignment = VerticalAlignment.Top,
                           Background = Brushes.White
                         };
-
+        
         string path = Path.Combine(Configuration.ApplicationData.VehicleImages.FullName, item?.ImageName ?? "");
         BitmapImage bitmapImage;
         if (File.Exists(path))
@@ -140,7 +143,7 @@ namespace Shell.WPF
           using Stream stream = assembly.GetManifestResourceStream(resourceName)!;
           bitmapImage = LoadPhoto(stream!);
         }
-
+        
         var image = new Image
                 {
                   Source = bitmapImage,
@@ -163,13 +166,13 @@ namespace Shell.WPF
                            }
                          }; 
         sp.Children.Add(image);
-
+        
         sp.Children.Add(new TextBlock
                         {
                           Text = !string.IsNullOrWhiteSpace(item?.Name) ? item.Name : !string.IsNullOrWhiteSpace(item?.FullName) ? item.FullName : $"Adresse: {item?.Address}",
                           Background = Brushes.Transparent
                         });
-
+        
         VehicleBorder border = new()
                                {
                                  Padding = new(2),
@@ -180,10 +183,10 @@ namespace Shell.WPF
                                  ContextMenu = new(),
                                  Effect = new DropShadowEffect { Opacity = 0.2, RenderingBias = RenderingBias.Quality }
                                };
-
+        
         VehicleMenuItem mi = new(item, "Fahrzeug steuern", (a) => TrainControl.TrainControl.CreatTrainControlWindow(ServiceProvider, a));
         border.ContextMenu.Items.Add(mi);
-
+        
         border.MouseDown += Border_MouseDown;
         VehicleGrid.Children.Add(border);
       }
