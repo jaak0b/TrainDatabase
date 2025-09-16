@@ -72,7 +72,7 @@ namespace Shell.WPF.TrainControl
 
     public Visibility VehicleTypeVisbility => (Vehicle?.Type ?? VehicleType.Lokomotive) == VehicleType.Lokomotive ? Visibility.Visible : Visibility.Collapsed;
 
-    public VehiclePresenter VehicleViewmodel { get; private set; } = default!;
+    public VehiclePresenterOld VehicleViewmodel { get; private set; } = default!;
 
     public Z21.Client Z21Client { get; } = default!;
 

@@ -62,7 +62,7 @@ namespace Core.Controller
 
     private IServiceProvider ServiceProvider { get; }
 
-    private VehiclePresenter Vehicle { get; } = default!;
+    private VehiclePresenterOld Vehicle { get; } = default!;
 
     private VehicleEntity VehicleEntity { get; }
 

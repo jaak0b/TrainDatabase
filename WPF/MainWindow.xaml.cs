@@ -120,8 +120,8 @@ namespace Shell.WPF
       {
         StackPanel sp = new()
                         {
-                          Height = 120,
-                          Width = 250,
+                          Height = 240,
+                          Width = 500,
                           HorizontalAlignment = HorizontalAlignment.Left,
                           VerticalAlignment = VerticalAlignment.Top,
                           Background = Brushes.White
@@ -141,13 +141,28 @@ namespace Shell.WPF
           bitmapImage = LoadPhoto(stream!);
         }
 
-        sp.Children.Add(new Image
-                        {
-                          Source = bitmapImage,
-                          Width = 250,
-                          Height = 100,
-                          Tag = item
-                        });
+        var image = new Image
+                {
+                  Source = bitmapImage,
+                  Width = 500,
+                  Height = 200,
+                  Tag = item
+                };
+        sp.MouseEnter += (sender, args) =>
+                         {
+                           if (sender is StackPanel i)
+                           {
+                             i.Children.OfType<Image>().First().Visibility = Visibility.Collapsed;
+                           }
+                         }; 
+        sp.MouseLeave += (sender, args) =>
+                         {
+                           if (sender is StackPanel i)
+                           {
+                             i.Children.OfType<Image>().First().Visibility = Visibility.Visible;
+                           }
+                         }; 
+        sp.Children.Add(image);
 
         sp.Children.Add(new TextBlock
                         {
