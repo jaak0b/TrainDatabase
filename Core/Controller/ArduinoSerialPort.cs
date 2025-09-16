@@ -81,15 +81,13 @@ namespace Core.Controller
     /// <returns>Returns the read data.</returns>
     public async Task<string> WaitForValue(int millisecondsTimeout = -1)
     {
-      return await Task.Run(
-                            () =>
+      return await Task.Run(() =>
                             {
                               try
                               {
                                 Semaphore.WaitOne(millisecondsTimeout);
                                 return string.Join("", SerialBuffer.ToList());
-                              }
-                              finally
+                              } finally
                               {
                                 SerialBuffer.Clear();
                               }

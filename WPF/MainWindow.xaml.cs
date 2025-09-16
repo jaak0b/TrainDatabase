@@ -141,7 +141,7 @@ namespace Shell.WPF
           bitmapImage = LoadPhoto(stream!);
         }
 
-        sp.Children.Add(new Image()
+        sp.Children.Add(new Image
                         {
                           Source = bitmapImage,
                           Width = 250,
@@ -149,7 +149,7 @@ namespace Shell.WPF
                           Tag = item
                         });
 
-        sp.Children.Add(new TextBlock()
+        sp.Children.Add(new TextBlock
                         {
                           Text = !string.IsNullOrWhiteSpace(item?.Name) ? item.Name : !string.IsNullOrWhiteSpace(item?.FullName) ? item.FullName : $"Adresse: {item?.Address}",
                           Background = Brushes.Transparent
@@ -163,7 +163,7 @@ namespace Shell.WPF
                                  Vehicle = item,
                                  Child = sp,
                                  ContextMenu = new(),
-                                 Effect = new DropShadowEffect() { Opacity = 0.2, RenderingBias = RenderingBias.Quality }
+                                 Effect = new DropShadowEffect { Opacity = 0.2, RenderingBias = RenderingBias.Quality }
                                };
 
         VehicleMenuItem mi = new(item, "Fahrzeug steuern", (a) => TrainControl.TrainControl.CreatTrainControlWindow(ServiceProvider, a));
@@ -276,7 +276,7 @@ namespace Shell.WPF
                           //Height = (hCount * 152) + menuHeight;
 
                           int wCount = (int)((Width - 18 + 10) / 282);
-                          Width = (wCount * 282) + 18;
+                          Width = wCount * 282 + 18;
                         });
     }
 

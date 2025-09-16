@@ -17,7 +17,7 @@ namespace Composition
     public static IServiceProvider Initialize(IModule module, ILogger logger)
     {
       ArgumentNullException.ThrowIfNull(module, nameof(module));
-      
+
       ServiceCollection serviceCollection = new();
 
       serviceCollection.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(logger, true));

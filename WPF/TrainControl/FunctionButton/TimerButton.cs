@@ -7,9 +7,7 @@ namespace Shell.WPF.TrainControl.FunctionButton
 {
   internal class TimerButton : FunctionBase
   {
-    public TimerButton(IServiceProvider serviceProvider, VehicleFunctionEntity vehicleFunctionEntity) : base(
-                                                                                             serviceProvider,
-                                                                                             vehicleFunctionEntity)
+    public TimerButton(IServiceProvider serviceProvider, VehicleFunctionEntity vehicleFunctionEntity) : base(serviceProvider, vehicleFunctionEntity)
     {
       PreviewMouseDown += async (sender, e) =>
                           {

@@ -52,21 +52,21 @@ namespace Core.ConfigurationImport.Z21New
     private async Task MapFunctionsAsync(SqliteConnection con, bool removeEmptyFunctions)
     {
       List<FunctionDTO> f = con.Query<FunctionDTO>("Select * from functions").ToList();
-      List<VehicleFunctionEntity> functions = f.Select(functionDto => new VehicleFunctionEntity()
-                                                              {
-                                                                Id = (int)functionDto.id,
-                                                                Vehicle = Database.Vehicles.FirstOrDefault(v => v.Id == (int)functionDto.vehicle_id),
-                                                                ButtonType = (ButtonType)(int)functionDto.button_type,
-                                                                Name = functionDto.shortcut.IsNullOrWhiteSpace() ? functionDto.image_name : functionDto.shortcut,
-                                                                Time = (int)decimal.Parse(functionDto.time),
-                                                                Position = (int)functionDto.position,
-                                                                ImageName = functionDto.image_name,
-                                                                Address = (int)functionDto.function,
-                                                                ShowFunctionNumber = functionDto.show_function_number == 1,
-                                                                IsConfigured = functionDto.is_configured == 1
-                                                              })
-                                       .Where(functionModel => functionModel.Vehicle is not null)
-                                       .ToList();
+      List<VehicleFunctionEntity> functions = f.Select(functionDto => new VehicleFunctionEntity
+                                                                      {
+                                                                        Id = (int)functionDto.id,
+                                                                        Vehicle = Database.Vehicles.FirstOrDefault(v => v.Id == (int)functionDto.vehicle_id),
+                                                                        ButtonType = (ButtonType)(int)functionDto.button_type,
+                                                                        Name = functionDto.shortcut.IsNullOrWhiteSpace() ? functionDto.image_name : functionDto.shortcut,
+                                                                        Time = (int)decimal.Parse(functionDto.time),
+                                                                        Position = (int)functionDto.position,
+                                                                        ImageName = functionDto.image_name,
+                                                                        Address = (int)functionDto.function,
+                                                                        ShowFunctionNumber = functionDto.show_function_number == 1,
+                                                                        IsConfigured = functionDto.is_configured == 1
+                                                                      })
+                                               .Where(functionModel => functionModel.Vehicle is not null)
+                                               .ToList();
 
       functions = functions.Where(e => removeEmptyFunctions && e.Name is not "Empty").ToList();
 
@@ -78,24 +78,24 @@ namespace Core.ConfigurationImport.Z21New
     private async Task MapVehiclesAsync(SqliteConnection con)
     {
       List<VehicleDTO> v = con.Query<VehicleDTO>("Select * from vehicles").ToList();
-      List<VehicleEntity> vehicles = v.Select(vehicleDto => new VehicleEntity()
-                                                           {
-                                                             Id = (int)vehicleDto.id,
-                                                             Name = vehicleDto.name,
-                                                             ImageName = vehicleDto.image_name,
-                                                             Type = (VehicleType)(int)vehicleDto.type,
-                                                             MaxSpeed = vehicleDto.max_speed,
-                                                             Speedstep = vehicleDto.speed_display,
-                                                             Address = vehicleDto.address,
-                                                             IsActive = vehicleDto.active == 1,
-                                                             Position = vehicleDto.position,
-                                                             FullName = vehicleDto.full_name,
-                                                             Railway = vehicleDto.railway,
-                                                             InvertTraction = vehicleDto.traction_direction == 1,
-                                                             Description = vehicleDto.description,
-                                                             Dummy = vehicleDto.dummy == 1
-                                                           })
-                                     .ToList();
+      List<VehicleEntity> vehicles = v.Select(vehicleDto => new VehicleEntity
+                                                            {
+                                                              Id = (int)vehicleDto.id,
+                                                              Name = vehicleDto.name,
+                                                              ImageName = vehicleDto.image_name,
+                                                              Type = (VehicleType)(int)vehicleDto.type,
+                                                              MaxSpeed = vehicleDto.max_speed,
+                                                              Speedstep = vehicleDto.speed_display,
+                                                              Address = vehicleDto.address,
+                                                              IsActive = vehicleDto.active == 1,
+                                                              Position = vehicleDto.position,
+                                                              FullName = vehicleDto.full_name,
+                                                              Railway = vehicleDto.railway,
+                                                              InvertTraction = vehicleDto.traction_direction == 1,
+                                                              Description = vehicleDto.description,
+                                                              Dummy = vehicleDto.dummy == 1
+                                                            })
+                                      .ToList();
       await Database.AddRangeAsync(vehicles);
       await Database.SaveChangesAsync();
       await Database.Vehicles.Where(vehicleModel => string.IsNullOrWhiteSpace(vehicleModel.Name)).ForEachAsync(model => Log.Warning($"Imported Vehicle with Adresse {model.Address} has no display name!"));

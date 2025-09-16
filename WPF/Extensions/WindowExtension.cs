@@ -29,7 +29,7 @@ namespace Shell.WPF.Extensions
         window.Show();
       }
     }
-    
+
     /// <summary>
     /// Shows the window if it's not visible, or activates and restores it if already open.
     /// </summary>

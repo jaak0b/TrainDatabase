@@ -15,13 +15,7 @@ namespace Helper
       /// <summary>
       /// Path where application related data is stored. 
       /// </summary>
-      public static DirectoryInfo ApplicationDataDirectory => new(
-                                                                  Path.Combine(
-                                                                               Environment.GetFolderPath(
-                                                                                                         Environment
-                                                                                                          .SpecialFolder
-                                                                                                          .ApplicationData),
-                                                                               "TrainDatabase"));
+      public static DirectoryInfo ApplicationDataDirectory => new(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TrainDatabase"));
 
       /// <summary>
       /// Returns the location of the vehicle image folder.
@@ -110,8 +104,7 @@ namespace Helper
         return;
       }
 
-      System.Configuration.Configuration? config =
-        ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+      System.Configuration.Configuration? config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
       if (ConfigurationManager.AppSettings[key] is not null)
       {
         config.AppSettings.Settings.Remove(key);

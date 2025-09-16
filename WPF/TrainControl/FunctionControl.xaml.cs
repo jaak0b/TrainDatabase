@@ -50,8 +50,7 @@ namespace Shell.WPF.TrainControl
     /// </summary>
     private void DrawAllFunctions()
     {
-      Dispatcher.BeginInvoke(
-                             () =>
+      Dispatcher.BeginInvoke(() =>
                              {
                                FunctionGrid.Children.Clear();
                                foreach (VehicleFunctionEntity? item in Vehicle.Functions.OrderBy(e => e.Address))

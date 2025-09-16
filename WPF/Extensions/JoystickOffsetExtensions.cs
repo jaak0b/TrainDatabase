@@ -14,10 +14,7 @@ namespace Shell.WPF.Extensions
     /// <returns></returns>
     public static int GetMaxValue(this JoystickOffset e)
     {
-      return Convert.ToInt32(
-                             Configuration.Get($"{Enum.GetName(e)}_MaxValue")!.IsNullOrWhiteSpace(out string v)
-                               ? "0"
-                               : v);
+      return Convert.ToInt32(Configuration.Get($"{Enum.GetName(e)}_MaxValue")!.IsNullOrWhiteSpace(out string v) ? "0" : v);
     }
 
     /// <summary>

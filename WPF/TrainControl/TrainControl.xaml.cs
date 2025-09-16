@@ -45,9 +45,7 @@ namespace Shell.WPF.TrainControl
       {
         Close();
         LogService.Log(Microsoft.Extensions.Logging.LogLevel.Error, ex);
-        MessageBox.Show(
-                        $"Beim öffnen des Controllers ist ein Fehler aufgetreten: {(string.IsNullOrWhiteSpace(ex?.Message) ? "" : ex.Message)}",
-                        "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+        MessageBox.Show($"Beim öffnen des Controllers ist ein Fehler aufgetreten: {(string.IsNullOrWhiteSpace(ex?.Message) ? "" : ex.Message)}", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
       }
     }
 
@@ -70,13 +68,9 @@ namespace Shell.WPF.TrainControl
 
     public LogEventBus LogService { get; private set; }
 
-    public GridLength VehicleTypeGridLength => (Vehicle?.Type ?? VehicleType.Lokomotive) == VehicleType.Lokomotive
-                                                 ? new(80)
-                                                 : new GridLength(0);
+    public GridLength VehicleTypeGridLength => (Vehicle?.Type ?? VehicleType.Lokomotive) == VehicleType.Lokomotive ? new(80) : new GridLength(0);
 
-    public Visibility VehicleTypeVisbility => (Vehicle?.Type ?? VehicleType.Lokomotive) == VehicleType.Lokomotive
-                                                ? Visibility.Visible
-                                                : Visibility.Collapsed;
+    public Visibility VehicleTypeVisbility => (Vehicle?.Type ?? VehicleType.Lokomotive) == VehicleType.Lokomotive ? Visibility.Visible : Visibility.Collapsed;
 
     public VehiclePresenter VehicleViewmodel { get; private set; } = default!;
 
@@ -90,8 +84,7 @@ namespace Shell.WPF.TrainControl
     /// <param name="db"></param>
     public static void CreatTrainControlWindow(IServiceProvider serviceProvider, VehicleEntity vehicle)
     {
-      if (Application.Current.Windows.OfType<TrainControl>().FirstOrDefault(e => e.Vehicle.Id == vehicle?.Id) is
-          TrainControl trainControl)
+      if (Application.Current.Windows.OfType<TrainControl>().FirstOrDefault(e => e.Vehicle.Id == vehicle?.Id) is TrainControl trainControl)
       {
         trainControl.WindowState = WindowState.Normal;
         trainControl.Activate();
@@ -114,8 +107,7 @@ namespace Shell.WPF.TrainControl
 
     private void SetTitle()
     {
-      Title =
-        $"{Vehicle.Address} - {(string.IsNullOrWhiteSpace(Vehicle.Name) ? Vehicle.FullName : Vehicle.Name)}";
+      Title = $"{Vehicle.Address} - {(string.IsNullOrWhiteSpace(Vehicle.Name) ? Vehicle.FullName : Vehicle.Name)}";
     }
 
     private void TBRailPower_Click(object sender, RoutedEventArgs e)
@@ -140,11 +132,9 @@ namespace Shell.WPF.TrainControl
 
     private void TrainControl_Loaded(object sender, RoutedEventArgs e)
     {
-      Z21Client.ClientReachabilityChanged += (a, b) => Dispatcher.Invoke(
-                                                                         () =>
+      Z21Client.ClientReachabilityChanged += (a, b) => Dispatcher.Invoke(() =>
                                                                          {
-                                                                           BusyIndicator.IsBusy =
-                                                                             !Z21Client.ClientReachable;
+                                                                           BusyIndicator.IsBusy = !Z21Client.ClientReachable;
                                                                            Z21Client.GetLocoInfo(new(Vehicle.Address));
                                                                          });
 

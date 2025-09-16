@@ -1,9 +1,10 @@
 ﻿using System.Windows.Controls;
 using Persistence.Entities;
 
-namespace Shell.WPF;
-
-public class VehicleBorder : Border
+namespace Shell.WPF
 {
-  public VehicleEntity Vehicle { get; set; } = default!;
+  public class VehicleBorder : Border
+  {
+    public VehicleEntity Vehicle { get; set; } = default!;
+  }
 }

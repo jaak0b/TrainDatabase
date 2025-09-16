@@ -45,8 +45,7 @@ namespace Shell.WPF
 
     private void UpdateComPortList()
     {
-      Dispatcher.Invoke(
-                        () =>
+      Dispatcher.Invoke(() =>
                         {
                           object? selectedItem = SelectedItem ?? Configuration.ArduinoComPort;
                           Items.Clear();
@@ -106,15 +105,12 @@ namespace Shell.WPF
     private async void CmbAllVehicles_Loaded(object sender, RoutedEventArgs e)
     {
       CmbAllVehicles.Items.Clear();
-      foreach (VehicleEntity vehicle in await Db.Vehicles.Where(e => e.Type == VehicleType.Lokomotive)
-                                               .OrderBy(e => e.Address).ToListAsync())
+      foreach (VehicleEntity vehicle in await Db.Vehicles.Where(e => e.Type == VehicleType.Lokomotive).OrderBy(e => e.Address).ToListAsync())
       {
-        CmbAllVehicles.Items.Add(
-                                 new ComboBoxItem()
+        CmbAllVehicles.Items.Add(new ComboBoxItem
                                  {
                                    Tag = vehicle,
-                                   Content =
-                                     $"({vehicle.Address:D3})  {(string.IsNullOrWhiteSpace(vehicle.Name) ? vehicle.FullName : vehicle.Name)}"
+                                   Content = $"({vehicle.Address:D3})  {(string.IsNullOrWhiteSpace(vehicle.Name) ? vehicle.FullName : vehicle.Name)}"
                                  });
       }
     }

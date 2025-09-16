@@ -91,16 +91,12 @@ namespace Shell.WPF.JoyStick
       JoyStick.Dispose();
       if (MaxValue < 1)
       {
-        e.Cancel = MessageBoxResult.Cancel == MessageBox.Show(
-                                                              "Achtung, bei einem maximal Wert von 0 funktioniert der Button nicht!",
-                                                              "Error", MessageBoxButton.OKCancel);
+        e.Cancel = MessageBoxResult.Cancel == MessageBox.Show("Achtung, bei einem maximal Wert von 0 funktioniert der Button nicht!", "Error", MessageBoxButton.OKCancel);
       }
 
       if (JoyStickButton is null)
       {
-        e.Cancel = MessageBoxResult.Cancel == MessageBox.Show(
-                                                              "Achtung, es wurde kein Button ausgewählt!", "Error",
-                                                              MessageBoxButton.OKCancel);
+        e.Cancel = MessageBoxResult.Cancel == MessageBox.Show("Achtung, es wurde kein Button ausgewählt!", "Error", MessageBoxButton.OKCancel);
       }
 
       DialogResult = MaxValue >= 1 && JoyStickButton is not null;

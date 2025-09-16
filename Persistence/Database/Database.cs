@@ -104,7 +104,7 @@ namespace Persistence.Database
       CollectionChanged?.Invoke(this, new());
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    override protected void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
       string dbPath = Configuration.ApplicationData.DatabaseFile.FullName;
       Directory.CreateDirectory(Path.GetDirectoryName(dbPath));
@@ -114,47 +114,18 @@ namespace Persistence.Database
       }
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    override protected void OnModelCreating(ModelBuilder modelBuilder)
     {
-      ValueConverter<decimal?[], string> decimArrayToStringConverter = new(
-                                                                           v => string.Join(";", v),
-                                                                           v => v.Split(";", StringSplitOptions.None)
-                                                                                 .Select(
-                                                                                         val => val.IsDecimal()
-                                                                                                  ? decimal.Parse(val)
-                                                                                                  : (decimal?)null)
-                                                                                 .ToArray());
-      ValueComparer<decimal?[]> decimalArrayValueComparer = new(
-                                                                (a, b) => a.SequenceEqual(b),
-                                                                v => v.Aggregate(
-                                                                                 0,
-                                                                                 (a, i) => HashCode.Combine(
-                                                                                                            a,
-                                                                                                            i.GetHashCode())),
-                                                                v => v.ToArray());
-      modelBuilder.Entity<VehicleEntity>().Property(e => e.TractionForward).HasConversion(decimArrayToStringConverter)
-                  .Metadata.SetValueComparer(decimalArrayValueComparer);
-      modelBuilder.Entity<VehicleEntity>().Property(e => e.TractionBackward).HasConversion(decimArrayToStringConverter)
-                  .Metadata.SetValueComparer(decimalArrayValueComparer);
+      ValueConverter<decimal?[], string> decimArrayToStringConverter
+        = new(v => string.Join(";", v), v => v.Split(";", StringSplitOptions.None).Select(val => val.IsDecimal() ? decimal.Parse(val) : (decimal?)null).ToArray());
+      ValueComparer<decimal?[]> decimalArrayValueComparer = new((a, b) => a.SequenceEqual(b), v => v.Aggregate(0, (a, i) => HashCode.Combine(a, i.GetHashCode())), v => v.ToArray());
+      modelBuilder.Entity<VehicleEntity>().Property(e => e.TractionForward).HasConversion(decimArrayToStringConverter).Metadata.SetValueComparer(decimalArrayValueComparer);
+      modelBuilder.Entity<VehicleEntity>().Property(e => e.TractionBackward).HasConversion(decimArrayToStringConverter).Metadata.SetValueComparer(decimalArrayValueComparer);
 
-      ValueConverter<List<int>, string> intListConverter = new(
-                                                               v => string.Join(";", v.Distinct()),
-                                                               v => v.Split(";", StringSplitOptions.RemoveEmptyEntries)
-                                                                     .Select(
-                                                                             val => val.IsInt()
-                                                                                      ? int.Parse(val)
-                                                                                      : int.MinValue).Distinct()
-                                                                     .ToList());
-      ValueComparer<List<int>> intListValueComparer = new(
-                                                          (a, b) => a.SequenceEqual(b),
-                                                          v => v.Aggregate(
-                                                                           0,
-                                                                           (a, i) => HashCode.Combine(
-                                                                                                      a,
-                                                                                                      i.GetHashCode())),
-                                                          v => v.ToList());
-      modelBuilder.Entity<VehicleEntity>().Property(e => e.TractionVehicleIds).HasConversion(intListConverter).Metadata
-                  .SetValueComparer(intListValueComparer);
+      ValueConverter<List<int>, string> intListConverter = new(v => string.Join(";", v.Distinct()),
+                                                               v => v.Split(";", StringSplitOptions.RemoveEmptyEntries).Select(val => val.IsInt() ? int.Parse(val) : int.MinValue).Distinct().ToList());
+      ValueComparer<List<int>> intListValueComparer = new((a, b) => a.SequenceEqual(b), v => v.Aggregate(0, (a, i) => HashCode.Combine(a, i.GetHashCode())), v => v.ToList());
+      modelBuilder.Entity<VehicleEntity>().Property(e => e.TractionVehicleIds).HasConversion(intListConverter).Metadata.SetValueComparer(intListValueComparer);
 
       OnModelCreatingPartial(modelBuilder);
     }
@@ -178,11 +149,7 @@ namespace Persistence.Database
     /// </summary>
     public void DetachAllEntities()
     {
-      List<EntityEntry> changedEntriesCopy = ChangeTracker.Entries()
-                                                          .Where(
-                                                                 e => e.State is EntityState.Added
-                                                                              or EntityState.Modified
-                                                                              or EntityState.Deleted).ToList();
+      List<EntityEntry> changedEntriesCopy = ChangeTracker.Entries().Where(e => e.State is EntityState.Added or EntityState.Modified or EntityState.Deleted).ToList();
       foreach (EntityEntry entry in changedEntriesCopy)
       {
         entry.State = EntityState.Detached;

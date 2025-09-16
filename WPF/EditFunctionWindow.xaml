@@ -3,8 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:wpf="clr-namespace:TrainDatabase"
-        xmlns:model="clr-namespace:Persistence;assembly=Persistence"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:wpf1="clr-namespace:Shell.WPF"
         xmlns:enums="clr-namespace:Persistence.Enums;assembly=Persistence"
@@ -35,7 +33,8 @@
                      Text="{Binding ElementName=ew,Path=FunctionModel.Name, UpdateSourceTrigger=PropertyChanged}" />
 
             <Label Content="FunctionModel" Grid.Row="1" Grid.Column="0" />
-            <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" Padding="5" Margin="5" Value="{Binding ElementName=ew,Path=FunctionModel.Address, UpdateSourceTrigger=PropertyChanged}"/>
+            <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" Padding="5" Margin="5"
+                                Value="{Binding ElementName=ew,Path=FunctionModel.Address, UpdateSourceTrigger=PropertyChanged}" />
 
             <Label Content="Type:" Grid.Row="2" Grid.Column="0" />
             <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left"

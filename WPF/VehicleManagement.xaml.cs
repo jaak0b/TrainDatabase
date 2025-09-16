@@ -71,12 +71,9 @@ namespace Shell.WPF
       try
       {
         BtnNew.IsEnabled = false;
-        await Db.AddAsync(
-                          new VehicleEntity()
-                          { Position = Db.Vehicles.Any() ? Db.Vehicles.Max(e => e.Position) + 1 : 1 });
+        await Db.AddAsync(new VehicleEntity { Position = Db.Vehicles.Any() ? Db.Vehicles.Max(e => e.Position) + 1 : 1 });
         await ReloadVehicles();
-      }
-      finally
+      } finally
       {
         BtnNew.IsEnabled = true;
       }
@@ -92,9 +89,8 @@ namespace Shell.WPF
           return;
         }
 
-        if (MessageBoxResult.No == MessageBox.Show(
-                                                   $"Möchten Sie das Fahrzeug '{(vehicle.Name.IsNullOrWhiteSpace() ? vehicle.FullName : vehicle.Name)}' wirklich löschen?",
-                                                   "Fahrzeug löschen", MessageBoxButton.YesNo))
+        if (MessageBoxResult.No
+            == MessageBox.Show($"Möchten Sie das Fahrzeug '{(vehicle.Name.IsNullOrWhiteSpace() ? vehicle.FullName : vehicle.Name)}' wirklich löschen?", "Fahrzeug löschen", MessageBoxButton.YesNo))
         {
           return;
         }
@@ -102,8 +98,7 @@ namespace Shell.WPF
         Db.RemoveRange(Db.Functions.Include(e => e.Vehicle).Where(e => e.Vehicle.Id == vehicle.Id));
         Db.Remove(vehicle);
         await ReloadVehicles();
-      }
-      finally
+      } finally
       {
         BtnDeleteVehicle.IsEnabled = true;
       }
@@ -130,13 +125,10 @@ namespace Shell.WPF
         return;
       }
 
-      await Db.AddAsync(
-                        new VehicleFunctionEntity()
+      await Db.AddAsync(new VehicleFunctionEntity
                         {
                           Vehicle = SelectedVehicle, IsActive = true, ShowFunctionNumber = true,
-                          Position = SelectedVehicle.Functions.Any()
-                                       ? SelectedVehicle.Functions.Max(e => e.Position)
-                                       : 1 + 1
+                          Position = SelectedVehicle.Functions.Any() ? SelectedVehicle.Functions.Max(e => e.Position) : 1 + 1
                         });
       await ReloadVehicles();
     }
@@ -186,8 +178,7 @@ namespace Shell.WPF
       await Db.SaveChangesAsync();
       SelectedVehicleFunctions.Clear();
 
-      foreach (VehicleFunctionEntity function in SelectedVehicle?.Functions.OrderBy(e => e.Position).ToList() ??
-                                         new List<VehicleFunctionEntity>())
+      foreach (VehicleFunctionEntity function in SelectedVehicle?.Functions.OrderBy(e => e.Position).ToList() ?? new List<VehicleFunctionEntity>())
       {
         SelectedVehicleFunctions.Add(function);
       }
@@ -229,10 +220,7 @@ namespace Shell.WPF
         return;
       }
 
-      IEnumerable<string> extensions = ImageCodecInfo.GetImageEncoders()
-                                                     .SelectMany(codec => codec.FilenameExtension?.Split(';')!)
-                                                     .Where(extension => !string.IsNullOrEmpty(extension))
-                                                     .Distinct();
+      IEnumerable<string> extensions = ImageCodecInfo.GetImageEncoders().SelectMany(codec => codec.FilenameExtension?.Split(';')!).Where(extension => !string.IsNullOrEmpty(extension)).Distinct();
 
       string filter = "Image Files|" + string.Join(";", extensions);
 

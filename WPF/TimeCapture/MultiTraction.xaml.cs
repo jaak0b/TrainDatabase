@@ -31,8 +31,7 @@ namespace Shell.WPF.TimeCapture
       if (VehicleModel is not null)
       {
         TimeCapture = new(ServiceProvider, VehicleModel);
-        TimeCapture.StateChanged += (a, b) => Dispatcher.Invoke(
-                                                                async () =>
+        TimeCapture.StateChanged += (a, b) => Dispatcher.Invoke(async () =>
                                                                 {
                                                                   await DrawSpeedDataPlot();
                                                                   DrawSpeedMeasurementTable();
@@ -73,10 +72,7 @@ namespace Shell.WPF.TimeCapture
           return;
         }
 
-        if (MessageBoxResult.OK == MessageBox.Show(
-                                                   "CV 3 und 4 bitte manuel auf den Wert 0 stellen. Dann ok klicken.",
-                                                   "CV Wert setzen", MessageBoxButton.OKCancel,
-                                                   MessageBoxImage.Exclamation))
+        if (MessageBoxResult.OK == MessageBox.Show("CV 3 und 4 bitte manuel auf den Wert 0 stellen. Dann ok klicken.", "CV Wert setzen", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation))
         {
           IsEnabled = false;
           await TimeCapture?.Run()!;
@@ -85,8 +81,7 @@ namespace Shell.WPF.TimeCapture
       catch (Exception ex)
       {
         LogService.Log(Microsoft.Extensions.Logging.LogLevel.Error, ex);
-      }
-      finally
+      } finally
       {
         IsEnabled = true;
       }
@@ -105,14 +100,10 @@ namespace Shell.WPF.TimeCapture
 
       CreatSpeedTableRow($"Step", $"km/h (V)", $"km/h (R)");
       bool lastStep = false;
-      for (int i = TimeCaptureController.StartMeasurement;
-           i <= Client.maxDccStep;
-           i += TimeCaptureController.StepMeasurement)
+      for (int i = TimeCaptureController.StartMeasurement; i <= Client.maxDccStep; i += TimeCaptureController.StepMeasurement)
       {
-        string text2 =
-          $"{(TimeCapture?.TractionForward[i] is null ? "-" : (double)Math.Round(TimeCapture.TractionForward[i] / 3.6m ?? 0, 2))} km/h";
-        string text3 =
-          $"{(TimeCapture?.TractionBackward[i] is null ? "-" : (double)Math.Round(TimeCapture.TractionBackward[i] / 3.6m ?? 0, 2))}  km/h";
+        string text2 = $"{(TimeCapture?.TractionForward[i] is null ? "-" : (double)Math.Round(TimeCapture.TractionForward[i] / 3.6m ?? 0, 2))} km/h";
+        string text3 = $"{(TimeCapture?.TractionBackward[i] is null ? "-" : (double)Math.Round(TimeCapture.TractionBackward[i] / 3.6m ?? 0, 2))}  km/h";
         CreatSpeedTableRow($"Step {i}", text2, text3);
 
         if (!lastStep && i + TimeCaptureController.StepMeasurement > Client.maxDccStep)
@@ -175,16 +166,13 @@ namespace Shell.WPF.TimeCapture
                                     HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch
                                   };
 
-      LineSeries linePoints_Forward =
-        new() { StrokeThickness = 1, MarkerSize = 1, Title = "Vorwärts", Color = OxyColors.Red };
+      LineSeries linePoints_Forward = new() { StrokeThickness = 1, MarkerSize = 1, Title = "Vorwärts", Color = OxyColors.Red };
       linePoints_Forward.Points.AddRange(pointsForward);
 
-      LineSeries linePoints_Backwards =
-        new() { StrokeThickness = 1, MarkerSize = 1, Title = "Rückwärts", Color = OxyColors.Blue };
+      LineSeries linePoints_Backwards = new() { StrokeThickness = 1, MarkerSize = 1, Title = "Rückwärts", Color = OxyColors.Blue };
       linePoints_Backwards.Points.AddRange(pointsBackward);
 
-      model.Axes.Add(
-                     new LinearAxis()
+      model.Axes.Add(new LinearAxis
                      {
                        Maximum = Client.maxDccStep,
                        Minimum = TimeCaptureController.StartMeasurement,
@@ -192,8 +180,7 @@ namespace Shell.WPF.TimeCapture
                        Title = "Dcc Speed Step"
                      });
 
-      model.Axes.Add(
-                     new LinearAxis()
+      model.Axes.Add(new LinearAxis
                      {
                        Minimum = 0,
                        MinorStep = double.NaN,
@@ -211,8 +198,7 @@ namespace Shell.WPF.TimeCapture
 
     private async Task<List<DataPoint>> GetDataPointsList(decimal?[]? values)
     {
-      return await Task.Run(
-                            () =>
+      return await Task.Run(() =>
                             {
                               List<DataPoint> pointsBackward = new();
 
@@ -220,10 +206,7 @@ namespace Shell.WPF.TimeCapture
                               {
                                 if (values?[i] is not null)
                                 {
-                                  pointsBackward.Add(
-                                                     new(
-                                                         i,
-                                                         (double)Math.Round((values[i] / 3.6m) ?? 0, 2)));
+                                  pointsBackward.Add(new(i, (double)Math.Round(values[i] / 3.6m ?? 0, 2)));
                                 }
                               }
 

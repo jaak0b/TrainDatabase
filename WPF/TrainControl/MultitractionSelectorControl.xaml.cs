@@ -50,17 +50,14 @@ namespace Shell.WPF.TrainControl
 
     private void DrawAllVehicles(IEnumerable<VehicleEntity> vehicles)
     {
-      List<VehicleEntity> tractionVehicles = vehicles.Where(f => Vehicle.TractionVehicleIds.Any(e => e == f.Id))
-                                                    .OrderBy(e => e.Position).ToList();
+      List<VehicleEntity> tractionVehicles = vehicles.Where(f => Vehicle.TractionVehicleIds.Any(e => e == f.Id)).OrderBy(e => e.Position).ToList();
       if (tractionVehicles.Any())
       {
         AddListToStackPanel(tractionVehicles);
         SPVehilces.Children.Add(new Separator());
       }
 
-      AddListToStackPanel(
-                          vehicles.Where(f => !Vehicle.TractionVehicleIds.Any(e => e == f.Id))
-                                  .OrderBy(e => e.Position));
+      AddListToStackPanel(vehicles.Where(f => !Vehicle.TractionVehicleIds.Any(e => e == f.Id)).OrderBy(e => e.Position));
     }
 
     private void AddListToStackPanel(IEnumerable<VehicleEntity> vehicles)
@@ -102,10 +99,7 @@ namespace Shell.WPF.TrainControl
       SPVehilces.Children.Clear();
       if (!string.IsNullOrWhiteSpace(tbSearch.Text))
       {
-        DrawAllVehicles(
-                        Db.Vehicles.Where(
-                                          i => (i.Address + i.Railway + i.Description + i.FullName + i.Name + i.Type)
-                                              .ToLower().Contains(tbSearch.Text.ToLower())).OrderBy(e => e.Position));
+        DrawAllVehicles(Db.Vehicles.Where(i => (i.Address + i.Railway + i.Description + i.FullName + i.Name + i.Type).ToLower().Contains(tbSearch.Text.ToLower())).OrderBy(e => e.Position));
       }
       else
       {

@@ -146,15 +146,11 @@ namespace Core.Presenters
 
       if (!traction.Vehicle.InvertTraction)
       {
-        return direction
-                 ? traction.TractionForward.GetYValue(speedstep)
-                 : traction.TractionBackward.GetYValue(speedstep);
+        return direction ? traction.TractionForward.GetYValue(speedstep) : traction.TractionBackward.GetYValue(speedstep);
       }
       else
       {
-        return direction
-                 ? traction.TractionBackward.GetYValue(speedstep)
-                 : traction.TractionForward.GetYValue(speedstep);
+        return direction ? traction.TractionBackward.GetYValue(speedstep) : traction.TractionForward.GetYValue(speedstep);
       }
     }
 
@@ -165,26 +161,16 @@ namespace Core.Presenters
 
     private async Task DeterminSlowestVehicleInList()
     {
-      await Task.Run(
-                     () =>
+      await Task.Run(() =>
                      {
-                       List<MultiTractionItem>? list = MultiTractionItems
-                                                      .Where(
-                                                             e => e.Vehicle.Type == VehicleType.Lokomotive &&
-                                                                  e.TractionForward.Any() && e.TractionBackward.Any())
-                                                      .ToList();
+                       List<MultiTractionItem>? list = MultiTractionItems.Where(e => e.Vehicle.Type == VehicleType.Lokomotive && e.TractionForward.Any() && e.TractionBackward.Any()).ToList();
 
                        if (list.Any())
                        {
-                         SlowestVehicleInTractionList =
-                           list.Aggregate(
-                                          (cur, next) =>
-                                            (cur.TractionForward?.GetYValue(Client.maxDccStep) ??
-                                             int.MaxValue) <
-                                            (next.TractionForward?.GetYValue(Client.maxDccStep) ??
-                                             int.MaxValue)
-                                              ? cur
-                                              : next).Vehicle ?? VehicleEntity;
+                         SlowestVehicleInTractionList
+                           = list.Aggregate((cur, next) => (cur.TractionForward?.GetYValue(Client.maxDccStep) ?? int.MaxValue) < (next.TractionForward?.GetYValue(Client.maxDccStep) ?? int.MaxValue) ? cur : next)
+                                 .Vehicle
+                             ?? VehicleEntity;
                        }
                        else
                        {
@@ -208,11 +194,9 @@ namespace Core.Presenters
 
     private async Task SetLocoDrive(int? speedstep = null, bool? drivingDirection = null, bool inUse = true)
     {
-      await Task.Run(
-                     () =>
+      await Task.Run(() =>
                      {
-                       if (speedstep is not null && speedstep != 0 && speedstep != Client.maxDccStep &&
-                           DateTime.Now - LastSpeedChange < new TimeSpan(0, 0, 0, 0, 500))
+                       if (speedstep is not null && speedstep != 0 && speedstep != Client.maxDccStep && DateTime.Now - LastSpeedChange < new TimeSpan(0, 0, 0, 0, 500))
                        {
                          return;
                        }
@@ -225,50 +209,32 @@ namespace Core.Presenters
                        int speed = speedstep ?? Speed;
                        List<LokInfoData> data = new();
 
-                       MultiTractionItem slowestVehicle =
-                         MultiTractionItems.FirstOrDefault(
-                                                           e => e.Vehicle.Equals(
-                                                                                 SlowestVehicleInTractionList));
+                       MultiTractionItem slowestVehicle = MultiTractionItems.FirstOrDefault(e => e.Vehicle.Equals(SlowestVehicleInTractionList));
                        double yValue = GetSlowestVehicleSpeed(speed, direction, slowestVehicle);
 
-                       foreach (MultiTractionItem item in MultiTractionItems.Where(
-                                                                                   e => !e.Vehicle.Equals(
-                                                                                                          SlowestVehicleInTractionList)))
+                       foreach (MultiTractionItem item in MultiTractionItems.Where(e => !e.Vehicle.Equals(SlowestVehicleInTractionList)))
                        {
                          if (IsVehicleMeasured(item))
                          {
                            int dccSpeed;
                            if (!item.Vehicle.InvertTraction)
                            {
-                             dccSpeed = direction
-                                          ? item.TractionForward.GetXValue(yValue)
-                                          : item.TractionBackward.GetXValue(yValue);
+                             dccSpeed = direction ? item.TractionForward.GetXValue(yValue) : item.TractionBackward.GetXValue(yValue);
                            }
                            else
                            {
-                             dccSpeed = direction
-                                          ? item.TractionBackward.GetXValue(yValue)
-                                          : item.TractionForward.GetXValue(yValue);
+                             dccSpeed = direction ? item.TractionBackward.GetXValue(yValue) : item.TractionForward.GetXValue(yValue);
                            }
 
-                           data.Add(
-                                    GetLocoInfoData(
-                                                    dccSpeed, GetDrivingDirection(item.Vehicle, direction),
-                                                    inUse, item.Vehicle));
+                           data.Add(GetLocoInfoData(dccSpeed, GetDrivingDirection(item.Vehicle, direction), inUse, item.Vehicle));
                          }
                          else
                          {
-                           data.Add(
-                                    GetLocoInfoData(
-                                                    speed, GetDrivingDirection(item.Vehicle, direction),
-                                                    inUse, item.Vehicle));
+                           data.Add(GetLocoInfoData(speed, GetDrivingDirection(item.Vehicle, direction), inUse, item.Vehicle));
                          }
                        }
 
-                       data.Add(
-                                GetLocoInfoData(
-                                                speed, GetDrivingDirection(slowestVehicle.Vehicle, direction),
-                                                inUse, slowestVehicle.Vehicle));
+                       data.Add(GetLocoInfoData(speed, GetDrivingDirection(slowestVehicle.Vehicle, direction), inUse, slowestVehicle.Vehicle));
                        LiveData.DrivingDirection = direction;
                        LiveData.Speed = speed;
                        OnStateChanged();
@@ -283,8 +249,7 @@ namespace Core.Presenters
     /// <exception cref="ApplicationException"></exception>
     private async void SetVehicleModel(VehicleEntity vehicleEntity)
     {
-      VehicleEntity = Db.Vehicles.Include(e => e.Functions).FirstOrDefault(e => e.Id == vehicleEntity.Id) ??
-                     throw new ApplicationException($"Could not find vehicle '{vehicleEntity}'.");
+      VehicleEntity = Db.Vehicles.Include(e => e.Functions).FirstOrDefault(e => e.Id == vehicleEntity.Id) ?? throw new ApplicationException($"Could not find vehicle '{vehicleEntity}'.");
       UpdateMultiTractionList();
       await DeterminSlowestVehicleInList();
       OnStateChanged();
@@ -293,14 +258,7 @@ namespace Core.Presenters
     private void UpdateMultiTractionList()
     {
       MultiTractionItems.Clear();
-      MultiTractionItems.AddRange(
-                                  VehicleEntity.TractionVehicleIds
-                                              .Select(
-                                                      e => new MultiTractionItem(
-                                                                                 Db.Vehicles.FirstOrDefault(
-                                                                                                            f =>
-                                                                                                              f.Id == e)
-                                                                                 !)).Where(e => e.Vehicle is not null));
+      MultiTractionItems.AddRange(VehicleEntity.TractionVehicleIds.Select(e => new MultiTractionItem(Db.Vehicles.FirstOrDefault(f => f.Id == e) !)).Where(e => e.Vehicle is not null));
       MultiTractionItems.Add(new(VehicleEntity));
     }
 

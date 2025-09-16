@@ -72,15 +72,13 @@ namespace Core.Controller
 
     public async Task Run()
     {
-      await Task.Run(
-                     async () =>
+      await Task.Run(async () =>
                      {
                        try
                        {
                          if (!Z21Client.ClientReachable)
                          {
-                           throw new ApplicationException(
-                                                          "Z21 not connected. Please ensure that the z21 is turned on and in the same network as this pc. ");
+                           throw new ApplicationException("Z21 not connected. Please ensure that the z21 is turned on and in the same network as this pc. ");
                          }
 
                          IsRunning = true;
@@ -93,9 +91,7 @@ namespace Core.Controller
                          bool lastStep = false;
 
                          int stepMeasurement = StepMeasurement;
-                         for (int speed = StartMeasurement;
-                              speed <= Client.maxDccStep;
-                              speed += stepMeasurement)
+                         for (int speed = StartMeasurement; speed <= Client.maxDccStep; speed += stepMeasurement)
                          {
                            await CaptureTime(speed, true);
                            await CaptureTime(speed, false);
@@ -111,8 +107,7 @@ namespace Core.Controller
                          await SaveChanges();
 
                          TimeCaptureFinished?.Invoke(this, null!);
-                       }
-                       finally
+                       } finally
                        {
                          IsRunning = false;
                          OnStateChanged();
@@ -138,13 +133,10 @@ namespace Core.Controller
 
         string? data = await port.WaitForValue(int.Parse($"{new TimeSpan(0, 5, 0).TotalMilliseconds}"));
 
-        return decimal.TryParse(
-                                data.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture,
-                                out decimal result)
+        return decimal.TryParse(data.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out decimal result)
                  ? result
                  : throw new ApplicationException($"Serial bus data ('{data}') could not be parsed as decimal!");
-      }
-      finally
+      } finally
       {
         await Task.Delay((int)new TimeSpan(0, 0, 2).TotalMilliseconds);
         Vehicle.Speed = 0;
@@ -173,8 +165,7 @@ namespace Core.Controller
 
     private async Task SaveChanges()
     {
-      VehicleEntity? temp = Database.Vehicles.FirstOrDefault(e => e.Id == VehicleEntity.Id) ??
-                           throw new($"Fahrzeug mit Adresse '{VehicleEntity.Address}' nicht gefunden!");
+      VehicleEntity? temp = Database.Vehicles.FirstOrDefault(e => e.Id == VehicleEntity.Id) ?? throw new($"Fahrzeug mit Adresse '{VehicleEntity.Address}' nicht gefunden!");
       temp.TractionBackward = TractionBackward;
       temp.TractionForward = TractionForward;
       await Database.SaveChangesAsync();
@@ -191,9 +182,7 @@ namespace Core.Controller
         TractionBackward[speedStep] = speed;
       }
 
-      LogService.Log(
-                     Microsoft.Extensions.Logging.LogLevel.Information,
-                     $"Loco drove {speed} m/s at dcc speed {speedStep} and direction {direction}.");
+      LogService.Log(Microsoft.Extensions.Logging.LogLevel.Information, $"Loco drove {speed} m/s at dcc speed {speedStep} and direction {direction}.");
       OnStateChanged();
     }
   }

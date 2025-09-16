@@ -141,9 +141,7 @@ namespace Shell.WPF
     {
       if (ValueChanged)
       {
-        MessageBox.Show(
-                        "Geänderte Einstellungen werden teilweise erst nach einem Restart übernommen!",
-                        "Geänderte Settings", MessageBoxButton.OK, MessageBoxImage.Information);
+        MessageBox.Show("Geänderte Einstellungen werden teilweise erst nach einem Restart übernommen!", "Geänderte Settings", MessageBoxButton.OK, MessageBoxImage.Information);
       }
     }
 

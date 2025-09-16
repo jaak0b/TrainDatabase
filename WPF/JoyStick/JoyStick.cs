@@ -59,8 +59,7 @@ namespace Shell.WPF.JoyStick
     /// </summary>
     private void Run()
     {
-      new Thread(
-                 () =>
+      new Thread(() =>
                  {
                    try
                    {
@@ -77,11 +76,7 @@ namespace Shell.WPF.JoyStick
                        {
                          if (OnValueUpdate is not null)
                          {
-                           OnValueUpdate(
-                                         this,
-                                         new(
-                                             state.Offset, state.Value,
-                                             JoyStickMaxValue.TryGetValue(state.Offset, out int maxval) ? maxval : 0));
+                           OnValueUpdate(this, new(state.Offset, state.Value, JoyStickMaxValue.TryGetValue(state.Offset, out int maxval) ? maxval : 0));
                          }
                        }
                      }
@@ -99,9 +94,7 @@ namespace Shell.WPF.JoyStick
     /// <returns>A List of Joysticks represented as  <see cref="Guid"/></returns>
     public static List<Guid> GetAllJoySticks()
     {
-      return new List<Guid>(
-                            new DirectInput().GetDevices(DeviceType.Joystick, DeviceEnumerationFlags.AllDevices)
-                                             .ToList().Select(e => e.InstanceGuid)) ?? new();
+      return new List<Guid>(new DirectInput().GetDevices(DeviceType.Joystick, DeviceEnumerationFlags.AllDevices).ToList().Select(e => e.InstanceGuid)) ?? new();
     }
   }
 }

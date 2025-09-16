@@ -10,8 +10,7 @@ namespace Shell.WPF
     {
     }
 
-    override public object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture,
-                                     object value, Type destinationType)
+    override public object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
     {
       if (destinationType == typeof(string))
       {
@@ -20,11 +19,8 @@ namespace Shell.WPF
           FieldInfo? fi = value.GetType().GetField(value.ToString());
           if (fi != null)
           {
-            DescriptionAttribute[]? attributes =
-              (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
-            return attributes.Length > 0 && !string.IsNullOrEmpty(attributes[0].Description)
-                     ? attributes[0].Description
-                     : value.ToString();
+            DescriptionAttribute[]? attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
+            return attributes.Length > 0 && !string.IsNullOrEmpty(attributes[0].Description) ? attributes[0].Description : value.ToString();
           }
         }
 

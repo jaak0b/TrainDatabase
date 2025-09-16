@@ -43,9 +43,8 @@ namespace Shell.WPF
         throw new ApplicationException($"Paramter '{nameof(vehicleFunction)}' darf nicht null sein!");
       }
 
-      FunctionModel =
-        db.Functions.Include(m => m.Vehicle).ThenInclude(m => m.Functions).FirstOrDefault(e => e.Id == vehicleFunction.Id) ??
-        throw new ApplicationException($"Funktion  mit der ID '{vehicleFunction.Id} konnte nicht geöffnet werden!");
+      FunctionModel = db.Functions.Include(m => m.Vehicle).ThenInclude(m => m.Functions).FirstOrDefault(e => e.Id == vehicleFunction.Id)
+                      ?? throw new ApplicationException($"Funktion  mit der ID '{vehicleFunction.Id} konnte nicht geöffnet werden!");
 
       Title = FunctionModel.Name ?? "";
 

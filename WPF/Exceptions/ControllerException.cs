@@ -16,15 +16,12 @@ namespace Shell.WPF.Exceptions
       controller.SetTrackPowerOFF();
     }
 
-    public ControllerException(Client controller, string message, Exception innerException) : base(
-                                                                                                   message,
-                                                                                                   innerException)
+    public ControllerException(Client controller, string message, Exception innerException) : base(message, innerException)
     {
       controller.SetTrackPowerOFF();
     }
 
-    protected ControllerException(Client controller, SerializationInfo info, StreamingContext context) :
-      base(info, context)
+    protected ControllerException(Client controller, SerializationInfo info, StreamingContext context) : base(info, context)
     {
       controller.SetTrackPowerOFF();
     }

@@ -66,15 +66,12 @@ namespace Persistence.Entities
     /// <returns></returns>
     public decimal? GetTractionSpeed(int speed, bool direction)
     {
-      return (speed <= Client.maxDccStep && speed >= 2)
-               ? (direction ? TractionForward[speed] : TractionBackward[speed])
-               : throw new ArgumentOutOfRangeException();
+      return speed <= Client.maxDccStep && speed >= 2 ? direction ? TractionForward[speed] : TractionBackward[speed] : throw new ArgumentOutOfRangeException();
     }
 
     override public string ToString()
     {
-      return
-        $"Add: {Address} - Name: \"{Name ?? FullName}\" - Pos: {Position} - {(IsActive ? "Aktiv" : "Deaktiviert")}";
+      return $"Add: {Address} - Name: \"{Name ?? FullName}\" - Pos: {Position} - {(IsActive ? "Aktiv" : "Deaktiviert")}";
     }
   }
 }

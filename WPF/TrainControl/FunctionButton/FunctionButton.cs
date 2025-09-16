@@ -17,7 +17,7 @@ namespace Shell.WPF.TrainControl.FunctionButton
       button.Height = 50;
       button.Width = 95;
 
-      RichTextBox textBox = new RichTextBox
+      RichTextBox textBox = new()
                             {
                               IsReadOnly = true,
                               IsHitTestVisible = false,
@@ -61,8 +61,8 @@ namespace Shell.WPF.TrainControl.FunctionButton
       button.ToolTip = vehicleFunctionEntity.ToString();
       button.Margin = new(10);
       button.Padding = new(2);
-      button.BorderThickness = new Thickness(0);
-      button.Effect = new DropShadowEffect() { Opacity = 0.2 };
+      button.BorderThickness = new(0);
+      button.Effect = new DropShadowEffect { Opacity = 0.2 };
     }
 
     private static string ShortenString(string input)

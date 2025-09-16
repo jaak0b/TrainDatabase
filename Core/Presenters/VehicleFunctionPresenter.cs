@@ -20,8 +20,7 @@ namespace Core.Presenters
       Db = ServiceProvider.GetService<Database>()!;
       Client = ServiceProvider.GetService<Client>()!;
 
-      FunctionModel = Db.Functions.Include(e => e.Vehicle).FirstOrDefault(e => e.Id == vehicleFunctionEntity.Id) ??
-                      throw new ApplicationException($"Function '{vehicleFunctionEntity}' was not found!");
+      FunctionModel = Db.Functions.Include(e => e.Vehicle).FirstOrDefault(e => e.Id == vehicleFunctionEntity.Id) ?? throw new ApplicationException($"Function '{vehicleFunctionEntity}' was not found!");
 
       Client.OnGetLocoInfo += Z21Client_OnGetLocoInfo;
     }
@@ -43,8 +42,7 @@ namespace Core.Presenters
 
     private void Z21Client_OnGetLocoInfo(object? sender, GetLocoInfoEventArgs e)
     {
-      if (e.Data.Adresse.Value == FunctionModel.Vehicle.Address &&
-          e.Data.Functions.Any(e => e.address == FunctionModel.Address))
+      if (e.Data.Adresse.Value == FunctionModel.Vehicle.Address && e.Data.Functions.Any(e => e.address == FunctionModel.Address))
       {
         State = e.Data.Functions.First(e => e.address == FunctionModel.Address).state;
 
@@ -60,18 +58,13 @@ namespace Core.Presenters
     {
       if (FunctionModel.EnumType != FunctionType.None)
       {
-        List<VehicleFunctionEntity> functions = FunctionModel.Vehicle.TractionVehicleIds
-                                                     .Select(
-                                                             e => Db.Vehicles.Include(e => e.Functions)
-                                                                    .FirstOrDefault(f => f.Id == e))
-                                                     .SelectMany(e => e?.Functions ?? new List<VehicleFunctionEntity>())
-                                                     .Where(
-                                                            e => e.EnumType == FunctionModel.EnumType &&
-                                                                 e.ButtonType == FunctionModel.ButtonType).ToList();
+        List<VehicleFunctionEntity> functions = FunctionModel.Vehicle.TractionVehicleIds.Select(e => Db.Vehicles.Include(e => e.Functions).FirstOrDefault(f => f.Id == e))
+                                                             .SelectMany(e => e?.Functions ?? new List<VehicleFunctionEntity>())
+                                                             .Where(e => e.EnumType == FunctionModel.EnumType && e.ButtonType == FunctionModel.ButtonType)
+                                                             .ToList();
         functions.Add(FunctionModel);
 
-        List<FunctionData> list = functions.Select(e => new FunctionData(e.Vehicle.Address, e.Address, toggleType))
-                                           .ToList();
+        List<FunctionData> list = functions.Select(e => new FunctionData(e.Vehicle.Address, e.Address, toggleType)).ToList();
 
         Client.SetLocoFunction(list);
       }

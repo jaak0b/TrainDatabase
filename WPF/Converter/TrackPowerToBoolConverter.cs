@@ -36,7 +36,7 @@ namespace Shell.WPF.Converter
     /// <exception cref="NotSupportedException"></exception>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      return value is bool b ? (b ? TrackPower.ON : TrackPower.OFF) : throw new NotSupportedException();
+      return value is bool b ? b ? TrackPower.ON : TrackPower.OFF : throw new NotSupportedException();
     }
   }
 }
