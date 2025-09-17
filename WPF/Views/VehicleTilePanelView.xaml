@@ -34,7 +34,7 @@
             <ItemsControl Grid.Row="1" ItemsSource="{Binding VehicleViews}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel IsItemsHost="True" />
+                        <WrapPanel IsItemsHost="True" HorizontalAlignment="Center" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>

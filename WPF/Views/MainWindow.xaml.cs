@@ -54,8 +54,6 @@ namespace Shell.WPF.Views
           Application.Current.Shutdown();
           return;
         }
-
-        ResizeTimer.Elapsed += ResizeTimer_Elapsed;
       }
       catch (Exception exception)
       {
@@ -71,8 +69,6 @@ namespace Shell.WPF.Views
     private Client Client { get; } = default!;
 
     private Database Db { get; } = default!;
-
-    private System.Timers.Timer ResizeTimer { get; } = new() { Enabled = false, Interval = new TimeSpan(0, 0, 0, 1).TotalMilliseconds, AutoReset = false };
 
     protected void OnPropertyChanged([CallerMemberName] string name = null!)
     {
@@ -115,94 +111,7 @@ namespace Shell.WPF.Views
       databaseImportView.ShowDialogOrActivate();
     }
 
-    private void DrawVehicles(IEnumerable<VehicleEntity> list)
-    {
-      VehicleGrid.Children.Clear();
-      foreach (VehicleEntity item in list.OrderBy(e => e.Position))
-      {
-        StackPanel sp = new()
-                        {
-                          Height = 240,
-                          Width = 500,
-                          HorizontalAlignment = HorizontalAlignment.Left,
-                          VerticalAlignment = VerticalAlignment.Top,
-                          Background = Brushes.White
-                        };
-
-        string path = Path.Combine(Configuration.ApplicationData.VehicleImages.FullName, item?.ImageName ?? "");
-        BitmapImage bitmapImage;
-        if (File.Exists(path))
-        {
-          bitmapImage = LoadPhoto(path);
-        }
-        else
-        {
-          Assembly assembly = Assembly.GetExecutingAssembly();
-          string resourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith("NotFound.png"));
-          using Stream stream = assembly.GetManifestResourceStream(resourceName)!;
-          bitmapImage = LoadPhoto(stream!);
-        }
-
-        var image = new Image
-                    {
-                      Source = bitmapImage,
-                      Width = 500,
-                      Height = 200,
-                      Tag = item
-                    };
-        sp.MouseEnter += (sender, args) =>
-                         {
-                           if (sender is StackPanel i)
-                           {
-                             i.Children.OfType<Image>().First().Visibility = Visibility.Collapsed;
-                           }
-                         };
-        sp.MouseLeave += (sender, args) =>
-                         {
-                           if (sender is StackPanel i)
-                           {
-                             i.Children.OfType<Image>().First().Visibility = Visibility.Visible;
-                           }
-                         };
-        sp.Children.Add(image);
-
-        sp.Children.Add(new TextBlock
-                        {
-                          Text = !string.IsNullOrWhiteSpace(item?.Name) ? item.Name : !string.IsNullOrWhiteSpace(item?.FullName) ? item.FullName : $"Adresse: {item?.Address}",
-                          Background = Brushes.Transparent
-                        });
-
-        VehicleBorder border = new()
-                               {
-                                 Padding = new(2),
-                                 Margin = new(10),
-                                 BorderThickness = new(0),
-                                 Vehicle = item,
-                                 Child = sp,
-                                 ContextMenu = new(),
-                                 Effect = new DropShadowEffect { Opacity = 0.2, RenderingBias = RenderingBias.Quality }
-                               };
-
-        VehicleMenuItem mi = new(item, "Fahrzeug steuern", (a) => TrainControl.TrainControl.CreatTrainControlWindow(ServiceProvider, a));
-        border.ContextMenu.Items.Add(mi);
-
-        border.MouseDown += Border_MouseDown;
-        VehicleGrid.Children.Add(border);
-      }
-    }
-
-    private void DrawVehiclesIfAnyExist()
-    {
-      if (!Db.Vehicles.Any()
-          && MessageBoxResult.Yes
-          == MessageBox.Show("Sie haben noch keine Daten in der Datenbank. Möchten Sie jetzt welche importieren?", "Datenbank importieren", MessageBoxButton.YesNo, MessageBoxImage.Question))
-      {
-        databaseImportView.ShowDialogOrActivate();
-      }
-
-      Search();
-    }
-
+ 
     private void MeasureLoko_Click(object sender, RoutedEventArgs e)
     {
       new Einmessen(ServiceProvider).Show();
@@ -222,9 +131,7 @@ namespace Shell.WPF.Views
                     return;
                 }
 #endif
-      DrawVehiclesIfAnyExist();
       RemoveUnneededImages();
-      Db.CollectionChanged += (a, b) => Dispatcher.Invoke(() => Search());
     }
 
     private void Mw_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -233,19 +140,6 @@ namespace Shell.WPF.Views
       // {
       //   TbSearch.Focus();
       // }
-    }
-
-    private void Mw_SizeChanged(object sender, SizeChangedEventArgs e)
-    {
-      if (!ResizeTimer.Enabled)
-      {
-        ResizeTimer.Start();
-      }
-      else
-      {
-        ResizeTimer.Stop();
-        ResizeTimer.Start();
-      }
     }
 
     private void OpenVehicleManagement_Click(object sender, RoutedEventArgs e)
@@ -284,30 +178,6 @@ namespace Shell.WPF.Views
                });
     }
 
-    private void ResizeTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-    {
-      Dispatcher.Invoke(() =>
-                        {
-                          //var menuHeight = RSearchbar.ActualHeight + RMenu.ActualHeight;
-                          //int hCount = (int)((Height - (menuHeight)) / 152);
-                          //Height = (hCount * 152) + menuHeight;
-
-                          int wCount = (int)((Width - 18 + 10) / 282);
-                          Width = wCount * 282 + 18;
-                        });
-    }
-
-    private void Search()
-    {
-      List<VehicleEntity>? vehicles = Db.Vehicles.Where(e => e.IsActive).ToList();
-      // foreach (string? item in TbSearch.Text.Split(" ", StringSplitOptions.RemoveEmptyEntries))
-      // {
-      //   vehicles = vehicles.Where(i => i.IsActive && $"{i.Name} {i.FullName} {i.Type} {i.Address} {i.Railway}".ToLower().Contains(item.ToLower().Trim())).ToList();
-      // }
-
-      DrawVehicles(vehicles);
-    }
-
     private void Settings_Click(object sender, RoutedEventArgs e)
     {
       if (Application.Current.Windows.OfType<SettingsWindow>().FirstOrDefault() is SettingsWindow settings)
@@ -319,11 +189,6 @@ namespace Shell.WPF.Views
       {
         new SettingsWindow().Show();
       }
-    }
-
-    private void TbSearch_TextChanged(object sender, TextChangedEventArgs e)
-    {
-      Search();
     }
 
     private void MiDeleteDatabase(object sender, RoutedEventArgs e)

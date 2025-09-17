@@ -3,17 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Shell.WPF.Views"
              mc:Ignorable="d"
-             Height="300" Width="500" d:DataContext="{d:DesignInstance }">
-    <Border Padding="2" Margin="2" BorderThickness="0" >
-        <Border.Effect>
-            <DropShadowEffect Opacity="0.2" RenderingBias="Quality"/>
-        </Border.Effect>
-        <StackPanel Height="240" Width="500" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White">
-            <Image Name="TrainImage" Grid.Row="0" Source="{Binding VehicleImage}" Width="500" Height="200"></Image>
-            <TextBlock Grid.Row="1" Text="{Binding Vehicle.Name}" IsHitTestVisible="False"></TextBlock>
-        </StackPanel>
-    </Border>
+             d:DataContext="{d:DesignInstance }">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" Height="240" Width="500"
+          Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
+        <Image Grid.Row="0" Source="{Binding VehicleImage}" Stretch="Uniform"
+               HorizontalAlignment="Left" VerticalAlignment="Top">
+        </Image>
+        <TextBlock Grid.Row="2" Text="{Binding Vehicle.Name}" IsHitTestVisible="False" FontWeight="Bold"></TextBlock>
+        <Grid.Effect>
+            <DropShadowEffect Opacity="0.2" RenderingBias="Quality" />
+        </Grid.Effect>
+    </Grid>
 </UserControl>
