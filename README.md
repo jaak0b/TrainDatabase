@@ -1,13 +1,11 @@
 # TrainDatabase
-TrainDatabase is a software that lets you control your model trains with your PC. Whether you want to run a single train or a whole network, TrainDatabase gives you an easy and intuitive way to do it. With TrainDatabase, you can:
+TrainDatabase lets you control your model trains with your PC. Whether you want to run a single train or a whole network, TrainDatabase gives you an easy and intuitive way to do it. With TrainDatabase, you can:
 
-- Control your model trains with your PC using TrainDatabase
+- Control you trains via a modern and elegant user interface
 - Run a single train or a whole network with ease and flexibility
-- Enjoy realistic and immersive simulation of train operations and scenarios
 - Support double traction for more power and speed
-- Import a z21 Database for seamless integration with your existing Roco/Fleischman system
-
-*Note: TrainDatabase and its documentation is written in German. An English language package is **not** planned.*
+- Measure locomotive speed via an arduino based speed measurment unit for reliable double tractions. 
+- Import your existing locomotives from the Roco/Fleischmann Z21 smartphone app.
 
 ## Getting Started
 
@@ -67,13 +65,16 @@ TrainDatabase (with the help of a [raspberry pi](https://www.raspberrypi.org/pro
 
 Feature Name | Status
 ------------ | -------------
-Import database from Roco Z21 App|Complete
-Manage vehicles|Complete
-Control vehicle speed|Complete
-Control vehicle functions|Complete
-Multi traction support|In development
-Joystick support|Not done
-Hotykey support|Not done
+Import Roco/Fleischmann Z21 app data| ✅
+Import Rocrail data | ❌
+Manage vehicles| ✅
+Control vehicle speed / functions manually| ✅
+Multi traction support| ❌
+Joystick support| ❌
+Hotykey support| ❌
+Layout control | ❌
+Train automation | ❌
+
 
 ## Sources
 TBD
