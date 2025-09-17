@@ -5,19 +5,61 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance }">
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" Height="240" Width="500" Margin="10">
+    <Grid
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch"
+        Background="White"
+        Height="240"
+        Width="500"
+        Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Image Grid.Row="0" Source="{Binding VehicleImage}" Stretch="Uniform"
-               HorizontalAlignment="Left" VerticalAlignment="Top">
-        </Image>
-        <TextBlock Grid.Row="2" Text="{Binding Vehicle.Name}" IsHitTestVisible="False" FontWeight="Bold"></TextBlock>
+        <Image x:Name="VehicleImage" Grid.Row="0" Source="{Binding VehicleImage}" Stretch="Uniform"
+               HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" />
+
+        <Grid x:Name="VehicleControlGrid" Grid.Row="0" Visibility="Collapsed">
+        </Grid>
+
+        <TextBlock Grid.Row="2" Text="{Binding Vehicle.Name}" IsHitTestVisible="False" FontWeight="Bold" Margin="5" />
+
         <Grid.Effect>
             <DropShadowEffect Opacity="0.2" RenderingBias="Quality" />
         </Grid.Effect>
+
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="MouseEnter">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VehicleImage"
+                                                       Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VehicleControlGrid"
+                                                       Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+
+            <EventTrigger RoutedEvent="MouseLeave">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VehicleImage"
+                                                       Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VehicleControlGrid"
+                                                       Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
     </Grid>
 </UserControl>
