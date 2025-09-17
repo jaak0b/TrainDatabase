@@ -5,8 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance }">
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" Height="240" Width="500"
-          Margin="5">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" Height="240" Width="500" Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
