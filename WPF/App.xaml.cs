@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using Composition;
-using R3;
+using Shell.WPF.Views;
 using Z21;
 
 namespace Shell.WPF
@@ -31,8 +31,6 @@ namespace Shell.WPF
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         TaskScheduler.UnobservedTaskException += TaskScheduler_OnUnobservedTaskException;
 
-        WpfProviderInitializer.SetDefaultObservableSystem(ex => Trace.WriteLine($"R3 UnhandledException:{ex}"));
-        
         string logFilePath = Path.Combine(Configuration.ApplicationData.LogDirectory.FullName, "log.txt");
         Log.Logger = new LoggerConfiguration().MinimumLevel.Debug()
                                               .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)

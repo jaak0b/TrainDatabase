@@ -1,4 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
+using Persistence.Entities;
+using Persistence.Extensions;
+using Persistence.Model;
 using Persistence.Ports;
 
 namespace Persistence.Repositories
@@ -6,5 +12,24 @@ namespace Persistence.Repositories
   public class VehicleRepository(Database.Database database, IMapper mapper) : IVehicleRepository
   {
 
+    public Vehicle GetVehicleByIdRequired(int vehicleId) => GetVehicleById(vehicleId) ?? throw new IdNotFoundException();
+
+    public Vehicle? GetVehicleById(int vehicleId)
+    {
+      VehicleEntity? vehicleEntity = database.Vehicles.Find(vehicleId);
+      return vehicleEntity is null ? null : mapper.Map<VehicleEntity, Vehicle>(vehicleEntity);
+    }
+
+    public IReadOnlyCollection<Vehicle> FullTextSearchVehicles(string? vehicleName)
+    {
+      string searchString = vehicleName ?? "";
+      return database.Vehicles
+                     .ToList()
+                     .Where(entity => Contain(entity.Name, searchString) || Contain(entity.FullName, searchString))
+                     .Select(mapper.Map<VehicleEntity, Vehicle>)
+                     .ToList();
+    }
+
+    private static bool Contain(object value, string searchString) => value?.ToString()?.Contains(searchString, StringComparison.InvariantCultureIgnoreCase) == true;
   }
 }

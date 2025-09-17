@@ -12,7 +12,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
-using Core;
 using Helper;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -20,10 +19,10 @@ using Persistence.Database;
 using Persistence.Entities;
 using Shell.WPF.DatabaseImport;
 using Shell.WPF.Extensions;
-using Shell.WPF.Views;
+using Shell.WPF.ViewModels;
 using Z21;
 
-namespace Shell.WPF
+namespace Shell.WPF.Views
 {
   /// <summary>
   /// Interaction logic for MainWindow.xaml
@@ -35,15 +34,15 @@ namespace Shell.WPF
     private readonly VehicleTileViewFactory vehicleTileViewFactory;
     private readonly static Mutex mutex = new(true, "{8F6F0AC4-B9A1-45fd-A8CF-72F04E6BDE8F}");
 
-    public MainWindow(IServiceProvider serviceProvider, DatabaseImportView databaseImportView, ILogger<MainWindow> logger, VehicleTileViewFactory vehicleTileViewFactory)
+    public MainWindow(IServiceProvider serviceProvider, DatabaseImportView databaseImportView, ILogger<MainWindow> logger, VehicleTileViewFactory vehicleTileViewFactory, MainWindowViewModel mainWindowViewModel)
     {
       this.databaseImportView = databaseImportView;
       this.logger = logger;
       this.vehicleTileViewFactory = vehicleTileViewFactory;
       try
       {
-        DataContext = this;
         InitializeComponent();
+        DataContext = mainWindowViewModel;
 
         ServiceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
         Db = ServiceProvider.GetService<Database>()!;
@@ -129,7 +128,7 @@ namespace Shell.WPF
                           VerticalAlignment = VerticalAlignment.Top,
                           Background = Brushes.White
                         };
-        
+
         string path = Path.Combine(Configuration.ApplicationData.VehicleImages.FullName, item?.ImageName ?? "");
         BitmapImage bitmapImage;
         if (File.Exists(path))
@@ -143,36 +142,36 @@ namespace Shell.WPF
           using Stream stream = assembly.GetManifestResourceStream(resourceName)!;
           bitmapImage = LoadPhoto(stream!);
         }
-        
+
         var image = new Image
-                {
-                  Source = bitmapImage,
-                  Width = 500,
-                  Height = 200,
-                  Tag = item
-                };
+                    {
+                      Source = bitmapImage,
+                      Width = 500,
+                      Height = 200,
+                      Tag = item
+                    };
         sp.MouseEnter += (sender, args) =>
                          {
                            if (sender is StackPanel i)
                            {
                              i.Children.OfType<Image>().First().Visibility = Visibility.Collapsed;
                            }
-                         }; 
+                         };
         sp.MouseLeave += (sender, args) =>
                          {
                            if (sender is StackPanel i)
                            {
                              i.Children.OfType<Image>().First().Visibility = Visibility.Visible;
                            }
-                         }; 
+                         };
         sp.Children.Add(image);
-        
+
         sp.Children.Add(new TextBlock
                         {
                           Text = !string.IsNullOrWhiteSpace(item?.Name) ? item.Name : !string.IsNullOrWhiteSpace(item?.FullName) ? item.FullName : $"Adresse: {item?.Address}",
                           Background = Brushes.Transparent
                         });
-        
+
         VehicleBorder border = new()
                                {
                                  Padding = new(2),
@@ -183,10 +182,10 @@ namespace Shell.WPF
                                  ContextMenu = new(),
                                  Effect = new DropShadowEffect { Opacity = 0.2, RenderingBias = RenderingBias.Quality }
                                };
-        
+
         VehicleMenuItem mi = new(item, "Fahrzeug steuern", (a) => TrainControl.TrainControl.CreatTrainControlWindow(ServiceProvider, a));
         border.ContextMenu.Items.Add(mi);
-        
+
         border.MouseDown += Border_MouseDown;
         VehicleGrid.Children.Add(border);
       }
@@ -230,10 +229,10 @@ namespace Shell.WPF
 
     private void Mw_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
     {
-      if (IsActive && !TbSearch.IsFocused)
-      {
-        TbSearch.Focus();
-      }
+      // if (IsActive && !TbSearch.IsFocused)
+      // {
+      //   TbSearch.Focus();
+      // }
     }
 
     private void Mw_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -301,10 +300,10 @@ namespace Shell.WPF
     private void Search()
     {
       List<VehicleEntity>? vehicles = Db.Vehicles.Where(e => e.IsActive).ToList();
-      foreach (string? item in TbSearch.Text.Split(" ", StringSplitOptions.RemoveEmptyEntries))
-      {
-        vehicles = vehicles.Where(i => i.IsActive && $"{i.Name} {i.FullName} {i.Type} {i.Address} {i.Railway}".ToLower().Contains(item.ToLower().Trim())).ToList();
-      }
+      // foreach (string? item in TbSearch.Text.Split(" ", StringSplitOptions.RemoveEmptyEntries))
+      // {
+      //   vehicles = vehicles.Where(i => i.IsActive && $"{i.Name} {i.FullName} {i.Type} {i.Address} {i.Railway}".ToLower().Contains(item.ToLower().Trim())).ToList();
+      // }
 
       DrawVehicles(vehicles);
     }

@@ -27,9 +27,9 @@ namespace Core
       builder.RegisterType<VehiclePresenter>().AsSelf().InstancePerDependency();
       builder.Register<VehiclePresenterFactory>(ctx =>
                                                 {
-                                                  ConcurrentDictionary<ushort, VehiclePresenter> cache = new();
+                                                  ConcurrentDictionary<int, VehiclePresenter> cache = new();
                                                   IComponentContext c = ctx.Resolve<IComponentContext>();
-                                                  return address => cache.GetOrAdd(address, i => c.Resolve<VehiclePresenter>(new TypedParameter(typeof(ushort), i)));
+                                                  return address => cache.GetOrAdd(address, i => c.Resolve<VehiclePresenter>(new TypedParameter(typeof(int), i)));
                                                 })
              .SingleInstance();
     }

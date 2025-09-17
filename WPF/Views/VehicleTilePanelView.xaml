@@ -1,0 +1,48 @@
+<UserControl x:Class="Shell.WPF.Views.VehicleTilePanelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Shell.WPF.Views"
+             xmlns:resx="clr-namespace:Shell.WPF.Resources"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance }">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBox Name="TbSearchBox" Grid.Row="0"
+                 Text="{Binding VehicleSearchText.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2" />
+        <TextBlock Grid.Row="0" IsHitTestVisible="False" Text="{x:Static resx:Resources.List_Search}"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="DarkGray" Padding="2" Grid.Column="0">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Text, ElementName=TbSearchBox}" Value="">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible">
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding VehicleViews}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel IsItemsHost="True" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type local:VehicleTileView}">
+                        <ContentPresenter Content="{Binding}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
