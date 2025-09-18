@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Shell.WPF.Converter
+namespace Shell.WPF.Converters
 {
   public class BoolToDirectionConverter : IValueConverter
   {

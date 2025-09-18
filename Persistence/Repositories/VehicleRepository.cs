@@ -20,12 +20,12 @@ namespace Persistence.Repositories
       return vehicleEntity is null ? null : mapper.Map<VehicleEntity, Vehicle>(vehicleEntity);
     }
 
-    public IReadOnlyCollection<Vehicle> FullTextSearchVehicles(string? vehicleName)
+    public IReadOnlyCollection<Vehicle> FullTextSearchVehicles(string? searchString)
     {
-      string searchString = vehicleName ?? "";
+      string searchStringNotNull = searchString ?? "";
       return database.Vehicles
                      .ToList()
-                     .Where(entity => Contain(entity.Name, searchString) || Contain(entity.FullName, searchString))
+                     .Where(entity => Contain(entity.Name, searchStringNotNull) || Contain(entity.FullName, searchStringNotNull))
                      .Select(mapper.Map<VehicleEntity, Vehicle>)
                      .ToList();
     }

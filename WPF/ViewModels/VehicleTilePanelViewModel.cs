@@ -2,7 +2,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
-using MugenMvvmToolkit;
 using Persistence.Ports;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
@@ -24,16 +23,17 @@ namespace Shell.WPF.ViewModels
       VehicleSearchText.Throttle(TimeSpan.FromMilliseconds(200)).DistinctUntilChanged().ObserveOnUIDispatcher().Subscribe(_ => RefreshTiles());
     }
 
-    public ObservableCollection<VehicleTileView> VehicleViews { get; set; } = [];
+    public ObservableCollection<VehicleTileView> VehicleViews { get; } = [];
 
     public ReactiveProperty<string> VehicleSearchText { get; set; } = new();
 
     private void RefreshTiles()
     {
       VehicleViews.Clear();
-
-      VehicleViews.AddRange(vehicleRepository.FullTextSearchVehicles(VehicleSearchText.Value)
-                                             .Select(vehicle => vehicleTileViewFactory(vehicle.Id)));
+      foreach (VehicleTileView vehicleTileView in vehicleRepository.FullTextSearchVehicles(VehicleSearchText.Value).Select(vehicle => vehicleTileViewFactory(vehicle.Id)))
+      {
+        VehicleViews.Add(vehicleTileView);
+      }
     }
   }
 }

@@ -97,15 +97,6 @@ namespace Shell.WPF.Views
       return bitmap;
     }
 
-    private async void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-    {
-      if (e.ClickCount == 2 && sender is VehicleBorder border)
-      {
-        await Task.Delay(150);
-        TrainControl.TrainControl.CreatTrainControlWindow(ServiceProvider, border.Vehicle);
-      }
-    }
-
     private void MiImportNewDatabase(object sender, RoutedEventArgs e)
     {
       databaseImportView.ShowDialogOrActivate();

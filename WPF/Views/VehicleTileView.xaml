@@ -3,14 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:resx="clr-namespace:Shell.WPF.Resources"
+             xmlns:converters="clr-namespace:Shell.WPF.Converters"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance }">
+    <UserControl.Resources>
+        <converters:TrainSpeedToForegroundColorConvert x:Key="TrainSpeedToForegroundColorConvert" />
+    </UserControl.Resources>
     <Grid
         HorizontalAlignment="Stretch"
         VerticalAlignment="Stretch"
         Background="White"
-        Height="240"
-        Width="500"
+        Height="120"
+        Width="250"
         Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -18,48 +23,61 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Image x:Name="VehicleImage" Grid.Row="0" Source="{Binding VehicleImage}" Stretch="Uniform"
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <Image x:Name="VehicleImage" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+               Source="{Binding VehicleImage.Value}" Stretch="Uniform"
                HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" />
 
-        <Grid x:Name="VehicleControlGrid" Grid.Row="0" Visibility="Collapsed">
-        </Grid>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding Vehicle.Name}" IsHitTestVisible="False"
+                   FontWeight="Bold" Margin="5" />
 
-        <TextBlock Grid.Row="2" Text="{Binding Vehicle.Name}" IsHitTestVisible="False" FontWeight="Bold" Margin="5" />
-
+        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding SpeedDisplayText.Value}" IsHitTestVisible="False"
+                   Margin="5" FontFamily="Consolas"
+                   Foreground="{Binding VehiclePresenter.Speed.Value, Converter={ StaticResource TrainSpeedToForegroundColorConvert}}" />
         <Grid.Effect>
             <DropShadowEffect Opacity="0.2" RenderingBias="Quality" />
         </Grid.Effect>
 
-        <Grid.Triggers>
-            <EventTrigger RoutedEvent="MouseEnter">
-                <BeginStoryboard>
-                    <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VehicleImage"
-                                                       Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VehicleControlGrid"
-                                                       Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
-                        </ObjectAnimationUsingKeyFrames>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-
-            <EventTrigger RoutedEvent="MouseLeave">
-                <BeginStoryboard>
-                    <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VehicleImage"
-                                                       Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VehicleControlGrid"
-                                                       Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
-                        </ObjectAnimationUsingKeyFrames>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-        </Grid.Triggers>
+        <Grid.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="{x:Static resx:Resources.VehicleTileView_OpenTrainControllingView}" />
+            </ContextMenu>
+        </Grid.ContextMenu>
+        <!-- <Grid.Triggers> -->
+        <!--     <EventTrigger RoutedEvent="MouseEnter"> -->
+        <!--         <BeginStoryboard> -->
+        <!--             <Storyboard> -->
+        <!--                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VehicleImage" -->
+        <!--                                                Storyboard.TargetProperty="Visibility"> -->
+        <!--                     <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" /> -->
+        <!--                 </ObjectAnimationUsingKeyFrames> -->
+        <!--                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VehicleControlGrid" -->
+        <!--                                                Storyboard.TargetProperty="Visibility"> -->
+        <!--                     <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" /> -->
+        <!--                 </ObjectAnimationUsingKeyFrames> -->
+        <!--             </Storyboard> -->
+        <!--         </BeginStoryboard> -->
+        <!--     </EventTrigger> -->
+        <!-- -->
+        <!--     <EventTrigger RoutedEvent="MouseLeave"> -->
+        <!--         <BeginStoryboard> -->
+        <!--             <Storyboard> -->
+        <!--                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VehicleImage" -->
+        <!--                                                Storyboard.TargetProperty="Visibility"> -->
+        <!--                     <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" /> -->
+        <!--                 </ObjectAnimationUsingKeyFrames> -->
+        <!--                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VehicleControlGrid" -->
+        <!--                                                Storyboard.TargetProperty="Visibility"> -->
+        <!--                     <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" /> -->
+        <!--                 </ObjectAnimationUsingKeyFrames> -->
+        <!--             </Storyboard> -->
+        <!--         </BeginStoryboard> -->
+        <!--     </EventTrigger> -->
+        <!-- </Grid.Triggers> -->
     </Grid>
 </UserControl>

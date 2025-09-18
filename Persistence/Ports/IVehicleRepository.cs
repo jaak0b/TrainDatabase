@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using Persistence.Extensions;
 using Persistence.Model;
 
@@ -22,7 +23,8 @@ namespace Persistence.Ports
     /// <summary>
     /// Allows to search <see cref="Vehicle"/> by almost every parameter.
     /// </summary>
-    IReadOnlyCollection<Vehicle> FullTextSearchVehicles(string? vehicleName);
+    IReadOnlyCollection<Vehicle> FullTextSearchVehicles(string? searchString);
+    
     
   }
 }

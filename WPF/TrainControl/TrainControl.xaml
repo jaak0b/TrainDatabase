@@ -3,15 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:converter="clr-namespace:Shell.WPF.Converter"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:converters="clr-namespace:Shell.WPF.Converters"
         mc:Ignorable="d"
         Title="TrainControl" Name="Tc" MinHeight="300" MinWidth="240" Width="480" Height="450"
         PreviewMouseWheel="Tc_PreviewMouseWheel" PreviewKeyDown="Tc_PreviewKeyDown"
         WindowStartupLocation="CenterScreen" Loaded="TrainControl_Loaded">
     <Window.Resources>
-        <converter:BoolToDirectionConverter x:Key="BoolToDirectionConverter" />
-        <converter:TrackPowerToBoolConverter x:Key="TrackPowerToBoolConverter" />
+        <converters:BoolToDirectionConverter x:Key="BoolToDirectionConverter" />
+        <converters:TrackPowerToBoolConverter x:Key="TrackPowerToBoolConverter" />
     </Window.Resources>
     <xctk:BusyIndicator IsBusy="True" Name="BusyIndicator" BusyContent="Verbindung zur Zentrale wird hergestellt...">
         <Grid Margin="5">

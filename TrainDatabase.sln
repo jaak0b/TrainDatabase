@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Composition", "Composition\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence.UnitTest", "Persistence.UnitTest\Persistence.UnitTest.csproj", "{1713F881-53B1-4A60-9AEE-3AA94EDF1B43}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shell.WPF.UnitTest", "Shell.WPF.UnitTest\Shell.WPF.UnitTest.csproj", "{3DB3CF40-2371-451B-8D98-D9321DC7774A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -82,6 +84,12 @@ Global
 		{1713F881-53B1-4A60-9AEE-3AA94EDF1B43}.DefaultBuild|x64.Build.0 = Debug|Any CPU
 		{1713F881-53B1-4A60-9AEE-3AA94EDF1B43}.Release|x64.ActiveCfg = Release|Any CPU
 		{1713F881-53B1-4A60-9AEE-3AA94EDF1B43}.Release|x64.Build.0 = Release|Any CPU
+		{3DB3CF40-2371-451B-8D98-D9321DC7774A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3DB3CF40-2371-451B-8D98-D9321DC7774A}.Debug|x64.Build.0 = Debug|Any CPU
+		{3DB3CF40-2371-451B-8D98-D9321DC7774A}.DefaultBuild|x64.ActiveCfg = Debug|Any CPU
+		{3DB3CF40-2371-451B-8D98-D9321DC7774A}.DefaultBuild|x64.Build.0 = Debug|Any CPU
+		{3DB3CF40-2371-451B-8D98-D9321DC7774A}.Release|x64.ActiveCfg = Release|Any CPU
+		{3DB3CF40-2371-451B-8D98-D9321DC7774A}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

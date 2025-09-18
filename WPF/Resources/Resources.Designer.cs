@@ -67,5 +67,14 @@ namespace Shell.WPF.Resources {
                 return ResourceManager.GetString("List_Search", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Control Train.
+        /// </summary>
+        public static string VehicleTileView_OpenTrainControllingView {
+            get {
+                return ResourceManager.GetString("VehicleTileView_OpenTrainControllingView", resourceCulture);
+            }
+        }
     }
 }

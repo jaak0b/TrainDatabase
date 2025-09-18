@@ -14,4 +14,7 @@
     <data name="List_Search" xml:space="preserve">
         <value>Suche</value>
     </data>
+    <data name="VehicleTileView_OpenTrainControllingView" xml:space="preserve">
+        <value>Zug steuern</value>
+    </data>
 </root>
