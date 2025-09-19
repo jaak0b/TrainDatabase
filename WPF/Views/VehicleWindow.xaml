@@ -5,8 +5,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:Shell.WPF.Views"
         mc:Ignorable="d"
-        Title="VehicleWindow" Height="450" Width="800">
+        Title="{Binding VehicleViewModel.VehicleDisplayText.Value}" Height="450" Width="800"
+        d:DataContext="{d:DesignInstance }">
     <TabControl>
-        <TabItem Header="xxxx"></TabItem>
+        <TabItem Header="xxxx" Content="{Binding  VehicleManualControlView}"></TabItem>
     </TabControl>
 </Window>

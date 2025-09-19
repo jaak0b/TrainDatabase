@@ -1,4 +1,5 @@
 using System.Windows;
+using Shell.WPF.ViewModels;
 
 namespace Shell.WPF.Views
 {
@@ -6,9 +7,10 @@ namespace Shell.WPF.Views
 
   public partial class VehicleWindow : Window
   {
-    public VehicleWindow(int vehicleId)
+    public VehicleWindow(int vehicleId, VehicleWindowViewModelFactory vehicleWindowViewModelFactory)
     {
       InitializeComponent();
+      DataContext = vehicleWindowViewModelFactory(vehicleId);
     }
   }
 }

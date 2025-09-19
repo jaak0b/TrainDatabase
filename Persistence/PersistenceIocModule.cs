@@ -19,7 +19,7 @@ namespace Persistence
       builder.Register(context =>
                        {
                          ILoggerFactory loggerFactory = context.Resolve<ILoggerFactory>();
-                         MapperConfiguration config = new(mapperConfigurationExpression => { mapperConfigurationExpression.AddProfile<VehicleProfile>(); }, loggerFactory);
+                         MapperConfiguration config = new(mapperConfigurationExpression => { mapperConfigurationExpression.AddProfile<VehicleProfile>(); });
                          config.AssertConfigurationIsValid();
                          return config;
                        })

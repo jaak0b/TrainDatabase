@@ -35,7 +35,7 @@ namespace Shell.WPF
                                                       return address => cache.GetOrAdd(address, i => c.Resolve<VehicleTileViewModel>(new TypedParameter(typeof(int), i)));
                                                     })
              .SingleInstance();
-      
+
       builder.RegisterType<VehicleTileView>().AsSelf().InstancePerDependency();
       builder.Register<VehicleTileViewFactory>(ctx =>
                                                {
@@ -59,8 +59,33 @@ namespace Shell.WPF
                                                                                 });
                                              })
              .SingleInstance();
+
+      builder.RegisterType<VehicleManualControlView>().AsSelf().InstancePerDependency();
+      builder.Register<VehicleManualControlViewFactory>(ctx =>
+                                                        {
+                                                          ConcurrentDictionary<int, VehicleManualControlView> cache = new();
+                                                          IComponentContext c = ctx.Resolve<IComponentContext>();
+                                                          return address => cache.GetOrAdd(address, i => c.Resolve<VehicleManualControlView>(new TypedParameter(typeof(int), i)));
+                                                        })
+             .SingleInstance();
+
+      builder.RegisterType<VehicleManualControlViewModel>().AsSelf().InstancePerDependency();
+      builder.Register<VehicleManualControlViewModelFactory>(ctx =>
+                                                             {
+                                                               ConcurrentDictionary<int, VehicleManualControlViewModel> cache = new();
+                                                               IComponentContext c = ctx.Resolve<IComponentContext>();
+                                                               return address => cache.GetOrAdd(address, i => c.Resolve<VehicleManualControlViewModel>(new TypedParameter(typeof(int), i)));
+                                                             })
+             .SingleInstance();
       
-      
+      builder.RegisterType<VehicleWindowViewModel>().AsSelf().InstancePerDependency();
+      builder.Register<VehicleWindowViewModelFactory>(ctx =>
+                                                      {
+                                                        ConcurrentDictionary<int, VehicleWindowViewModel> cache = new();
+                                                        IComponentContext c = ctx.Resolve<IComponentContext>();
+                                                        return address => cache.GetOrAdd(address, i => c.Resolve<VehicleWindowViewModel>(new TypedParameter(typeof(int), i)));
+                                                      })
+             .SingleInstance();
     }
   }
 }
