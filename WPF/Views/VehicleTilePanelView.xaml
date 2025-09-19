@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Shell.WPF.Views"
              xmlns:resx="clr-namespace:Shell.WPF.Resources"
+             xmlns:dragDrop="urn:gong-wpf-dragdrop"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance }">
     <Grid>
@@ -31,7 +32,12 @@
         </TextBlock>
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible">
-            <ItemsControl Grid.Row="1" ItemsSource="{Binding VehicleViews}">
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding VehicleViews}" 
+                          dragDrop:DragDrop.IsDragSource="True"
+                          dragDrop:DragDrop.IsDropTarget="True"
+                          dragDrop:DragDrop.UseDefaultDragAdorner="True"
+                          dragDrop:DragDrop.DropHandler="{Binding}">
+
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel IsItemsHost="True" HorizontalAlignment="Center" />
