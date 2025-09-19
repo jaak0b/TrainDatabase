@@ -54,10 +54,12 @@ namespace Shell.WPF.ViewModels
       if (dropInfo.Data is not VehicleTileViewModel sourceItem || !Equals(dropInfo.TargetCollection, VehicleTiles))
         return;
 
-      int insertIndex = dropInfo.InsertIndex;
       int sourceIndex = VehicleTiles.IndexOf(sourceItem);
+      int insertIndex = dropInfo.InsertIndex;
 
-      if (sourceIndex == -1 || insertIndex == sourceIndex)
+      insertIndex = Math.Max(0, Math.Min(insertIndex, VehicleTiles.Count - 1));
+
+      if (insertIndex >= VehicleTiles.Count || insertIndex == sourceIndex)
         return;
 
       VehicleTiles.Move(sourceIndex, insertIndex);
