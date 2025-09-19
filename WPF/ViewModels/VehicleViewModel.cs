@@ -3,9 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reflection;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using Core.Factories;
 using Core.Presenters;
 using Helper;
 using Persistence.Model;
@@ -56,7 +54,7 @@ namespace Shell.WPF.ViewModels
 
     public ReactiveProperty<BitmapImage> VehicleImage { get; } = new();
 
-    public VehiclePresenter VehiclePresenter { get; }
+    public IVehiclePresenter VehiclePresenter { get; }
 
     public ReactiveProperty<Vehicle> Vehicle { get; } = new();
 

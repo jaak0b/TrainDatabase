@@ -2,7 +2,6 @@ using System.Collections.Concurrent;
 using Autofac;
 using Core.ConfigurationImport;
 using Core.ConfigurationImport.Z21New;
-using Core.Factories;
 using Core.Presenters;
 using Z21;
 
@@ -12,6 +11,8 @@ namespace Core
   {
     override protected void Load(ContainerBuilder builder)
     {
+      builder.RegisterType<ClientPresenter>().As<IClientPresenter>().SingleInstance();
+      
       builder.RegisterType<Z21NewDatabaseImporter>().As<IDatabaseImporter>().SingleInstance();
 
       builder.RegisterType<TrackPowerService>().AsSelf().SingleInstance();
@@ -24,12 +25,12 @@ namespace Core
 
       builder.RegisterType<VehiclePresenterOld>().AsSelf().InstancePerDependency();
 
-      builder.RegisterType<VehiclePresenter>().AsSelf().InstancePerDependency();
+      builder.RegisterType<VehiclePresenter>().As<IVehiclePresenter>().InstancePerDependency();
       builder.Register<VehiclePresenterFactory>(ctx =>
                                                 {
-                                                  ConcurrentDictionary<int, VehiclePresenter> cache = new();
+                                                  ConcurrentDictionary<int, IVehiclePresenter> cache = new();
                                                   IComponentContext c = ctx.Resolve<IComponentContext>();
-                                                  return address => cache.GetOrAdd(address, i => c.Resolve<VehiclePresenter>(new TypedParameter(typeof(int), i)));
+                                                  return address => cache.GetOrAdd(address, i => c.Resolve<IVehiclePresenter>(new TypedParameter(typeof(int), i)));
                                                 })
              .SingleInstance();
     }
