@@ -35,6 +35,20 @@ namespace Persistence.Repositories
                      .ToList();
     }
 
+    public void UpdateVehiclePositions(IEnumerable<(int vehicleId, int position)> updates)
+    {
+      foreach ((int vehicleId, int position) in updates)
+      {
+        VehicleEntity? entity = database.Vehicles.Find(vehicleId);
+        if (entity != null)
+        {
+          entity.Position = position;
+        }
+      }
+
+      database.SaveChanges();
+    }
+
     private static bool Contain(object value, string searchString) => value?.ToString()?.Contains(searchString, StringComparison.InvariantCultureIgnoreCase) == true;
 
     public void NotifyVehicleUpdated(int vehicleId)

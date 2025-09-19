@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Shell.WPF.Views"
              xmlns:resx="clr-namespace:Shell.WPF.Resources"
              xmlns:dragDrop="urn:gong-wpf-dragdrop"
+             xmlns:vm="clr-namespace:Shell.WPF.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance }">
     <Grid>
@@ -32,7 +33,7 @@
         </TextBlock>
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible">
-            <ItemsControl Grid.Row="1" ItemsSource="{Binding VehicleViews}" 
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding VehicleTiles}" 
                           dragDrop:DragDrop.IsDragSource="True"
                           dragDrop:DragDrop.IsDropTarget="True"
                           dragDrop:DragDrop.UseDefaultDragAdorner="True"
@@ -44,8 +45,8 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type local:VehicleTileView}">
-                        <ContentPresenter Content="{Binding}" />
+                    <DataTemplate DataType="{x:Type vm:VehicleTileViewModel}">
+                        <local:VehicleTileView />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

@@ -36,15 +36,6 @@ namespace Shell.WPF
                                                     })
              .SingleInstance();
 
-      builder.RegisterType<VehicleTileView>().AsSelf().InstancePerDependency();
-      builder.Register<VehicleTileViewFactory>(ctx =>
-                                               {
-                                                 ConcurrentDictionary<int, VehicleTileView> cache = new();
-                                                 IComponentContext c = ctx.Resolve<IComponentContext>();
-                                                 return address => cache.GetOrAdd(address, i => c.Resolve<VehicleTileView>(new TypedParameter(typeof(int), i)));
-                                               })
-             .SingleInstance();
-
       builder.RegisterType<VehicleWindow>().AsSelf().InstancePerDependency();
       builder.Register<VehicleWindowFactory>(ctx =>
                                              {

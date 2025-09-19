@@ -31,14 +31,12 @@ namespace Shell.WPF.Views
   {
     private readonly DatabaseImportView databaseImportView;
     private readonly ILogger logger;
-    private readonly VehicleTileViewFactory vehicleTileViewFactory;
     private readonly static Mutex mutex = new(true, "{8F6F0AC4-B9A1-45fd-A8CF-72F04E6BDE8F}");
 
-    public MainWindow(IServiceProvider serviceProvider, DatabaseImportView databaseImportView, ILogger<MainWindow> logger, VehicleTileViewFactory vehicleTileViewFactory, MainWindowViewModel mainWindowViewModel)
+    public MainWindow(IServiceProvider serviceProvider, DatabaseImportView databaseImportView, ILogger<MainWindow> logger, MainWindowViewModel mainWindowViewModel)
     {
       this.databaseImportView = databaseImportView;
       this.logger = logger;
-      this.vehicleTileViewFactory = vehicleTileViewFactory;
       try
       {
         InitializeComponent();

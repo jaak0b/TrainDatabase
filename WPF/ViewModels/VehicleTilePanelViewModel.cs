@@ -14,35 +14,35 @@ namespace Shell.WPF.ViewModels
   public class VehicleTilePanelViewModel : IDropTarget
   {
     private readonly IVehicleRepository vehicleRepository;
-    private readonly VehicleTileViewFactory vehicleTileViewFactory;
+    private readonly VehicleTileViewModelFactory vehicleTileViewModelFactory;
 
-    public VehicleTilePanelViewModel(IVehicleRepository vehicleRepository, VehicleTileViewFactory vehicleTileViewFactory)
+    public VehicleTilePanelViewModel(IVehicleRepository vehicleRepository, VehicleTileViewModelFactory vehicleTileViewModelFactory)
     {
       this.vehicleRepository = vehicleRepository;
-      this.vehicleTileViewFactory = vehicleTileViewFactory;
+      this.vehicleTileViewModelFactory = vehicleTileViewModelFactory;
 
       RefreshTiles();
       VehicleSearchText.Throttle(TimeSpan.FromMilliseconds(500)).DistinctUntilChanged().ObserveOnUIDispatcher().Subscribe(_ => RefreshTiles());
     }
 
-    public ObservableCollection<VehicleTileView> VehicleViews { get; } = [];
+    public ObservableCollection<VehicleTileViewModel> VehicleTiles { get; } = [];
 
     public ReactiveProperty<string> VehicleSearchText { get; set; } = new();
 
     private void RefreshTiles()
     {
-      VehicleViews.Clear();
-      foreach (VehicleTileView vehicleTileView in vehicleRepository.FullTextSearchVehicles(VehicleSearchText.Value)
-                                                                   .OrderBy(vehicle => vehicle.Position)
-                                                                   .Select(vehicle => vehicleTileViewFactory(vehicle.Id)))
+      VehicleTiles.Clear();
+      foreach (VehicleTileViewModel vehicleTileView in vehicleRepository.FullTextSearchVehicles(VehicleSearchText.Value)
+                                                                        .OrderBy(vehicle => vehicle.Position)
+                                                                        .Select(vehicle => vehicleTileViewModelFactory(vehicle.Id)))
       {
-        VehicleViews.Add(vehicleTileView);
+        VehicleTiles.Add(vehicleTileView);
       }
     }
 
     public void DragOver(IDropInfo dropInfo)
     {
-      if (dropInfo.Data is VehicleTileView && Equals(dropInfo.TargetCollection, VehicleViews))
+      if (dropInfo.Data is VehicleTileViewModel && Equals(dropInfo.TargetCollection, VehicleTiles))
       {
         dropInfo.Effects = DragDropEffects.Move;
         dropInfo.DropTargetAdorner = DropTargetAdorners.Insert;
@@ -51,16 +51,31 @@ namespace Shell.WPF.ViewModels
 
     public void Drop(IDropInfo dropInfo)
     {
-      if (dropInfo.Data is VehicleTileView sourceItem && Equals(dropInfo.TargetCollection, VehicleViews))
-      {
-        int insertIndex = dropInfo.InsertIndex;
-        int sourceIndex = VehicleViews.IndexOf(sourceItem);
+      if (dropInfo.Data is not VehicleTileViewModel sourceItem || !Equals(dropInfo.TargetCollection, VehicleTiles))
+        return;
 
-        if (sourceIndex != -1 && insertIndex != sourceIndex)
-        {
-          VehicleViews.Move(sourceIndex, insertIndex);
-        }
-      }
+      int insertIndex = dropInfo.InsertIndex;
+      int sourceIndex = VehicleTiles.IndexOf(sourceItem);
+
+      if (sourceIndex == -1 || insertIndex == sourceIndex)
+        return;
+
+      VehicleTiles.Move(sourceIndex, insertIndex);
+
+      var changedPositions = VehicleTiles
+                            .Select((vehicleTileViewModel, index) => new
+                                                                     {
+                                                                       viewModel = vehicleTileViewModel,
+                                                                       vehicleId = vehicleTileViewModel.VehicleViewModel.Vehicle.Value.Id,
+                                                                       newPosition = index,
+                                                                       oldPosition = vehicleTileViewModel.VehicleViewModel.Vehicle.Value.Position
+                                                                     })
+                            .Where(arg => arg.newPosition != arg.oldPosition)
+                            .ToList();
+
+      changedPositions.ForEach(obj => obj.viewModel.VehicleViewModel.Vehicle.Value.Position = obj.newPosition);
+
+      vehicleRepository.UpdateVehiclePositions(changedPositions.Select(arg => (arg.vehicleId, arg.newPosition)));
     }
   }
 }

@@ -26,7 +26,7 @@ namespace Persistence.Ports
     /// Allows to search <see cref="Vehicle"/> by almost every parameter.
     /// </summary>
     IReadOnlyCollection<Vehicle> FullTextSearchVehicles(string? searchString);
-    
-    
+
+    void UpdateVehiclePositions(IEnumerable<(int vehicleId, int position)> updates);
   }
 }
