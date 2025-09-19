@@ -7,7 +7,6 @@ using GongSolutions.Wpf.DragDrop;
 using Persistence.Ports;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
-using Shell.WPF.Views;
 
 namespace Shell.WPF.ViewModels
 {
@@ -42,11 +41,10 @@ namespace Shell.WPF.ViewModels
 
     public void DragOver(IDropInfo dropInfo)
     {
-      if (dropInfo.Data is VehicleTileViewModel && Equals(dropInfo.TargetCollection, VehicleTiles))
-      {
-        dropInfo.Effects = DragDropEffects.Move;
-        dropInfo.DropTargetAdorner = DropTargetAdorners.Insert;
-      }
+      if (dropInfo.Data is not VehicleTileViewModel || !Equals(dropInfo.TargetCollection, VehicleTiles))
+        return;
+      dropInfo.Effects = string.IsNullOrEmpty(VehicleSearchText.Value) ? DragDropEffects.Move : DragDropEffects.None;
+      dropInfo.DropTargetAdorner = DropTargetAdorners.Insert;
     }
 
     public void Drop(IDropInfo dropInfo)
