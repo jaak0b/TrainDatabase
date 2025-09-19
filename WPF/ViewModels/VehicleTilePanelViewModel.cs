@@ -20,7 +20,7 @@ namespace Shell.WPF.ViewModels
       this.vehicleTileViewFactory = vehicleTileViewFactory;
 
       RefreshTiles();
-      VehicleSearchText.Throttle(TimeSpan.FromMilliseconds(200)).DistinctUntilChanged().ObserveOnUIDispatcher().Subscribe(_ => RefreshTiles());
+      VehicleSearchText.Throttle(TimeSpan.FromMilliseconds(500)).DistinctUntilChanged().ObserveOnUIDispatcher().Subscribe(_ => RefreshTiles());
     }
 
     public ObservableCollection<VehicleTileView> VehicleViews { get; } = [];

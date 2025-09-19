@@ -7,13 +7,13 @@ namespace Shell.WPF.Views
 
   public partial class VehicleTileView : UserControl
   {
-    public VehicleTileView(VehicleViewModelFactory vehicleViewModelFactory, int vehicleId)
+    public VehicleTileView(VehicleTileViewModelFactory vehicleViewModelFactory, int vehicleId)
     {
       InitializeComponent();
       VehicleViewModel = vehicleViewModelFactory(vehicleId);
       DataContext = VehicleViewModel;
     }
 
-    public VehicleViewModel VehicleViewModel { get; }
+    public VehicleTileViewModel VehicleViewModel { get; }
   }
 }

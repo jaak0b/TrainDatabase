@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
@@ -10,6 +11,7 @@ using Helper;
 using Persistence.Model;
 using Persistence.Ports;
 using Reactive.Bindings;
+using Reactive.Bindings.Extensions;
 
 namespace Shell.WPF.ViewModels
 {
@@ -20,11 +22,17 @@ namespace Shell.WPF.ViewModels
     public VehicleViewModel(VehiclePresenterFactory presenterFactory, int vehicleId, IVehicleRepository vehicleRepository)
     {
       VehiclePresenter = presenterFactory(vehicleId);
-      Vehicle = vehicleRepository.GetVehicleByIdRequired(vehicleId);
+      Vehicle.Value = vehicleRepository.GetVehicleByIdRequired(vehicleId);
 
+      vehicleRepository.VehicleChangedStream
+                       .Where(vehicle => vehicle.Id == vehicleId)
+                       .ObserveOnUIDispatcher()
+                       .Subscribe(updatedVehicle => Vehicle.Value = updatedVehicle);
+      
       SpeedDisplayText = VehiclePresenter.Speed.CombineLatest(VehiclePresenter.Direction, GetSpeedDisplayTest).ToReadOnlyReactiveProperty();
+      VehicleDisplayText = Vehicle.Select(vehicle => $"#{vehicle.Address} - {vehicle.Name}" ).ToReadOnlyReactiveProperty();
 
-      string path = Path.Combine(Configuration.ApplicationData.VehicleImages.FullName, Vehicle?.ImageName ?? "");
+      string path = Path.Combine(Configuration.ApplicationData.VehicleImages.FullName, Vehicle.Value.ImageName);
       if (File.Exists(path))
       {
         VehicleImage.Value = LoadPhoto(path);
@@ -50,9 +58,11 @@ namespace Shell.WPF.ViewModels
 
     public VehiclePresenter VehiclePresenter { get; }
 
-    public Vehicle Vehicle { get; }
+    public ReactiveProperty<Vehicle> Vehicle { get; } = new();
 
     public ReadOnlyReactiveProperty<string?> SpeedDisplayText { get; }
+
+    public ReadOnlyReactiveProperty<string?> VehicleDisplayText { get; }
 
     private static BitmapImage LoadPhoto(string path)
     {

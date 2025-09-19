@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Subjects;
 using AutoMapper;
 using Persistence.Entities;
 using Persistence.Extensions;
@@ -11,6 +12,10 @@ namespace Persistence.Repositories
 {
   public class VehicleRepository(Database.Database database, IMapper mapper) : IVehicleRepository
   {
+
+    private readonly Subject<Vehicle> vehicleUpdatedSubject = new();
+
+    public IObservable<Vehicle> VehicleChangedStream => vehicleUpdatedSubject;
 
     public Vehicle GetVehicleByIdRequired(int vehicleId) => GetVehicleById(vehicleId) ?? throw new IdNotFoundException();
 
@@ -31,5 +36,12 @@ namespace Persistence.Repositories
     }
 
     private static bool Contain(object value, string searchString) => value?.ToString()?.Contains(searchString, StringComparison.InvariantCultureIgnoreCase) == true;
+
+    public void NotifyVehicleUpdated(int vehicleId)
+    {
+      Vehicle? updated = GetVehicleById(vehicleId);
+      if (updated is not null)
+        vehicleUpdatedSubject.OnNext(updated);
+    }
   }
 }

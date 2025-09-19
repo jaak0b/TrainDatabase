@@ -1,7 +1,6 @@
 
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
 using Persistence.Extensions;
 using Persistence.Model;
 
@@ -9,6 +8,9 @@ namespace Persistence.Ports
 {
   public interface IVehicleRepository
   {
+    
+    IObservable<Vehicle> VehicleChangedStream { get; }
+    
     /// <summary>
     /// Gets a <see cref="Vehicle"/> from the data source with the specified <paramref name="vehicleId"/>.
     /// </summary>
