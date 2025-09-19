@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence.UnitTest", "Per
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shell.WPF.UnitTest", "Shell.WPF.UnitTest\Shell.WPF.UnitTest.csproj", "{3DB3CF40-2371-451B-8D98-D9321DC7774A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientAdapter", "ClientAdapter\ClientAdapter.csproj", "{7474DB8E-B6B5-4CE0-87DE-39DC54CE34BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -90,6 +92,12 @@ Global
 		{3DB3CF40-2371-451B-8D98-D9321DC7774A}.DefaultBuild|x64.Build.0 = Debug|Any CPU
 		{3DB3CF40-2371-451B-8D98-D9321DC7774A}.Release|x64.ActiveCfg = Release|Any CPU
 		{3DB3CF40-2371-451B-8D98-D9321DC7774A}.Release|x64.Build.0 = Release|Any CPU
+		{7474DB8E-B6B5-4CE0-87DE-39DC54CE34BF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7474DB8E-B6B5-4CE0-87DE-39DC54CE34BF}.Debug|x64.Build.0 = Debug|Any CPU
+		{7474DB8E-B6B5-4CE0-87DE-39DC54CE34BF}.DefaultBuild|x64.ActiveCfg = Debug|Any CPU
+		{7474DB8E-B6B5-4CE0-87DE-39DC54CE34BF}.DefaultBuild|x64.Build.0 = Debug|Any CPU
+		{7474DB8E-B6B5-4CE0-87DE-39DC54CE34BF}.Release|x64.ActiveCfg = Release|Any CPU
+		{7474DB8E-B6B5-4CE0-87DE-39DC54CE34BF}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,6 +2,7 @@
 using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using Autofac.Extras.CommonServiceLocator;
+using ClientAdapter;
 using CommonServiceLocator;
 using Core;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,7 @@ namespace Composition
       ContainerBuilder builder = new();
       builder.Populate(serviceCollection);
 
+      builder.RegisterModule(new ClientAdapterModule());
       builder.RegisterModule(new PersistenceIocModule());
       builder.RegisterModule(new CoreIocModule());
       builder.RegisterModule(module);

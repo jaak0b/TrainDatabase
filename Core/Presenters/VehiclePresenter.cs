@@ -1,4 +1,5 @@
 using System;
+using Core.Model;
 using Persistence.Model;
 using Persistence.Ports;
 using Reactive.Bindings;
@@ -19,20 +20,20 @@ namespace Core.Presenters
 
   public class VehiclePresenter : IVehiclePresenter
   {
-    public VehiclePresenter(int vehicleId, IVehicleRepository vehicleRepository, Z21.Client client)
+    public VehiclePresenter(int vehicleId, IVehicleRepository vehicleRepository, IClientAdapter client)
     {
       Vehicle = vehicleRepository.GetVehicleById(vehicleId) ?? throw new InvalidOperationException();
 
-      client.OnGetLocoInfo += Client_OnOnGetLocoInfo;
+      client.VehicleData.Subscribe(VehicleData_OnNext);
     }
 
-    private void Client_OnOnGetLocoInfo(object? sender, GetLocoInfoEventArgs e)
+    private void VehicleData_OnNext(VehicleLiveData vehicleLiveData)
     {
-      if (Vehicle.Address != e.Data.Adresse.Value)
+      if(vehicleLiveData.VehicleAddress != Vehicle.Address)
         return;
-
-      Speed.Value = e.Data.Speed;
-      Direction.Value = e.Data.DrivingDirection;
+      
+      Speed.Value = vehicleLiveData.Speed;
+      Direction.Value = vehicleLiveData.Direction;
     }
 
     public Vehicle Vehicle { get; }

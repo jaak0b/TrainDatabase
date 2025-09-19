@@ -27,11 +27,11 @@ namespace Shell.WPF.Views
   /// <summary>
   /// Interaction logic for MainWindow.xaml
   /// </summary>
-  public partial class MainWindow : Window, INotifyPropertyChanged
+  public partial class MainWindow : Window
   {
     private readonly DatabaseImportView databaseImportView;
     private readonly ILogger logger;
-    private readonly static Mutex mutex = new(true, "{8F6F0AC4-B9A1-45fd-A8CF-72F04E6BDE8F}");
+    private readonly static Mutex Mutex = new(true, "{8F6F0AC4-B9A1-45fd-A8CF-72F04E6BDE8F}");
 
     public MainWindow(IServiceProvider serviceProvider, DatabaseImportView databaseImportView, ILogger<MainWindow> logger, MainWindowViewModel mainWindowViewModel)
     {
@@ -44,9 +44,8 @@ namespace Shell.WPF.Views
 
         ServiceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
         Db = ServiceProvider.GetService<Database>()!;
-        Client = ServiceProvider.GetService<Client>()!;
 
-        if (!mutex.WaitOne(TimeSpan.Zero, true))
+        if (!Mutex.WaitOne(TimeSpan.Zero, true))
         {
           MessageBox.Show("Achtung mehr als eine Instanz der Software kann nicht geöffnet werden!");
           Application.Current.Shutdown();
@@ -60,46 +59,15 @@ namespace Shell.WPF.Views
       }
     }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
 
     public IServiceProvider ServiceProvider { get; } = default!;
 
-    private Client Client { get; } = default!;
-
     private Database Db { get; } = default!;
-
-    protected void OnPropertyChanged([CallerMemberName] string name = null!)
-    {
-      PropertyChanged?.Invoke(this, new(name));
-    }
-
-    private static BitmapImage LoadPhoto(string path)
-    {
-      BitmapImage bmi = new();
-      bmi.BeginInit();
-      bmi.CacheOption = BitmapCacheOption.OnLoad;
-      bmi.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-      bmi.UriSource = new(path);
-      bmi.EndInit();
-      return bmi;
-    }
-
-    private static BitmapImage LoadPhoto(Stream stream)
-    {
-      BitmapImage bitmap = new();
-      bitmap.BeginInit();
-      bitmap.StreamSource = stream;
-      bitmap.CacheOption = BitmapCacheOption.OnLoad;
-      bitmap.EndInit();
-      bitmap.Freeze();
-      return bitmap;
-    }
 
     private void MiImportNewDatabase(object sender, RoutedEventArgs e)
     {
       databaseImportView.ShowDialogOrActivate();
     }
-
  
     private void MeasureLoko_Click(object sender, RoutedEventArgs e)
     {
@@ -121,14 +89,6 @@ namespace Shell.WPF.Views
                 }
 #endif
       RemoveUnneededImages();
-    }
-
-    private void Mw_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-    {
-      // if (IsActive && !TbSearch.IsFocused)
-      // {
-      //   TbSearch.Focus();
-      // }
     }
 
     private void OpenVehicleManagement_Click(object sender, RoutedEventArgs e)

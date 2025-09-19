@@ -6,11 +6,13 @@ using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using Composition;
+using Core;
 using Shell.WPF.Views;
 using Z21;
 
@@ -46,8 +48,8 @@ namespace Shell.WPF
           AllocConsole();
         }
 
-        Client client = serviceProvider.GetRequiredService<Client>();
-        client.Connect(Configuration.ClientIP);
+        IClientAdapter client = serviceProvider.GetRequiredService<IClientAdapter>();
+        client.Connect(new(Configuration.ClientIP, 1234));
         serviceProvider.GetRequiredService<MainWindow>().Show();
       }
       catch (Exception ex)

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Datenbank" MinHeight="550" Height="550" MinWidth="870" Width="870" Name="Mw" Closing="Mw_Closing"
-        PreviewKeyDown="Mw_PreviewKeyDown" Loaded="Mw_Loaded"
+         Loaded="Mw_Loaded"
         d:DataContext="{d:DesignInstance }">
     <Window.Style>
         <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />

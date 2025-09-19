@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Reflection;
 using System.Windows.Media.Imaging;
+using Core;
 using Core.Presenters;
 using Helper;
 using Persistence.Model;
@@ -17,8 +18,11 @@ namespace Shell.WPF.ViewModels
 
   public class VehicleViewModel
   {
-    public VehicleViewModel(VehiclePresenterFactory presenterFactory, int vehicleId, IVehicleRepository vehicleRepository)
+    private readonly IClientAdapter clientAdapter;
+
+    public VehicleViewModel(VehiclePresenterFactory presenterFactory, int vehicleId, IVehicleRepository vehicleRepository, IClientAdapter clientAdapter)
     {
+      this.clientAdapter = clientAdapter;
       VehiclePresenter = presenterFactory(vehicleId);
       Vehicle.Value = vehicleRepository.GetVehicleByIdRequired(vehicleId);
 
@@ -26,9 +30,11 @@ namespace Shell.WPF.ViewModels
                        .Where(vehicle => vehicle.Id == vehicleId)
                        .ObserveOnUIDispatcher()
                        .Subscribe(updatedVehicle => Vehicle.Value = updatedVehicle);
-      
-      SpeedDisplayText = VehiclePresenter.Speed.CombineLatest(VehiclePresenter.Direction, GetSpeedDisplayTest).ToReadOnlyReactiveProperty();
-      VehicleDisplayText = Vehicle.Select(vehicle => $"#{vehicle.Address} - {vehicle.Name}" ).ToReadOnlyReactiveProperty();
+
+      SpeedDisplayText = VehiclePresenter.Speed
+                                         .CombineLatest(VehiclePresenter.Direction, clientAdapter.IsConnected, (speed, direction, arg3) => GetSpeedDisplayTest(speed, direction, arg3))
+                                         .ToReadOnlyReactiveProperty();
+      VehicleDisplayText = Vehicle.Select(vehicle => $"#{vehicle.Address} - {vehicle.Name}").ToReadOnlyReactiveProperty();
 
       string path = Path.Combine(Configuration.ApplicationData.VehicleImages.FullName, Vehicle.Value.ImageName);
       if (File.Exists(path))
@@ -44,9 +50,10 @@ namespace Shell.WPF.ViewModels
       }
     }
 
-    private static string GetSpeedDisplayTest(int speed, bool direction)
+    private static string GetSpeedDisplayTest(int speed, bool direction, bool isConnected)
     {
-      string speedText = $"{speed} SS";
+      string speedAsString = isConnected ? speed.ToString() : "-";
+      string speedText = $"{speedAsString} SS";
       if (direction)
         return "< " + speedText + "  ";
       return "  " + speedText + " >";

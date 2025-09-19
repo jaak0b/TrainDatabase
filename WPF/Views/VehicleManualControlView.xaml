@@ -7,6 +7,18 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Button>xxx</Button>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="AUTO" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="AUTO" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Slider Orientation="Vertical"
+                Grid.Row="0" Grid.Column="0"
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Center" Minimum="0" Maximum="100" />
     </Grid>
 </UserControl>
