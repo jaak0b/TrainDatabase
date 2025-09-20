@@ -1,5 +1,6 @@
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using Shell.WPF.ViewModels;
 
 namespace Shell.WPF.Views
@@ -25,6 +26,12 @@ namespace Shell.WPF.Views
     private void Thumb_OnDragCompleted(object sender, DragCompletedEventArgs e)
     {
       vehicleManualControlViewModel.IsSliderDragged = false;
+    }
+
+    private void VehicleManualControlView_OnPreviewMouseWheel(object sender, MouseWheelEventArgs e)
+    {
+      vehicleManualControlViewModel.SetVehicleSpeedFromScrollWheel(e.Delta);
+      e.Handled = true;
     }
   }
 }

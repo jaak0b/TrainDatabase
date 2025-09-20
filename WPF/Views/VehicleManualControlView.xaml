@@ -7,7 +7,8 @@
              xmlns:viewModels="clr-namespace:Shell.WPF.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
-             d:DataContext="{d:DesignInstance viewModels:VehicleManualControlViewModel }">
+             d:DataContext="{d:DesignInstance viewModels:VehicleManualControlViewModel }"
+             PreviewMouseWheel="VehicleManualControlView_OnPreviewMouseWheel">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -17,11 +18,12 @@
             <ColumnDefinition Width="AUTO" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        
+
         <Slider Orientation="Vertical"
                 Grid.Row="0" Grid.Column="0"
                 VerticalAlignment="Stretch"
-                HorizontalAlignment="Center" Minimum="0" Maximum="128" Value="{Binding VehicleSpeed.Value}" Thumb.DragStarted="Thumb_OnDragStarted"
-                Thumb.DragCompleted="Thumb_OnDragCompleted" />
+                HorizontalAlignment="Center" Minimum="0" Maximum="128" Value="{Binding VehicleSpeed.Value}"
+                Thumb.DragStarted="Thumb_OnDragStarted"
+                Thumb.DragCompleted="Thumb_OnDragCompleted" Width="30" />
     </Grid>
 </UserControl>

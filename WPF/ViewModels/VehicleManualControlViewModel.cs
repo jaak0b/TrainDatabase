@@ -4,8 +4,6 @@ using Core;
 using Core.Model;
 using Core.Presenters;
 using Reactive.Bindings;
-using Reactive.Bindings.Extensions;
-using Z21;
 
 namespace Shell.WPF.ViewModels
 {
@@ -36,5 +34,17 @@ namespace Shell.WPF.ViewModels
     public ReactiveProperty<int> VehicleSpeed { get; set; }
 
     public bool IsSliderDragged { get; set; }
+
+    public void SetVehicleSpeedFromScrollWheel(int delta)
+    {
+      try
+      {
+        IsSliderDragged = true;
+        VehicleSpeed.Value = delta < 0 ? VehicleSpeed.Value - 1 : VehicleSpeed.Value + 1;
+      } finally
+      {
+        IsSliderDragged = false;
+      }
+    }
   }
 }
