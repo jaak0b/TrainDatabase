@@ -12,9 +12,9 @@ using Z21.Model;
 
 namespace Core.Presenters
 {
-  public class VehicleFunctionPresenter
+  public class VehicleFunctionPresenterOld
   {
-    public VehicleFunctionPresenter(IServiceProvider serviceProvider, VehicleFunctionEntity vehicleFunctionEntity)
+    public VehicleFunctionPresenterOld(IServiceProvider serviceProvider, VehicleFunctionEntity vehicleFunctionEntity)
     {
       ServiceProvider = serviceProvider;
       Db = ServiceProvider.GetService<Database>()!;

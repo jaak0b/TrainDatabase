@@ -12,23 +12,24 @@ namespace Shell.WPF.ViewModels
   public class VehicleManualControlViewModel
   {
     private readonly IClientAdapter client;
-    private readonly IVehiclePresenter vehiclePresenter;
 
     public VehicleManualControlViewModel(int vehicleId, VehicleViewModelFactory vehicleViewModelFactory, VehiclePresenterFactory presenterFactory, IClientAdapter client)
     {
       this.client = client;
-      vehiclePresenter = presenterFactory(vehicleId);
+      VehiclePresenter = presenterFactory(vehicleId);
       VehicleViewModel = vehicleViewModelFactory(vehicleId);
 
-      VehicleSpeed = vehiclePresenter.Speed
+      VehicleSpeed = VehiclePresenter.Speed
                                      .Where(_ => !IsSliderDragged)
                                      .ToReactiveProperty();
 
       VehicleSpeed.Where(i => IsSliderDragged)
-                  .Delay(new TimeSpan(500))
-                  .Subscribe(i => client.SetVehiclesDriveAsync(new LocoSetDriveData() { VehicleAddress = (ushort)vehiclePresenter.Vehicle.Value.Address, Direction = true, Speed = (ushort)i }));
+                  .Sample(TimeSpan.FromMilliseconds(200))
+                  .Subscribe(i => client.SetVehiclesDriveAsync(new LocoSetDriveData() { VehicleAddress = (ushort)VehiclePresenter.Vehicle.Value.Address, Direction = true, Speed = (ushort)i }));
     }
 
+    public  IVehiclePresenter VehiclePresenter { get; }
+    
     public VehicleViewModel VehicleViewModel { get; }
 
     public ReactiveProperty<int> VehicleSpeed { get; set; }

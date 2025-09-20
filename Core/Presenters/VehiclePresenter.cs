@@ -12,6 +12,8 @@ namespace Core.Presenters
   {
     ReactiveProperty<Vehicle> Vehicle { get; }
 
+    ReactiveProperty<int> MaximumSpeedStep { get; }
+    
     ReactiveProperty<int> Speed { get; }
 
     ReactiveProperty<bool> Direction { get; }
@@ -27,7 +29,6 @@ namespace Core.Presenters
 
       vehicleRepository.VehicleChangedStream
                        .Where(vehicle => vehicle.Id == vehicleId)
-                       .ObserveOnUIDispatcher() // Maybe not needed? 
                        .Subscribe(updatedVehicle => Vehicle.Value = updatedVehicle);
 
       client.VehicleData.Subscribe(VehicleData_OnNext);
@@ -44,6 +45,8 @@ namespace Core.Presenters
 
     public ReactiveProperty<Vehicle> Vehicle { get; } = new();
 
+    public ReactiveProperty<int> MaximumSpeedStep { get; } = new(126);
+    
     public ReactiveProperty<int> Speed { get; } = new();
 
     public ReactiveProperty<bool> Direction { get; } = new();

@@ -22,6 +22,6 @@ namespace Shell.WPF.TrainControl.FunctionButton
 
     private VehicleFunctionEntity FunctionModel { get; }
 
-    internal VehicleFunctionPresenter VehicleFunction { get; }
+    internal VehicleFunctionPresenterOld VehicleFunction { get; }
   }
 }

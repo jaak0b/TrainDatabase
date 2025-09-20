@@ -33,6 +33,6 @@ namespace Shell.WPF.TrainControl.FunctionButton
 
     private VehicleFunctionEntity FunctionModel { get; }
 
-    private VehicleFunctionPresenter VehicleFunction { get; }
+    private VehicleFunctionPresenterOld VehicleFunction { get; }
   }
 }
