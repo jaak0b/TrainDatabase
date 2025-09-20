@@ -3,10 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:Shell.WPF.ViewModels"
         mc:Ignorable="d"
         Title="Datenbank" MinHeight="550" Height="550" MinWidth="870" Width="870" Name="Mw" Closing="Mw_Closing"
-         Loaded="Mw_Loaded"
-        d:DataContext="{d:DesignInstance }">
+        Loaded="Mw_Loaded"
+        d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel }">
     <Window.Style>
         <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
     </Window.Style>
@@ -27,7 +28,7 @@
             </MenuItem>
             <MenuItem Header="Optionen" Click="Settings_Click" />
         </Menu>
- 
+
 
         <ContentControl Grid.Row="2" Content="{Binding VehicleTilePanelView}"></ContentControl>
     </Grid>

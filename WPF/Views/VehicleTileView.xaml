@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:resx="clr-namespace:Shell.WPF.Resources"
              xmlns:converters="clr-namespace:Shell.WPF.Converters"
+             xmlns:viewModels="clr-namespace:Shell.WPF.ViewModels"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance }">
+             d:DataContext="{d:DesignInstance viewModels:VehicleTileViewModel }">
     <UserControl.Resources>
         <converters:TrainSpeedToForegroundColorConvert x:Key="TrainSpeedToForegroundColorConvert" />
     </UserControl.Resources>

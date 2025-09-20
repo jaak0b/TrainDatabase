@@ -20,20 +20,16 @@ namespace Shell.WPF.ViewModels
   {
     private readonly IClientAdapter clientAdapter;
 
-    public VehicleViewModel(VehiclePresenterFactory presenterFactory, int vehicleId, IVehicleRepository vehicleRepository, IClientAdapter clientAdapter)
+    public VehicleViewModel(VehiclePresenterFactory presenterFactory, int vehicleId, IClientAdapter clientAdapter)
     {
       this.clientAdapter = clientAdapter;
       VehiclePresenter = presenterFactory(vehicleId);
-      Vehicle.Value = vehicleRepository.GetVehicleByIdRequired(vehicleId);
-
-      vehicleRepository.VehicleChangedStream
-                       .Where(vehicle => vehicle.Id == vehicleId)
-                       .ObserveOnUIDispatcher()
-                       .Subscribe(updatedVehicle => Vehicle.Value = updatedVehicle);
+      Vehicle = VehiclePresenter.Vehicle.ToReactiveProperty()!;
 
       SpeedDisplayText = VehiclePresenter.Speed
-                                         .CombineLatest(VehiclePresenter.Direction, clientAdapter.IsConnected, (speed, direction, arg3) => GetSpeedDisplayTest(speed, direction, arg3))
+                                         .CombineLatest(VehiclePresenter.Direction, clientAdapter.IsConnected, (speed, direction, isConnected) => GetSpeedDisplayTest(speed, direction, isConnected))
                                          .ToReadOnlyReactiveProperty();
+
       VehicleDisplayText = Vehicle.Select(vehicle => $"#{vehicle.Address} - {vehicle.Name}").ToReadOnlyReactiveProperty();
 
       string path = Path.Combine(Configuration.ApplicationData.VehicleImages.FullName, Vehicle.Value.ImageName);
@@ -50,20 +46,12 @@ namespace Shell.WPF.ViewModels
       }
     }
 
-    private static string GetSpeedDisplayTest(int speed, bool direction, bool isConnected)
-    {
-      string speedAsString = isConnected ? speed.ToString() : "-";
-      string speedText = $"{speedAsString} SS";
-      if (direction)
-        return "< " + speedText + "  ";
-      return "  " + speedText + " >";
-    }
 
     public ReactiveProperty<BitmapImage> VehicleImage { get; } = new();
 
     public IVehiclePresenter VehiclePresenter { get; }
 
-    public ReactiveProperty<Vehicle> Vehicle { get; } = new();
+    public ReactiveProperty<Vehicle> Vehicle { get; }
 
     public ReadOnlyReactiveProperty<string?> SpeedDisplayText { get; }
 
@@ -89,6 +77,15 @@ namespace Shell.WPF.ViewModels
       bitmap.EndInit();
       bitmap.Freeze();
       return bitmap;
+    }
+
+    private static string GetSpeedDisplayTest(int speed, bool direction, bool isConnected)
+    {
+      string speedAsString = isConnected ? speed.ToString() : "-";
+      string speedText = $"{speedAsString} SS";
+      if (direction)
+        return "< " + speedText + "  ";
+      return "  " + speedText + " >";
     }
   }
 }

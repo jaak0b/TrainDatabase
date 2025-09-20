@@ -1,4 +1,5 @@
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using Shell.WPF.ViewModels;
 
 namespace Shell.WPF.Views
@@ -7,10 +8,23 @@ namespace Shell.WPF.Views
 
   public partial class VehicleManualControlView : UserControl
   {
+    private readonly VehicleManualControlViewModel vehicleManualControlViewModel;
+
     public VehicleManualControlView(int vehicleId, VehicleManualControlViewModelFactory vehicleManualControlViewModelFactory)
     {
       InitializeComponent();
-      DataContext = vehicleManualControlViewModelFactory(vehicleId);
+      vehicleManualControlViewModel = vehicleManualControlViewModelFactory(vehicleId);
+      DataContext = vehicleManualControlViewModel;
+    }
+
+    private void Thumb_OnDragStarted(object sender, DragStartedEventArgs e)
+    {
+      vehicleManualControlViewModel.IsSliderDragged = true;
+    }
+
+    private void Thumb_OnDragCompleted(object sender, DragCompletedEventArgs e)
+    {
+      vehicleManualControlViewModel.IsSliderDragged = false;
     }
   }
 }

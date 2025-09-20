@@ -5,6 +5,7 @@ using Core.Model;
 using Reactive.Bindings;
 using Z21;
 using Z21.Events;
+using Z21.Model;
 
 namespace ClientAdapter
 {
@@ -31,6 +32,11 @@ namespace ClientAdapter
     public IObservable<VehicleFunctionData> VehicleFunctionData => vehicleFunctionData;
 
     public ReactiveProperty<bool> IsConnected { get; } = new();
+
+    public async Task SetVehiclesDriveAsync(params LocoSetDriveData[] locoSetDriveDatas)
+    {
+      client.SetLocoDrive(locoSetDriveDatas.Select(data => new LokInfoData(data.VehicleAddress) { DrivingDirection = data.Direction, Speed = data.Speed }).ToList());
+    }
 
     private void Client_OnOnGetLocoInfo(object? sender, GetLocoInfoEventArgs e)
     {

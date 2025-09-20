@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Threading.Tasks;
 using Core.Model;
 using Reactive.Bindings;
 
@@ -14,5 +15,7 @@ namespace Core
     IObservable<VehicleFunctionData> VehicleFunctionData { get; }
 
     ReactiveProperty<bool> IsConnected { get; }
+
+    public Task SetVehiclesDriveAsync(params LocoSetDriveData[] locoSetDriveDatas);
   }
 }

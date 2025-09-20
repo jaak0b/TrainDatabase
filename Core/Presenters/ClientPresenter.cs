@@ -1,24 +1,20 @@
 using Reactive.Bindings;
-using Z21;
 
 namespace Core.Presenters
 {
   public interface IClientPresenter
   {
-    ReactiveProperty<bool> ClientReachable { get; }
+    ReadOnlyReactiveProperty<bool> IsConnected { get; }
   }
 
   public class ClientPresenter : IClientPresenter
   {
-    private readonly Client client;
 
-    public ClientPresenter(Client client)
+    public ClientPresenter(IClientAdapter clientAdapter)
     {
-      this.client = client;
-
-      client.ClientReachabilityChanged += (sender, clientReachable) => { ClientReachable.Value = clientReachable; };
+      IsConnected = clientAdapter.IsConnected.ToReadOnlyReactiveProperty();
     }
 
-    public ReactiveProperty<bool> ClientReachable { get; } = new();
+    public ReadOnlyReactiveProperty<bool> IsConnected { get; }
   }
 }

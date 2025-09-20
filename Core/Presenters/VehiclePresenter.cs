@@ -1,15 +1,16 @@
 using System;
+using System.Reactive.Linq;
 using Core.Model;
 using Persistence.Model;
 using Persistence.Ports;
 using Reactive.Bindings;
-using Z21.Events;
+using Reactive.Bindings.Extensions;
 
 namespace Core.Presenters
 {
   public interface IVehiclePresenter
   {
-    Vehicle Vehicle { get; }
+    ReactiveProperty<Vehicle> Vehicle { get; }
 
     ReactiveProperty<int> Speed { get; }
 
@@ -22,21 +23,26 @@ namespace Core.Presenters
   {
     public VehiclePresenter(int vehicleId, IVehicleRepository vehicleRepository, IClientAdapter client)
     {
-      Vehicle = vehicleRepository.GetVehicleById(vehicleId) ?? throw new InvalidOperationException();
+      Vehicle.Value = vehicleRepository.GetVehicleById(vehicleId) ?? throw new InvalidOperationException();
+
+      vehicleRepository.VehicleChangedStream
+                       .Where(vehicle => vehicle.Id == vehicleId)
+                       .ObserveOnUIDispatcher() // Maybe not needed? 
+                       .Subscribe(updatedVehicle => Vehicle.Value = updatedVehicle);
 
       client.VehicleData.Subscribe(VehicleData_OnNext);
     }
 
     private void VehicleData_OnNext(VehicleLiveData vehicleLiveData)
     {
-      if(vehicleLiveData.VehicleAddress != Vehicle.Address)
+      if (vehicleLiveData.VehicleAddress != Vehicle.Value.Address)
         return;
-      
+
       Speed.Value = vehicleLiveData.Speed;
       Direction.Value = vehicleLiveData.Direction;
     }
 
-    public Vehicle Vehicle { get; }
+    public ReactiveProperty<Vehicle> Vehicle { get; } = new();
 
     public ReactiveProperty<int> Speed { get; } = new();
 

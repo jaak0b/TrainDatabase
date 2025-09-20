@@ -7,8 +7,9 @@
              xmlns:resx="clr-namespace:Shell.WPF.Resources"
              xmlns:dragDrop="urn:gong-wpf-dragdrop"
              xmlns:vm="clr-namespace:Shell.WPF.ViewModels"
+             xmlns:viewModels="clr-namespace:Shell.WPF.ViewModels"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance }">
+             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance viewModels:VehicleTilePanelViewModel }">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="AUTO" />
