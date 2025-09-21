@@ -9,7 +9,11 @@ namespace Persistence.UnitTest
     [Test]
     public void AllProfiles_ShouldBeValid()
     {
-      MapperConfiguration config = new(cfg => { cfg.AddProfile<VehicleProfile>(); });
+      MapperConfiguration config = new(cfg =>
+                                       {
+                                         cfg.AddProfile<VehicleProfile>();
+                                         cfg.AddProfile<VehicleFunctionProfile>(); 
+                                       });
       Assert.DoesNotThrow(() => config.AssertConfigurationIsValid());
     }
   }

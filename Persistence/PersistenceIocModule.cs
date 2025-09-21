@@ -1,6 +1,7 @@
 using System.IO;
 using Autofac;
 using AutoMapper;
+using AutoMapper.EquivalencyExpression;
 using Helper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -15,11 +16,18 @@ namespace Persistence
     override protected void Load(ContainerBuilder builder)
     {
       builder.RegisterType<VehicleRepository>().As<IVehicleRepository>().SingleInstance();
-      
+
       builder.Register(context =>
                        {
                          ILoggerFactory loggerFactory = context.Resolve<ILoggerFactory>();
-                         MapperConfiguration config = new(mapperConfigurationExpression => { mapperConfigurationExpression.AddProfile<VehicleProfile>(); });
+                         MapperConfiguration config = new(mapperConfigurationExpression =>
+                                                          {
+                                                            mapperConfigurationExpression.AddProfile<VehicleProfile>();
+                                                            mapperConfigurationExpression.AddProfile<VehicleFunctionProfile>();
+
+                                                            mapperConfigurationExpression.AddCollectionMappers();
+                                                            mapperConfigurationExpression.UseEntityFrameworkCoreModel(context.Resolve<Database.Database>().Model);
+                                                          });
                          config.AssertConfigurationIsValid();
                          return config;
                        })

@@ -14,14 +14,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Remove="Data\**"/>
-        <Compile Remove="Z21Client\**"/>
-        <EmbeddedResource Remove="Data\**"/>
-        <EmbeddedResource Remove="Z21Client\**"/>
-        <None Remove="Data\**"/>
-        <None Remove="Z21Client\**"/>
-        <Page Remove="Data\**"/>
-        <Page Remove="Z21Client\**"/>
+        <Compile Remove="Data\**" />
+        <Compile Remove="Z21Client\**" />
+        <EmbeddedResource Remove="Data\**" />
+        <EmbeddedResource Remove="Z21Client\**" />
+        <None Remove="Data\**" />
+        <None Remove="Z21Client\**" />
+        <Page Remove="Data\**" />
+        <Page Remove="Z21Client\**" />
         <Page Update="Views\MainWindow.xaml">
           <Generator>MSBuild:Compile</Generator>
           <XamlRuntime>Wpf</XamlRuntime>
@@ -36,20 +36,23 @@
           <AutoGen>True</AutoGen>
           <DependentUpon>Resources.resx</DependentUpon>
         </Compile>
-        <Page Update="Views\TrainControlView.xaml">
-          <Generator>MSBuild:Compile</Generator>
-          <XamlRuntime>Wpf</XamlRuntime>
-          <SubType>Designer</SubType>
-        </Page>
-        <EmbeddedResource Update="Resources\VehicleSettingsViewResources.resx">
-          <Generator>ResXFileCodeGenerator</Generator>
-          <LastGenOutput>VehicleWindowResources.Designer.cs</LastGenOutput>
-        </EmbeddedResource>
         <Compile Update="Resources\VehicleSettingsViewResources.Designer.cs">
           <DesignTime>True</DesignTime>
           <AutoGen>True</AutoGen>
           <DependentUpon>VehicleSettingsViewResources.resx</DependentUpon>
         </Compile>
+        <Page Update="Views\TrainControlView.xaml">
+          <Generator>MSBuild:Compile</Generator>
+          <XamlRuntime>Wpf</XamlRuntime>
+          <SubType>Designer</SubType>
+        </Page>
+        <EmbeddedResource Update="Resources\Resources.de.resx">
+          <DependentUpon>Resources.resx</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\VehicleSettingsViewResources.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+          <LastGenOutput>VehicleSettingsViewResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>

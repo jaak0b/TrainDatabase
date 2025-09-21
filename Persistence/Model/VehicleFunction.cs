@@ -8,6 +8,7 @@ namespace Persistence.Model
     public int Id { get; set; }
 
     public int VehicleId { get; set; }
+    public Vehicle Vehicle { get; set; }
 
     public ButtonType ButtonType { get; set; }
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Subjects;
+using System.Threading.Tasks;
 using AutoMapper;
 using Persistence.Entities;
 using Persistence.Extensions;
@@ -49,13 +50,30 @@ namespace Persistence.Repositories
       database.SaveChanges();
     }
 
+    public async Task UpdateVehicleAsync(Vehicle vehicle)
+    {
+      VehicleEntity? entity = await database.Vehicles.FindAsync(vehicle.Id);
+      if (entity == null)
+        throw new KeyNotFoundException($"Vehicle with ID {vehicle.Id} not found.");
+
+      mapper.Map(vehicle, entity);
+
+      await database.SaveChangesAsync();
+
+      NotifyVehicleUpdated(vehicle.Id);
+    }
+
+    public void RevertVehicleChange(int vehicleId)
+    {
+      NotifyVehicleUpdated(vehicleId);
+    }
+
     private static bool Contain(object value, string searchString) => value?.ToString()?.Contains(searchString, StringComparison.InvariantCultureIgnoreCase) == true;
 
     public void NotifyVehicleUpdated(int vehicleId)
     {
-      Vehicle? updated = GetVehicleById(vehicleId);
-      if (updated is not null)
-        vehicleUpdatedSubject.OnNext(updated);
+      Vehicle updated = GetVehicleByIdRequired(vehicleId);
+      vehicleUpdatedSubject.OnNext(updated);
     }
   }
 }

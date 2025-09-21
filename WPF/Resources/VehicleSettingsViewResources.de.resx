@@ -11,10 +11,31 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
+    <data name="CancelButtonText" xml:space="preserve">
+        <value>Abbrechen</value>
+    </data>
     <data name="SaveButtonText" xml:space="preserve">
         <value>Speichern</value>
     </data>
-    <data name="CancelButtonText" xml:space="preserve">
-        <value>Abbrechen</value>
+    <data name="VehicleTypeLabelText" xml:space="preserve">
+        <value>Fahrzeug Type</value>
+    </data>
+    <data name="VehicleShortNameLabelText" xml:space="preserve">
+        <value>Kurzer Name</value>
+    </data>
+    <data name="VehicleLongNameLabelText" xml:space="preserve">
+        <value>Langer Name</value>
+    </data>
+    <data name="VehiclePictureLabelText" xml:space="preserve">
+        <value>Bild</value>
+    </data>
+    <data name="VehicleAddressLabelText" xml:space="preserve">
+        <value>Adresse</value>
+    </data>
+    <data name="VehicleRailwayTransportCompanyLabelText" xml:space="preserve">
+        <value>Eisenbahnverkehrsunternehmen</value>
+    </data>
+    <data name="VehicleDescriptionLabelText" xml:space="preserve">
+        <value>Beschreibung</value>
     </data>
 </root>

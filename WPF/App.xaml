@@ -8,6 +8,15 @@
                 <ResourceDictionary Source="pack://application:,,,/AdonisUI;component/ColorSchemes/Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/AdonisUI.ClassicTheme;component/Resources.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="Padding" Value="2"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+            
+            <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                <Setter Property="Margin" Value="2"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

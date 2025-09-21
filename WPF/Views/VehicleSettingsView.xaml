@@ -5,8 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Shell.WPF.Views"
              xmlns:resx="clr-namespace:Shell.WPF.Resources"
+             xmlns:enums="clr-namespace:Persistence.Enums;assembly=Persistence"
+             xmlns:viewModels="clr-namespace:Shell.WPF.ViewModels"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d"
-             d:DesignHeight="500" d:DesignWidth="600">
+             d:DesignHeight="500" d:DesignWidth="600"
+             d:DataContext="{d:DesignInstance viewModels:VehicleSettingsViewModel }">
+    <UserControl.Resources>
+        <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type enums:VehicleType}" x:Key="StatusEnumValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enums:VehicleType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -28,6 +39,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
@@ -36,14 +48,35 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Column="0" Grid.Row="0" Content="Fahrzeug Type" />
+                    <Label Grid.Column="0" Grid.Row="0"
+                           Content="{x:Static resx:VehicleSettingsViewResources.VehicleTypeLabelText}" />
+                    <ComboBox Grid.Column="1" Grid.Row="0"
+                              ItemsSource="{Binding Source={StaticResource StatusEnumValues}}"
+                              SelectedItem="{Binding Vehicle.Value.Type }" />
 
-                    <Label Grid.Column="0" Grid.Row="1" Content="Kurzer Name" />
+                    <Label Grid.Column="0" Grid.Row="1"
+                           Content="{x:Static resx:VehicleSettingsViewResources.VehicleShortNameLabelText}" />
+                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Vehicle.Value.Name}" />
 
-                    <Label Grid.Column="0" Grid.Row="2" Content="Langer Name" />
+                    <Label Grid.Column="0" Grid.Row="2"
+                           Content="{x:Static resx:VehicleSettingsViewResources.VehicleLongNameLabelText}" />
+                    <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Vehicle.Value.FullName}" />
 
-                    <Label Grid.Column="0" Grid.Row="3" Content="Bild" />
+                    <Label Grid.Column="0" Grid.Row="3"
+                           Content="{x:Static resx:VehicleSettingsViewResources.VehiclePictureLabelText}" />
+                    <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Vehicle.Value.ImageName}" IsReadOnly="True" />
 
+                    <Label Grid.Column="0" Grid.Row="4"
+                           Content="{x:Static resx:VehicleSettingsViewResources.VehicleRailwayTransportCompanyLabelText}" />
+                    <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding Vehicle.Value.Railway}" />
+
+                    <Label Grid.Column="0" Grid.Row="5"
+                           Content="{x:Static resx:VehicleSettingsViewResources.VehicleDescriptionLabelText}" />
+                    <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding Vehicle.Value.Description}"
+                             VerticalContentAlignment="Top"
+                             TextWrapping="Wrap"
+                             AcceptsReturn="True"
+                             VerticalScrollBarVisibility="Auto" />
                 </Grid>
             </TabItem>
             <TabItem Header="Decoder">
@@ -58,7 +91,12 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Column="0" Grid.Row="0" Content="Adresse" />
+                    <Label Grid.Column="0" Grid.Row="0"
+                           Content="{x:Static resx:VehicleSettingsViewResources.VehicleAddressLabelText}" />
+                    <xctk:IntegerUpDown Grid.Column="1" Grid.Row="0"
+                                        Text="{Binding Vehicle.Value.Address}" />
+
+                    
                 </Grid>
             </TabItem>
             <TabItem Header="Funktionen">
@@ -73,5 +111,10 @@
             </TabItem>
         </TabControl>
 
+
+        <Button Grid.Row="1" Content="{x:Static resx:VehicleSettingsViewResources.SaveButtonText}" Grid.Column="0"
+                Margin="3" Click="SaveButton_OnClick" />
+        <Button Grid.Row="1" Content="{x:Static resx:VehicleSettingsViewResources.CancelButtonText}" Grid.Column="1"
+                Margin="3" Click="CancelButton_OnClick" />
     </Grid>
 </UserControl>
