@@ -14,6 +14,8 @@
                         BusyContent="Verbindung zur Zentrale wird hergestellt...">
         <TabControl>
             <TabItem Header="xxxx" Content="{Binding  VehicleManualControlView}"></TabItem>
+            <TabItem Header="Settings" Content="{Binding VehicleSettingsView}"></TabItem>
+            <TabItem Header="Zug Zusammenstellung"></TabItem>
         </TabControl>
     </xctk:BusyIndicator>
 </Window>

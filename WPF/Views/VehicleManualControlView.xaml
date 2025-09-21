@@ -26,5 +26,6 @@
                 Value="{Binding VehicleSpeed.Value}"
                 Thumb.DragStarted="Thumb_OnDragStarted"
                 Thumb.DragCompleted="Thumb_OnDragCompleted" Width="30" />
+        <ToggleButton Grid.Row="1" Grid.Column="0" IsChecked="{Binding VehicleDirection.Value}" PreviewMouseDown="UIElement_OnPreviewMouseDown" Content="{Binding VehicleDirectionDisplayText.Value}" />
     </Grid>
 </UserControl>

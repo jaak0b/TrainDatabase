@@ -21,24 +21,24 @@ namespace Shell.WPF.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resources {
+    internal class VehicleSettingsViewResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal VehicleSettingsViewResources() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Shell.WPF.Resources.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Shell.WPF.Resources.VehicleSettingsViewResources", typeof(VehicleSettingsViewResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -50,7 +50,7 @@ namespace Shell.WPF.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -60,38 +60,20 @@ namespace Shell.WPF.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search.
+        ///   Looks up a localized string similar to Cancel.
         /// </summary>
-        public static string List_Search {
+        internal static string CancelButtonText {
             get {
-                return ResourceManager.GetString("List_Search", resourceCulture);
+                return ResourceManager.GetString("CancelButtonText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Backwards.
+        ///   Looks up a localized string similar to Save.
         /// </summary>
-        public static string VehicleDirectionBackwards {
+        internal static string SaveButtonText {
             get {
-                return ResourceManager.GetString("VehicleDirectionBackwards", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Forward.
-        /// </summary>
-        public static string VehicleDirectionForward {
-            get {
-                return ResourceManager.GetString("VehicleDirectionForward", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Control Train.
-        /// </summary>
-        public static string VehicleTileView_OpenTrainControllingView {
-            get {
-                return ResourceManager.GetString("VehicleTileView_OpenTrainControllingView", resourceCulture);
+                return ResourceManager.GetString("SaveButtonText", resourceCulture);
             }
         }
     }

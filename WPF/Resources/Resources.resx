@@ -24,4 +24,10 @@
     <data name="VehicleTileView_OpenTrainControllingView" xml:space="preserve">
         <value>Control Train</value>
     </data>
+    <data name="VehicleDirectionForward" xml:space="preserve">
+        <value>Forward</value>
+    </data>
+    <data name="VehicleDirectionBackwards" xml:space="preserve">
+        <value>Backwards</value>
+    </data>
 </root>

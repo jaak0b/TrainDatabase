@@ -11,16 +11,10 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="List_Search" xml:space="preserve">
-        <value>Suche</value>
+    <data name="SaveButtonText" xml:space="preserve">
+        <value>Speichern</value>
     </data>
-    <data name="VehicleTileView_OpenTrainControllingView" xml:space="preserve">
-        <value>Zug steuern</value>
-    </data>
-    <data name="VehicleDirectionForward" xml:space="preserve">
-        <value>Vorwärts</value>
-    </data>
-    <data name="VehicleDirectionBackwards" xml:space="preserve">
-        <value>Rückwärts</value>
+    <data name="CancelButtonText" xml:space="preserve">
+        <value>Abbrechen</value>
     </data>
 </root>

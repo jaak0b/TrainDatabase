@@ -8,11 +8,13 @@ namespace Shell.WPF.ViewModels
 
   public class VehicleWindowViewModel
   {
-    public VehicleWindowViewModel(int vehicleId, VehicleViewModelFactory vehicleViewModelFactory, VehicleManualControlViewFactory vehicleManualControlViewFactory, IClientPresenter clientPresenter)
+    public VehicleWindowViewModel(int vehicleId, VehicleViewModelFactory vehicleViewModelFactory, VehicleManualControlViewFactory vehicleManualControlViewFactory,
+                                  VehicleSettingsViewFactory vehicleSettingsViewFactory, IClientPresenter clientPresenter)
     {
       VehicleViewModel = vehicleViewModelFactory(vehicleId);
       VehicleManualControlView = vehicleManualControlViewFactory(vehicleId);
       IsConnected = clientPresenter.IsConnected.ToReadOnlyReactiveProperty();
+      VehicleSettingsView = vehicleSettingsViewFactory(vehicleId);
     }
 
     public ReadOnlyReactiveProperty<bool> IsConnected { get; }
@@ -20,5 +22,7 @@ namespace Shell.WPF.ViewModels
     public VehicleViewModel VehicleViewModel { get; }
 
     public VehicleManualControlView VehicleManualControlView { get; }
+
+    public VehicleSettingsView VehicleSettingsView { get; }
   }
 }

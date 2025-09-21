@@ -68,7 +68,7 @@ namespace Shell.WPF
                                                                return address => cache.GetOrAdd(address, i => c.Resolve<VehicleManualControlViewModel>(new TypedParameter(typeof(int), i)));
                                                              })
              .SingleInstance();
-      
+
       builder.RegisterType<VehicleWindowViewModel>().AsSelf().InstancePerDependency();
       builder.Register<VehicleWindowViewModelFactory>(ctx =>
                                                       {
@@ -76,6 +76,24 @@ namespace Shell.WPF
                                                         IComponentContext c = ctx.Resolve<IComponentContext>();
                                                         return address => cache.GetOrAdd(address, i => c.Resolve<VehicleWindowViewModel>(new TypedParameter(typeof(int), i)));
                                                       })
+             .SingleInstance();
+
+      builder.RegisterType<VehicleSettingsView>().AsSelf().InstancePerDependency();
+      builder.Register<VehicleSettingsViewFactory>(ctx =>
+                                                   {
+                                                     ConcurrentDictionary<int, VehicleSettingsView> cache = new();
+                                                     IComponentContext c = ctx.Resolve<IComponentContext>();
+                                                     return address => cache.GetOrAdd(address, i => c.Resolve<VehicleSettingsView>(new TypedParameter(typeof(int), i)));
+                                                   })
+             .SingleInstance();
+
+      builder.RegisterType<VehicleSettingsViewModel>().AsSelf().InstancePerDependency();
+      builder.Register<VehicleSettingsViewModelFactory>(ctx =>
+                                                        {
+                                                          ConcurrentDictionary<int, VehicleSettingsViewModel> cache = new();
+                                                          IComponentContext c = ctx.Resolve<IComponentContext>();
+                                                          return address => cache.GetOrAdd(address, i => c.Resolve<VehicleSettingsViewModel>(new TypedParameter(typeof(int), i)));
+                                                        })
              .SingleInstance();
     }
   }

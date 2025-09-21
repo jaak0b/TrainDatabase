@@ -41,6 +41,15 @@
           <XamlRuntime>Wpf</XamlRuntime>
           <SubType>Designer</SubType>
         </Page>
+        <EmbeddedResource Update="Resources\VehicleSettingsViewResources.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>VehicleWindowResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <Compile Update="Resources\VehicleSettingsViewResources.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>VehicleSettingsViewResources.resx</DependentUpon>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup>

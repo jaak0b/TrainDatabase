@@ -3,6 +3,7 @@ using Autofac;
 using Core.ConfigurationImport;
 using Core.ConfigurationImport.Z21New;
 using Core.Presenters;
+using Core.Services;
 using Z21;
 
 namespace Core
@@ -11,8 +12,10 @@ namespace Core
   {
     override protected void Load(ContainerBuilder builder)
     {
+      builder.RegisterType<VehicleControlService>().As<IVehicleControlService>().SingleInstance();
+
       builder.RegisterType<ClientPresenter>().As<IClientPresenter>().SingleInstance();
-      
+
       builder.RegisterType<Z21NewDatabaseImporter>().As<IDatabaseImporter>().SingleInstance();
 
       builder.RegisterType<TrackPowerService>().AsSelf().SingleInstance();
@@ -20,8 +23,6 @@ namespace Core
       builder.RegisterType<VehicleService>().AsSelf().SingleInstance();
 
       builder.RegisterType<LogEventBus>().AsSelf().SingleInstance();
-
-      builder.RegisterType<Client>().AsSelf().SingleInstance();
 
       builder.RegisterType<VehiclePresenterOld>().AsSelf().InstancePerDependency();
 

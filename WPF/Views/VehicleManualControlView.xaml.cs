@@ -1,3 +1,5 @@
+using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
@@ -20,18 +22,23 @@ namespace Shell.WPF.Views
 
     private void Thumb_OnDragStarted(object sender, DragStartedEventArgs e)
     {
-      vehicleManualControlViewModel.IsSliderDragged = true;
+      vehicleManualControlViewModel.IsSpeedChangeUserInitiated = true;
     }
 
     private void Thumb_OnDragCompleted(object sender, DragCompletedEventArgs e)
     {
-      vehicleManualControlViewModel.IsSliderDragged = false;
+      vehicleManualControlViewModel.IsSpeedChangeUserInitiated = false;
     }
 
     private void VehicleManualControlView_OnPreviewMouseWheel(object sender, MouseWheelEventArgs e)
     {
       vehicleManualControlViewModel.SetVehicleSpeedFromScrollWheel(e.Delta);
       e.Handled = true;
+    }
+
+    private void UIElement_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+    {
+      vehicleManualControlViewModel.IsDirectionChangedUserInitiated = true;
     }
   }
 }
