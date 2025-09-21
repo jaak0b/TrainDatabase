@@ -11,8 +11,9 @@ namespace Persistence.UnitTest
     {
       MapperConfiguration config = new(cfg =>
                                        {
+                                         cfg.AddProfile<BaseObjectProfile>();
                                          cfg.AddProfile<VehicleProfile>();
-                                         cfg.AddProfile<VehicleFunctionProfile>(); 
+                                         cfg.AddProfile<VehicleFunctionProfile>();
                                        });
       Assert.DoesNotThrow(() => config.AssertConfigurationIsValid());
     }
