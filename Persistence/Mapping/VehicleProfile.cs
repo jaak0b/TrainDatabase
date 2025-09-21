@@ -11,19 +11,16 @@ namespace Persistence.Mapping
     public VehicleProfile()
     {
       CreateMap<VehicleEntity, Vehicle>()
-       .EqualityComparison((src, dest) => src.Id == dest.Id)
        .ForMember(vehicle => vehicle.Functions, expression => expression.MapFrom(src => src.Functions))
        .ForMember(vehicle => vehicle.TractionForward, expression => expression.MapFrom(src => src.TractionForward))
        .ForMember(vehicle => vehicle.TractionBackward, expression => expression.MapFrom(src => src.TractionBackward))
        .ForMember(vehicle => vehicle.TractionVehicleIds, expression => expression.MapFrom(src => src.TractionVehicleIds));
 
       CreateMap<Vehicle, VehicleEntity>()
-       .EqualityComparison((src, dest) => src.Id == dest.Id)
        .ForMember(vehicleEntity => vehicleEntity.Functions, expression => expression.MapFrom(src => src.Functions))
        .ForMember(vehicleEntity => vehicleEntity.TractionForward, expression => expression.MapFrom(src => src.TractionForward))
        .ForMember(vehicleEntity => vehicleEntity.TractionBackward, expression => expression.MapFrom(src => src.TractionBackward))
-       .ForMember(vehicleEntity => vehicleEntity.TractionVehicleIds, expression => expression.MapFrom(src => src.TractionVehicleIds))
-       .ForMember(vehicleEntity => vehicleEntity.Id, expression => expression.Ignore());
+       .ForMember(vehicleEntity => vehicleEntity.TractionVehicleIds, expression => expression.MapFrom(src => src.TractionVehicleIds));
     }
   }
 }

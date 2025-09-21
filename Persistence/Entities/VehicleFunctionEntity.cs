@@ -4,10 +4,8 @@ using Persistence.Enums;
 
 namespace Persistence.Entities
 {
-  public partial class VehicleFunctionEntity
+  public partial class VehicleFunctionEntity : BaseObjectEntity
   {
-    public int Id { get; set; }
-
     public VehicleEntity Vehicle { get; set; }
 
     public int VehicleId { get; set; }

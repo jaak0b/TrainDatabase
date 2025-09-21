@@ -8,10 +8,8 @@ using Z21;
 
 namespace Persistence.Entities
 {
-  public partial class VehicleEntity : IEquatable<VehicleEntity>, IComparable
+  public partial class VehicleEntity : BaseObjectEntity, IEquatable<VehicleEntity>, IComparable
   {
-    public int Id { get; set; }
-
     [Required]
     public string Name { get; set; } = "";
 

@@ -10,13 +10,10 @@ namespace Persistence.Mapping
     public VehicleFunctionProfile()
     {
       CreateMap<VehicleFunctionEntity, VehicleFunction>()
-       .ForMember(dest => dest.Vehicle, opt => opt.MapFrom(src => src.Vehicle))
-       .EqualityComparison((src, dest) => src.Id == dest.Id);
+       .ForMember(dest => dest.Vehicle, opt => opt.MapFrom(src => src.Vehicle));
 
       CreateMap<VehicleFunction, VehicleFunctionEntity>()
-       .EqualityComparison((src, dest) => src.Id == dest.Id)
-       .ForMember(dest => dest.Vehicle, opt => opt.MapFrom(src => src.Vehicle))
-       .ForMember(vehicleEntity => vehicleEntity.Id, expression => expression.Ignore());
+       .ForMember(dest => dest.Vehicle, opt => opt.MapFrom(src => src.Vehicle));
     }
   }
 }

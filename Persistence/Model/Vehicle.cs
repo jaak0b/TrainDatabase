@@ -4,10 +4,8 @@ using Z21;
 
 namespace Persistence.Model
 {
-  public class Vehicle
+  public class Vehicle : BaseObject
   {
-    public int Id { get; set; }
-
     public string Name { get; set; } = "";
 
     public string ImageName { get; set; } = "";
