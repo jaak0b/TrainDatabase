@@ -23,7 +23,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence.UnitTest", "Per
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shell.WPF.UnitTest", "Shell.WPF.UnitTest\Shell.WPF.UnitTest.csproj", "{3DB3CF40-2371-451B-8D98-D9321DC7774A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientAdapter", "ClientAdapter\ClientAdapter.csproj", "{7474DB8E-B6B5-4CE0-87DE-39DC54CE34BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter", "Adapter\Adapter.csproj", "{7474DB8E-B6B5-4CE0-87DE-39DC54CE34BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.UnitTest", "Core.UnitTest\Core.UnitTest.csproj", "{3D831C3E-05EA-4264-8065-9728B5B1AA1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeedSensorConsole", "SpeedSensorConsole\SpeedSensorConsole.csproj", "{F49813CB-B667-4898-9E02-3E5B08384379}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -98,6 +102,18 @@ Global
 		{7474DB8E-B6B5-4CE0-87DE-39DC54CE34BF}.DefaultBuild|x64.Build.0 = Debug|Any CPU
 		{7474DB8E-B6B5-4CE0-87DE-39DC54CE34BF}.Release|x64.ActiveCfg = Release|Any CPU
 		{7474DB8E-B6B5-4CE0-87DE-39DC54CE34BF}.Release|x64.Build.0 = Release|Any CPU
+		{3D831C3E-05EA-4264-8065-9728B5B1AA1D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3D831C3E-05EA-4264-8065-9728B5B1AA1D}.Debug|x64.Build.0 = Debug|Any CPU
+		{3D831C3E-05EA-4264-8065-9728B5B1AA1D}.DefaultBuild|x64.ActiveCfg = Debug|Any CPU
+		{3D831C3E-05EA-4264-8065-9728B5B1AA1D}.DefaultBuild|x64.Build.0 = Debug|Any CPU
+		{3D831C3E-05EA-4264-8065-9728B5B1AA1D}.Release|x64.ActiveCfg = Release|Any CPU
+		{3D831C3E-05EA-4264-8065-9728B5B1AA1D}.Release|x64.Build.0 = Release|Any CPU
+		{F49813CB-B667-4898-9E02-3E5B08384379}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F49813CB-B667-4898-9E02-3E5B08384379}.Debug|x64.Build.0 = Debug|Any CPU
+		{F49813CB-B667-4898-9E02-3E5B08384379}.DefaultBuild|x64.ActiveCfg = Debug|Any CPU
+		{F49813CB-B667-4898-9E02-3E5B08384379}.DefaultBuild|x64.Build.0 = Debug|Any CPU
+		{F49813CB-B667-4898-9E02-3E5B08384379}.Release|x64.ActiveCfg = Release|Any CPU
+		{F49813CB-B667-4898-9E02-3E5B08384379}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

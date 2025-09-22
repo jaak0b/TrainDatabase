@@ -29,7 +29,7 @@ void getTime(int pin2) {
   long end = millis();
   WaitForSensorClear(pin2);
   Serial.flush();
-  Serial.print(String((end - start) / val, 22));
+  Serial.println("{\"duration\":" + String((end - start) / val, 6) + "}"); // we print the value as millisecond
 }
 
 void WaitForSensorClear(int pin2) {

@@ -29,14 +29,8 @@ namespace Persistence.Database
     public virtual DbSet<VehicleFunctionEntity> Functions => Set<VehicleFunctionEntity>();
 
     public virtual DbSet<VehicleEntity> Vehicles => Set<VehicleEntity>();
-
-    override public EntityEntry<TEntity> Add<TEntity>(TEntity obj) where TEntity : class
-    {
-      EntityEntry<TEntity> result = Set<TEntity>().Add(obj);
-      SaveChanges();
-      CollectionChanged?.Invoke(this, new());
-      return result;
-    }
+    
+    public virtual DbSet<VehicleCalibrationDataEntity> VehicleCalibrationData => Set<VehicleCalibrationDataEntity>();
 
     public async Task<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity obj) where TEntity : class
     {
@@ -67,41 +61,12 @@ namespace Persistence.Database
       return value;
     }
 
-    public void RemoveRange<TEntity>(List<TEntity> obj) where TEntity : class
-    {
-      Set<TEntity>().RemoveRange(obj);
-      SaveChanges();
-      CollectionChanged?.Invoke(this, new());
-    }
-
     override public EntityEntry<TEntity> Update<TEntity>(TEntity obj) where TEntity : class
     {
       EntityEntry<TEntity> result = Set<TEntity>().Update(obj);
       SaveChanges();
       CollectionChanged?.Invoke(this, new());
       return result;
-    }
-
-    public async Task<EntityEntry<TEntity>> UpdateAsync<TEntity>(TEntity obj) where TEntity : class
-    {
-      EntityEntry<TEntity> result = Set<TEntity>().Update(obj);
-      await SaveChangesAsync();
-      CollectionChanged?.Invoke(this, new());
-      return result;
-    }
-
-    public void UpdateRange<TEntity>(List<TEntity> obj) where TEntity : class
-    {
-      Set<TEntity>().UpdateRange(obj);
-      SaveChanges();
-      CollectionChanged?.Invoke(this, new());
-    }
-
-    public async Task UpdateRangeAsync<TEntity>(List<TEntity> obj) where TEntity : class
-    {
-      Set<TEntity>().UpdateRange(obj);
-      await SaveChangesAsync();
-      CollectionChanged?.Invoke(this, new());
     }
 
     override protected void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -127,6 +92,10 @@ namespace Persistence.Database
       ValueComparer<List<int>> intListValueComparer = new((a, b) => a.SequenceEqual(b), v => v.Aggregate(0, (a, i) => HashCode.Combine(a, i.GetHashCode())), v => v.ToList());
       modelBuilder.Entity<VehicleEntity>().Property(e => e.TractionVehicleIds).HasConversion(intListConverter).Metadata.SetValueComparer(intListValueComparer);
 
+      modelBuilder.Entity<VehicleCalibrationDataEntity>()
+                  .HasIndex(entity => new { entity.VehicleId, entity.Direction, entity.SpeedStep })
+                  .IsUnique();
+      
       OnModelCreatingPartial(modelBuilder);
     }
 

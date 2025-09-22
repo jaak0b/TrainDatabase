@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Core.Controller
 {
   /// <summary>
-  /// Used to read the arduiono serial bus.
+  /// Used to read the arduino serial bus.
   /// </summary>
   public sealed class ArduinoSerialPort : SerialPort, IDisposable
   {

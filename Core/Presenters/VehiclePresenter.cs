@@ -4,7 +4,6 @@ using Core.Model;
 using Persistence.Model;
 using Persistence.Ports;
 using Reactive.Bindings;
-using Reactive.Bindings.Extensions;
 
 namespace Core.Presenters
 {
@@ -13,7 +12,7 @@ namespace Core.Presenters
     ReactiveProperty<Vehicle> Vehicle { get; }
 
     ReactiveProperty<int> MaximumSpeedStep { get; }
-    
+
     ReactiveProperty<int> Speed { get; }
 
     ReactiveProperty<bool> Direction { get; }
@@ -25,11 +24,11 @@ namespace Core.Presenters
   {
     public VehiclePresenter(int vehicleId, IVehicleRepository vehicleRepository, IClientAdapter client)
     {
-      Vehicle.Value = vehicleRepository.GetVehicleById(vehicleId) ?? throw new InvalidOperationException();
+      UpdatePropertiesOnSubscribe(vehicleRepository.GetVehicleById(vehicleId) ?? throw new InvalidOperationException());
 
       vehicleRepository.VehicleChangedStream
                        .Where(vehicle => vehicle.Id == vehicleId)
-                       .Subscribe(updatedVehicle => Vehicle.Value = updatedVehicle);
+                       .Subscribe(UpdatePropertiesOnSubscribe);
 
       client.VehicleData.Subscribe(VehicleData_OnNext);
     }
@@ -45,10 +44,16 @@ namespace Core.Presenters
 
     public ReactiveProperty<Vehicle> Vehicle { get; } = new();
 
-    public ReactiveProperty<int> MaximumSpeedStep { get; } = new(126);
-    
     public ReactiveProperty<int> Speed { get; } = new();
 
     public ReactiveProperty<bool> Direction { get; } = new();
+
+    public ReactiveProperty<int> MaximumSpeedStep { get; } = new();
+
+    private void UpdatePropertiesOnSubscribe(Vehicle updatedVehicle)
+    {
+      Vehicle.Value = updatedVehicle;
+      MaximumSpeedStep.Value = (int)updatedVehicle.RegulationStep;
+    }
   }
 }

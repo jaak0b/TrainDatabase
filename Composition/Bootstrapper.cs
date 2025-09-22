@@ -1,8 +1,8 @@
-﻿using Autofac;
+﻿using Adapter;
+using Autofac;
 using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using Autofac.Extras.CommonServiceLocator;
-using ClientAdapter;
 using CommonServiceLocator;
 using Core;
 using Microsoft.EntityFrameworkCore;
@@ -15,21 +15,21 @@ namespace Composition
 {
   public static class Bootstrapper
   {
-    public static IServiceProvider Initialize(IModule module, ILogger logger)
+    public static IServiceProvider Initialize(IModule? module, ILogger? logger)
     {
-      ArgumentNullException.ThrowIfNull(module, nameof(module));
-
       ServiceCollection serviceCollection = new();
 
-      serviceCollection.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(logger, true));
+      if (logger is not null)
+        serviceCollection.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(logger, true));
 
       ContainerBuilder builder = new();
       builder.Populate(serviceCollection);
 
-      builder.RegisterModule(new ClientAdapterModule());
+      builder.RegisterModule(new AdapterModule());
       builder.RegisterModule(new PersistenceIocModule());
       builder.RegisterModule(new CoreIocModule());
-      builder.RegisterModule(module);
+      if (module is not null)
+        builder.RegisterModule(module);
 
       IContainer container = builder.Build();
       ServiceLocator.SetLocatorProvider(() => new AutofacServiceLocator(container));

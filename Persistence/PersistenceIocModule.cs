@@ -24,6 +24,7 @@ namespace Persistence
                                                           {
                                                             mapperConfigurationExpression.AddProfile<VehicleProfile>();
                                                             mapperConfigurationExpression.AddProfile<VehicleFunctionProfile>();
+                                                            mapperConfigurationExpression.AddProfile<VehicleCalibrationDataProfile>();
                                                             mapperConfigurationExpression.AddProfile<BaseObjectProfile>();
 
                                                             mapperConfigurationExpression.AddCollectionMappers();

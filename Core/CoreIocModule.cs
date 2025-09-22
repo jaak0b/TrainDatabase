@@ -12,6 +12,12 @@ namespace Core
   {
     override protected void Load(ContainerBuilder builder)
     {
+      builder.RegisterType<VehicleSpeedCalibrationService>().As<IVehicleSpeedCalibrationService>().SingleInstance();
+
+      builder.RegisterType<TrackService>().As<ITrackService>().SingleInstance();
+
+      builder.RegisterType<TrackPresenter>().As<ITrackPresenter>().SingleInstance();
+
       builder.RegisterType<VehicleControlService>().As<IVehicleControlService>().SingleInstance();
 
       builder.RegisterType<ClientPresenter>().As<IClientPresenter>().SingleInstance();

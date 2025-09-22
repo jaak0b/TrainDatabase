@@ -16,7 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\ClientAdapter\ClientAdapter.csproj" />
+        <ProjectReference Include="..\Adapter\Adapter.csproj" />
         <ProjectReference Include="..\Core\Core.csproj"/>
         <ProjectReference Include="..\Helper\Helper.csproj"/>
         <ProjectReference Include="..\Persistence\Persistence.csproj"/>

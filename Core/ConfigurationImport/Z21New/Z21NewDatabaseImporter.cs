@@ -14,6 +14,7 @@ using Persistence.Database;
 using Persistence.Entities;
 using Persistence.Enums;
 using Persistence.Extensions;
+using Persistence.Model;
 using Serilog;
 
 namespace Core.ConfigurationImport.Z21New
@@ -85,7 +86,7 @@ namespace Core.ConfigurationImport.Z21New
                                                               ImageName = vehicleDto.image_name,
                                                               Type = (VehicleType)(int)vehicleDto.type,
                                                               MaxSpeed = vehicleDto.max_speed,
-                                                              Speedstep = vehicleDto.speed_display,
+                                                              RegulationStep = GetRegulationStep(vehicleDto.speed_display),
                                                               Address = vehicleDto.address,
                                                               IsActive = vehicleDto.active == 1,
                                                               Position = vehicleDto.position,
@@ -99,6 +100,17 @@ namespace Core.ConfigurationImport.Z21New
       await Database.AddRangeAsync(vehicles);
       await Database.SaveChangesAsync();
       await Database.Vehicles.Where(vehicleModel => string.IsNullOrWhiteSpace(vehicleModel.Name)).ForEachAsync(model => Log.Warning($"Imported Vehicle with Adresse {model.Address} has no display name!"));
+    }
+
+    private static RegulationStep GetRegulationStep(long speedStep)
+    {
+      return speedStep switch
+             {
+               14 => RegulationStep.Step14,
+               28 => RegulationStep.Step28,
+               128 => RegulationStep.Step128,
+               _ => RegulationStep.Step128 // If we don't know the value we assume its 128.
+             };
     }
 
     /// <summary>

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Persistence.Enums;
 using Z21;
@@ -14,8 +15,8 @@ namespace Persistence.Model
 
     public long? MaxSpeed { get; set; } = 0;
 
-    public long Speedstep { get; set; } = 128;
-
+    public RegulationStep RegulationStep { get; set; }
+    
     public long Address { get; set; } = 3;
 
     public bool IsActive { get; set; } = true;
@@ -34,8 +35,12 @@ namespace Persistence.Model
 
     public List<VehicleFunction> Functions { get; set; } = new();
 
+    public List<VehicleCalibrationData> VehicleCalibrations { get; set; } = new();
+    
+    [Obsolete]
     public decimal?[] TractionForward { get; set; } = new decimal?[Client.maxDccStep + 1];
 
+    [Obsolete]
     public decimal?[] TractionBackward { get; set; } = new decimal?[Client.maxDccStep + 1];
 
     public List<int> TractionVehicleIds { get; set; } = new();

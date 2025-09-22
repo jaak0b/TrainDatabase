@@ -1,21 +1,18 @@
 using AutoMapper;
-using AutoMapper.EquivalencyExpression;
 using Persistence.Entities;
 using Persistence.Model;
 
 namespace Persistence.Mapping
 {
-  public class VehicleFunctionProfile : Profile
+  public class VehicleCalibrationDataProfile : Profile
   {
-    public VehicleFunctionProfile()
+    public VehicleCalibrationDataProfile()
     {
-      CreateMap<VehicleFunctionEntity, VehicleFunction>()
+      CreateMap<VehicleCalibrationDataEntity, VehicleCalibrationData>()
        .ForMember(dest => dest.Vehicle, opt => opt.MapFrom(src => src.Vehicle));
 
-      CreateMap<VehicleFunction, VehicleFunctionEntity>()
+      CreateMap<VehicleCalibrationData, VehicleCalibrationDataEntity>()
        .ForMember(dest => dest.Vehicle, opt => opt.MapFrom(src => src.Vehicle));
     }
   }
-
-
 }

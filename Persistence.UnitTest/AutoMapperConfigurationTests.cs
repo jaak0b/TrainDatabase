@@ -14,6 +14,7 @@ namespace Persistence.UnitTest
                                          cfg.AddProfile<BaseObjectProfile>();
                                          cfg.AddProfile<VehicleProfile>();
                                          cfg.AddProfile<VehicleFunctionProfile>();
+                                         cfg.AddProfile<VehicleCalibrationDataProfile>();
                                        });
       Assert.DoesNotThrow(() => config.AssertConfigurationIsValid());
     }
