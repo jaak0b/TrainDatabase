@@ -1,5 +1,3 @@
-using Core.Presenters;
-using Reactive.Bindings;
 using Shell.WPF.Views;
 
 namespace Shell.WPF.ViewModels
@@ -9,15 +7,12 @@ namespace Shell.WPF.ViewModels
   public class VehicleWindowViewModel
   {
     public VehicleWindowViewModel(int vehicleId, VehicleViewModelFactory vehicleViewModelFactory, VehicleManualControlViewFactory vehicleManualControlViewFactory,
-                                  VehicleSettingsViewFactory vehicleSettingsViewFactory, IClientPresenter clientPresenter)
+                                  VehicleSettingsViewFactory vehicleSettingsViewFactory)
     {
       VehicleViewModel = vehicleViewModelFactory(vehicleId);
       VehicleManualControlView = vehicleManualControlViewFactory(vehicleId);
-      IsConnected = clientPresenter.IsConnected.ToReadOnlyReactiveProperty();
       VehicleSettingsView = vehicleSettingsViewFactory(vehicleId);
     }
-
-    public ReadOnlyReactiveProperty<bool> IsConnected { get; }
 
     public VehicleViewModel VehicleViewModel { get; }
 

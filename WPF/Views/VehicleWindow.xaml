@@ -3,19 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:Shell.WPF.Views"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:viewModels="clr-namespace:Shell.WPF.ViewModels"
         mc:Ignorable="d"
         Title="{Binding VehicleViewModel.VehicleDisplayText.Value}" Height="450" Width="800"
         d:DataContext="{d:DesignInstance viewModels:VehicleWindowViewModel }">
-
-    <xctk:BusyIndicator IsBusy="{Binding !IsConnected}" Name="BusyIndicator"
-                        BusyContent="Verbindung zur Zentrale wird hergestellt...">
         <TabControl>
             <TabItem Header="xxxx" Content="{Binding  VehicleManualControlView}"></TabItem>
             <TabItem Header="Settings" Content="{Binding VehicleSettingsView}"></TabItem>
             <TabItem Header="Zug Zusammenstellung"></TabItem>
         </TabControl>
-    </xctk:BusyIndicator>
 </Window>

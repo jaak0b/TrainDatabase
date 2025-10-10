@@ -23,4 +23,7 @@
     <data name="VehicleDirectionBackwards" xml:space="preserve">
         <value>Rückwärts</value>
     </data>
+    <data name="LostConnectionToControlStation" xml:space="preserve">
+        <value>Verbindung zur Zentrale wird hergestellt...</value>
+    </data>
 </root>

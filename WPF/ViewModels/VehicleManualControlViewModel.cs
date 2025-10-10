@@ -13,7 +13,7 @@ namespace Shell.WPF.ViewModels
   public class VehicleManualControlViewModel
   {
 
-    public VehicleManualControlViewModel(int vehicleId, VehicleViewModelFactory vehicleViewModelFactory, VehiclePresenterFactory presenterFactory, IVehicleControlService vehicleControlService)
+    public VehicleManualControlViewModel(int vehicleId, VehicleViewModelFactory vehicleViewModelFactory, VehiclePresenterFactory presenterFactory, IVehicleControlService vehicleControlService, IClientPresenter clientPresenter)
     {
       VehiclePresenter = presenterFactory(vehicleId);
       VehicleViewModel = vehicleViewModelFactory(vehicleId);
@@ -39,6 +39,8 @@ namespace Shell.WPF.ViewModels
 
       VehicleDirection.Subscribe(vehicleDirection => VehicleDirectionDisplayText.Value
                                                        = vehicleDirection ? Resources.Resources.VehicleDirectionBackwards : Resources.Resources.VehicleDirectionForward);
+      
+      IsDisconnected  = clientPresenter.IsDisconnected.ToReadOnlyReactiveProperty();
     }
 
     public IVehiclePresenter VehiclePresenter { get; }
@@ -51,6 +53,8 @@ namespace Shell.WPF.ViewModels
 
     public ReactiveProperty<string> VehicleDirectionDisplayText { get; set; } = new();
 
+    public ReadOnlyReactiveProperty<bool> IsDisconnected  { get; }
+    
     public bool IsSpeedChangeUserInitiated { get; set; }
 
     public bool IsDirectionChangedUserInitiated { get; set; }

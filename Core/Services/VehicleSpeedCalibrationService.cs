@@ -42,22 +42,21 @@ namespace Core.Services
         decimal sensorDistance = 200; // in mm
         string portName = "";
         int baudRate = 9600;
-        using (ISpeedSensorPort sensor = speedSensorPortFactory(portName, baudRate))
+        
+        using ISpeedSensorPort sensor = speedSensorPortFactory(portName, baudRate);
+        for (int speed = startStep; speed <= maximumSpeedStep; speed += incrementStepBy)
         {
-          for (int speed = startStep; speed <= maximumSpeedStep; speed += incrementStepBy)
+          await CaptureTime(sensor, vehicle, speed, true, sensorDistance);
+          await CaptureTime(sensor, vehicle, speed, false, sensorDistance);
+
+          if (!lastStep && speed + incrementStepBy > maximumSpeedStep)
           {
-            await CaptureTime(sensor, vehicle, speed, true, sensorDistance);
-            await CaptureTime(sensor, vehicle, speed, false, sensorDistance);
-
-            if (!lastStep && speed + incrementStepBy > maximumSpeedStep)
-            {
-              speed = maximumSpeedStep - incrementStepBy;
-              lastStep = true;
-            }
+            speed = maximumSpeedStep - incrementStepBy;
+            lastStep = true;
           }
-
-          await ReturnToStartPosition(sensor, vehicle);
         }
+
+        await ReturnToStartPosition(sensor, vehicle);
       } finally
       {
         ServiceState.Value = Core.Model.ServiceState.Idle();

@@ -30,4 +30,7 @@
     <data name="VehicleDirectionBackwards" xml:space="preserve">
         <value>Backwards</value>
     </data>
+    <data name="LostConnectionToControlStation" xml:space="preserve">
+        <value>Connecting to the command station...</value>
+    </data>
 </root>

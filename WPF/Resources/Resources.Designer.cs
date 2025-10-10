@@ -69,6 +69,15 @@ namespace Shell.WPF.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connecting to the command station....
+        /// </summary>
+        public static string LostConnectionToControlStation {
+            get {
+                return ResourceManager.GetString("LostConnectionToControlStation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Backwards.
         /// </summary>
         public static string VehicleDirectionBackwards {
