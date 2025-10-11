@@ -15,7 +15,7 @@ namespace Persistence.Model
 
     public long? MaxSpeed { get; set; } = 0;
 
-    public RegulationStep RegulationStep { get; set; }
+    public RegulationStep RegulationStep { get; set; } = RegulationStep.Step128;
     
     public long Address { get; set; } = 3;
 

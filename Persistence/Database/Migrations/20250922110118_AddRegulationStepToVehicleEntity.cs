@@ -14,6 +14,7 @@ namespace Infrastructure.Migrations
                 name: "Speedstep",
                 table: "Vehicles",
                 newName: "RegulationStep");
+            migrationBuilder.Sql("UPDATE Vehicles SET RegulationStep = 128");
         }
 
         /// <inheritdoc />

@@ -26,6 +26,8 @@ namespace Shell.WPF.ViewModels
                                          .Where(_ => !IsDirectionChangedUserInitiated)
                                          .ToReactiveProperty();
 
+      VehicleMaxSpeed = VehiclePresenter.MaximumSpeedStep.ToReadOnlyReactiveProperty();
+      
       VehicleSpeed.Where(_ => IsSpeedChangeUserInitiated)
                   .Sample(TimeSpan.FromMilliseconds(200))
                   .Subscribe(async void (speed) => await vehicleControlService.SetVehicleSpeedAsync(VehicleViewModel.Vehicle.Value, speed, VehicleDirection.Value));
@@ -46,9 +48,11 @@ namespace Shell.WPF.ViewModels
     public IVehiclePresenter VehiclePresenter { get; }
 
     public VehicleViewModel VehicleViewModel { get; }
-
+    
     public ReactiveProperty<int> VehicleSpeed { get; set; }
 
+    public ReadOnlyReactiveProperty<int> VehicleMaxSpeed { get; set; }
+    
     public ReactiveProperty<bool> VehicleDirection { get; set; }
 
     public ReactiveProperty<string> VehicleDirectionDisplayText { get; set; } = new();
