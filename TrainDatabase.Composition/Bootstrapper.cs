@@ -40,6 +40,7 @@ public static class Bootstrapper
         AutofacServiceProvider provider = new(container);
 
         await provider.GetRequiredService<IDatabaseInitializer>().InitializeAsync();
+        await provider.GetRequiredService<IConnectionInitializer>().ConnectAsync();
 
         return provider;
     }

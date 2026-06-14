@@ -1,3 +1,5 @@
+using TrainDatabase.Core.Domain;
+
 namespace TrainDatabase.Core.Live;
 
 /// <summary>
@@ -10,4 +12,6 @@ public class LocoSetDriveData
     public ushort Speed { get; init; }
 
     public bool Direction { get; init; }
+
+    public RegulationStep SpeedStep { get; init; } = RegulationStep.Step128;
 }

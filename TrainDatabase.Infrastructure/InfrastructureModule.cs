@@ -7,6 +7,7 @@ using TrainDatabase.Infrastructure.Hardware;
 using TrainDatabase.Infrastructure.Mapping;
 using TrainDatabase.Infrastructure.Platform;
 using TrainDatabase.Infrastructure.Repositories;
+using Z21.Autofac;
 
 namespace TrainDatabase.Infrastructure;
 
@@ -47,7 +48,7 @@ public class InfrastructureModule : Module
         builder.RegisterType<Import.Z21DatabaseImporter>().As<IDatabaseImporter>().SingleInstance();
 
         // Command station (z21).
-        builder.RegisterType<Z21.Client>().AsSelf().SingleInstance();
+        builder.AddZ21();
         builder.RegisterType<Z21ClientAdapter>().As<IClientAdapter>().SingleInstance();
 
         // Speed sensor + serial devices.

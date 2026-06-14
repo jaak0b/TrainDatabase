@@ -22,6 +22,7 @@ public class VehicleControlService(IClientAdapter client, IVehicleRepository rep
                 VehicleAddress = (ushort)vehicle.Address,
                 Direction = direction,
                 Speed = (ushort)speed,
+                SpeedStep = vehicle.RegulationStep,
             },
         };
 
@@ -38,6 +39,7 @@ public class VehicleControlService(IClientAdapter client, IVehicleRepository rep
                 VehicleAddress = (ushort)member.Address,
                 Direction = member.InvertTraction ? !direction : direction,
                 Speed = (ushort)speed,
+                SpeedStep = member.RegulationStep,
             });
         }
 

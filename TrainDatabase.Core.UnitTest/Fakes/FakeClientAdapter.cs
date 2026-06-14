@@ -12,7 +12,7 @@ public sealed class FakeClientAdapter : IClientAdapter
     public Subject<VehicleLiveData> VehicleDataSubject { get; } = new();
     public Subject<VehicleFunctionData> VehicleFunctionDataSubject { get; } = new();
     public ObservableValue<bool> IsConnectedValue { get; } = new(false);
-    public ObservableValue<TrackPower> TrackPowerValue { get; } = new(Live.TrackPower.Off);
+    public ObservableValue<TrackPower> TrackPowerValue { get; } = new(TrainDatabase.Core.Live.TrackPower.Off);
 
     public List<LocoSetDriveData> DriveCommands { get; } = new();
     public List<bool> TrackPowerCommands { get; } = new();

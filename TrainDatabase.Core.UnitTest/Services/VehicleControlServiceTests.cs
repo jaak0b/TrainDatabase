@@ -51,6 +51,40 @@ public class VehicleControlServiceTests
     }
 
     [Test]
+    public async Task SetVehicleSpeedAsync_NoConsist_CarriesVehicleRegulationStep()
+    {
+        FakeClientAdapter client = new();
+        FakeVehicleRepository repository = new();
+        VehicleControlService service = new(client, repository);
+        Vehicle vehicle = new() { Address = 55, RegulationStep = RegulationStep.Step28 };
+
+        await service.SetVehicleSpeedAsync(vehicle, speed: 30, direction: true);
+
+        Assert.That(client.DriveCommands[0].SpeedStep, Is.EqualTo(RegulationStep.Step28));
+    }
+
+    [Test]
+    public async Task SetVehicleSpeedAsync_WithConsist_EachCommandCarriesItsOwnRegulationStep()
+    {
+        FakeClientAdapter client = new();
+        FakeVehicleRepository repository = new();
+        Vehicle member = new() { Id = 2, Address = 11, RegulationStep = RegulationStep.Step14 };
+        repository.Seed(member);
+        Vehicle lead = new() { Id = 1, Address = 10, RegulationStep = RegulationStep.Step128, TractionVehicleIds = { 2 } };
+        VehicleControlService service = new(client, repository);
+
+        await service.SetVehicleSpeedAsync(lead, speed: 40, direction: true);
+
+        LocoSetDriveData leadCommand = client.DriveCommands.Single(c => c.VehicleAddress == 10);
+        LocoSetDriveData memberCommand = client.DriveCommands.Single(c => c.VehicleAddress == 11);
+        Assert.Multiple(() =>
+        {
+            Assert.That(leadCommand.SpeedStep, Is.EqualTo(RegulationStep.Step128));
+            Assert.That(memberCommand.SpeedStep, Is.EqualTo(RegulationStep.Step14));
+        });
+    }
+
+    [Test]
     public async Task SetVehicleSpeedAsync_MemberWithInvertTraction_FlipsItsDirection()
     {
         FakeClientAdapter client = new();

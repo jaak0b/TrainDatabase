@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using Autofac;
 using TrainDatabase.Core.Logging;
+using TrainDatabase.Core.Ports;
 using TrainDatabase.Core.Presenters;
 using TrainDatabase.Core.Services;
 
@@ -15,6 +16,7 @@ public class CoreModule : Module
     protected override void Load(ContainerBuilder builder)
     {
         builder.RegisterType<VehicleControlService>().As<IVehicleControlService>().SingleInstance();
+        builder.RegisterType<ConnectionInitializer>().As<IConnectionInitializer>().SingleInstance();
         builder.RegisterType<TrackService>().As<ITrackService>().SingleInstance();
         builder.RegisterType<VehicleSpeedCalibrationService>().As<IVehicleSpeedCalibrationService>().SingleInstance();
         builder.RegisterType<TrainPhysicsService>().AsSelf().SingleInstance();

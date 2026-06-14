@@ -15,6 +15,7 @@ TrainDatabase lets you control your model trains with your PC. Whether you want 
 2. Go to this [link](https://github.com/Jakob-Eichberger/TrainDatabase/releases) to download the installer.
 3. Install the software using the provided installer!
 4. When the app starts for the first time you get the option to import your Z21 layout (from the new Z21 Android/IOS App).
+5. Open **Settings** and enter your command station's IP address. From then on TrainDatabase connects to it automatically every time it starts up, so your trains are ready to drive as soon as the app is open.
 
 ### Import existing z21 Layout. 
 1. Open the Roco/Fleischmann Z21 App.
@@ -52,7 +53,7 @@ In a train's edit screen you can couple other trains into a consist under **Mult
 
 ### Vehicle edit window
 
-The edit screen is organised into three tabs so related settings stay together instead of one long list. **General** holds the basics — name, full name, address, railway, vehicle type, regulation step (14/28/128), a free-text description and the active flag. **Functions** lists the decoder functions, each with its F-number, name and button type. **Multi-traction** is where you couple other trains into a consist (and flip this loco's direction if it runs in reverse). One **Save** button at the bottom commits the whole screen at once, and **Revert** discards your pending edits.
+The edit screen is organised into three tabs so related settings stay together instead of one long list. **General** holds the basics — name, full name, address, railway, vehicle type, regulation step (14/28/128), a free-text description and the active flag. The regulation step is sent to the decoder when driving, so a 14- or 28-step locomotive is controlled at its own resolution rather than being forced onto the 128-step scale. **Functions** lists the decoder functions, each with its F-number, name and button type. **Multi-traction** is where you couple other trains into a consist (and flip this loco's direction if it runs in reverse). One **Save** button at the bottom commits the whole screen at once, and **Revert** discards your pending edits.
 
 ![image](https://user-images.githubusercontent.com/53713395/140822639-1f07bcd9-de62-45f9-afd3-61c8f13acb3f.png)
 ![image](https://user-images.githubusercontent.com/53713395/140822682-2b9de754-85eb-48f0-8cbd-5c29560fdb69.png)
@@ -99,3 +100,4 @@ TBD
 - CommunityToolkit.Mvvm
 - EF Core 9 + SQLite, Mapster
 - Autofac
+- Z21 client 7.x (`Z21` + `Z21.Autofac`) for the command-station link
