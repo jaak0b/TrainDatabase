@@ -1,0 +1,18 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:TrainDatabase.Presentation.ViewModels"
+             x:Class="TrainDatabase.UI.Views.SettingsView"
+             x:DataType="vm:SettingsViewModel">
+
+    <StackPanel Spacing="8" MaxWidth="420" HorizontalAlignment="Left">
+        <TextBlock Text="Application settings" FontWeight="Bold" FontSize="15" />
+        <TextBlock Text="Command station IP" />
+        <TextBox Text="{Binding ClientIp}" />
+        <TextBlock Text="Arduino COM port" />
+        <TextBox Text="{Binding ArduinoComPort}" />
+        <TextBlock Text="Arduino baud rate" />
+        <NumericUpDown Value="{Binding ArduinoBaudRate}" Minimum="300" Maximum="1000000" Increment="100" FormatString="0" />
+        <Button Content="Save" Command="{Binding SaveCommand}" Margin="0,8,0,0" />
+    </StackPanel>
+
+</UserControl>

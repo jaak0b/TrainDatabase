@@ -84,7 +84,8 @@ TBD
 
 ## Technologies
 
-- .Net 5.0 WPF
-- EF Core 5.0.0
-- OxyPlot.WPF 2.0.0
-- SharpDX 4.2.0
+- .NET 8 / .NET 10 (mobile + browser heads)
+- Avalonia 12 (cross-platform UI: Desktop, Android, Browser/WASM)
+- CommunityToolkit.Mvvm
+- EF Core 9 + SQLite, Mapster
+- Autofac

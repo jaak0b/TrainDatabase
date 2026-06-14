@@ -1,0 +1,18 @@
+{
+  "stryker-config": {
+    "project": "TrainDatabase.Core.csproj",
+    "test-projects": [
+      "TrainDatabase.Core.UnitTest.csproj"
+    ],
+    "mutation-level": "Complete",
+    "thresholds": {
+      "high": 90,
+      "low": 85,
+      "break": 85
+    },
+    "reporters": [
+      "progress",
+      "html"
+    ]
+  }
+}

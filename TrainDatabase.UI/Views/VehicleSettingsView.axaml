@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:TrainDatabase.Presentation.ViewModels"
+             x:Class="TrainDatabase.UI.Views.VehicleSettingsView"
+             x:DataType="vm:VehicleSettingsViewModel">
+
+    <StackPanel Spacing="8">
+        <TextBlock Text="Vehicle settings" FontWeight="Bold" FontSize="15" />
+        <TextBlock Text="Name" />
+        <TextBox Text="{Binding Name}" />
+        <TextBlock Text="Full name" />
+        <TextBox Text="{Binding FullName}" />
+        <TextBlock Text="Address" />
+        <NumericUpDown Value="{Binding Address}" Minimum="1" Maximum="9999" Increment="1" FormatString="0" />
+        <TextBlock Text="Railway" />
+        <TextBox Text="{Binding Railway}" />
+        <CheckBox Content="Active" IsChecked="{Binding IsActive}" />
+        <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,8,0,0">
+            <Button Content="Save" Command="{Binding SaveCommand}" />
+            <Button Content="Revert" Command="{Binding RevertCommand}" />
+        </StackPanel>
+
+        <TextBlock Text="Functions" FontWeight="Bold" Margin="0,12,0,0" />
+        <ItemsControl ItemsSource="{Binding Functions}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:FunctionEditViewModel">
+                    <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,2">
+                        <NumericUpDown Grid.Column="0" Value="{Binding Address}" Minimum="0" Maximum="68"
+                                       FormatString="0" Width="96" Watermark="F#" />
+                        <TextBox Grid.Column="1" Text="{Binding Name}" Margin="6,0" Watermark="Name" />
+                        <ComboBox Grid.Column="2" ItemsSource="{Binding Source={x:Static vm:VehicleSettingsViewModel.ButtonTypes}}"
+                                  SelectedItem="{Binding ButtonType}" Width="130" />
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <Button Content="Save functions" Command="{Binding SaveFunctionsCommand}" HorizontalAlignment="Left" />
+    </StackPanel>
+
+</UserControl>

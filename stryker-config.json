@@ -1,0 +1,27 @@
+{
+  "stryker-config": {
+    "reporters": [ "cleartexttree", "progress", "html" ],
+    "thresholds": {
+      "high": 98,
+      "low": 90,
+      "break": 0
+    },
+    "mutation-level": "Complete",
+    "mutate": [
+      "**/*.cs",
+      "!**/*.axaml.cs",
+      "!**/Views/**/*.cs",
+      "!**/Migrations/**/*.cs",
+      "!**/CoreModule.cs",
+      "!**/InfrastructureModule.cs",
+      "!**/PresentationModule.cs",
+      "!**/UiModule.cs",
+      "!**/Composition/Bootstrapper.cs",
+      "!**/Database/TrainDbContext.cs",
+      "!**/Database/DesignTimeTrainDbContextFactory.cs",
+      "!**/ViewLocator.cs",
+      "!**/Program.cs",
+      "!**/MainActivity.cs"
+    ]
+  }
+}

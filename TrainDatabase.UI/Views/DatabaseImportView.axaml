@@ -1,0 +1,14 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:TrainDatabase.Presentation.ViewModels"
+             x:Class="TrainDatabase.UI.Views.DatabaseImportView"
+             x:DataType="vm:DatabaseImportViewModel">
+
+    <StackPanel Spacing="12" MaxWidth="520" HorizontalAlignment="Left">
+        <TextBlock Text="Import database" FontWeight="Bold" FontSize="15" />
+        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" Opacity="0.8" />
+        <Button Content="Choose .z21 file…" Command="{Binding ImportCommand}" />
+        <ProgressBar IsIndeterminate="True" IsVisible="{Binding IsImporting}" />
+    </StackPanel>
+
+</UserControl>

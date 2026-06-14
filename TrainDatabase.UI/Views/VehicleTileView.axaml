@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:TrainDatabase.Presentation.ViewModels"
+             xmlns:conv="using:TrainDatabase.UI.Converters"
+             x:Class="TrainDatabase.UI.Views.VehicleTileView"
+             x:DataType="vm:VehicleTileViewModel">
+
+    <Button Command="{Binding OpenCommand}" Width="200" Height="120" Margin="4" Padding="8">
+        <DockPanel>
+            <Image DockPanel.Dock="Left" Width="72" Height="72" Margin="0,0,8,0" Stretch="Uniform"
+                   Source="{Binding ImageData, Converter={x:Static conv:BytesToBitmapConverter.Instance}}" />
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="{Binding Name}" FontWeight="Bold" TextWrapping="Wrap" />
+                <TextBlock Text="{Binding Speed, StringFormat='Speed: {0}'}" Opacity="0.7" Margin="0,4,0,0" />
+            </StackPanel>
+        </DockPanel>
+    </Button>
+
+</UserControl>

@@ -1,0 +1,15 @@
+<Solution>
+  <Project Path="TrainDatabase.Composition/TrainDatabase.Composition.csproj" />
+  <Project Path="TrainDatabase.Core.UnitTest/TrainDatabase.Core.UnitTest.csproj" />
+  <Project Path="TrainDatabase.Core/TrainDatabase.Core.csproj" />
+  <Project Path="TrainDatabase.Infrastructure.IntegrationTest/TrainDatabase.Infrastructure.IntegrationTest.csproj" />
+  <Project Path="TrainDatabase.Infrastructure/TrainDatabase.Infrastructure.csproj" />
+  <Project Path="TrainDatabase.Presentation.UnitTest/TrainDatabase.Presentation.UnitTest.csproj" />
+  <Project Path="TrainDatabase.Presentation/TrainDatabase.Presentation.csproj" />
+  <Project Path="TrainDatabase.SpeedSensorConsole/TrainDatabase.SpeedSensorConsole.csproj" />
+  <Project Path="TrainDatabase.UI.Android/TrainDatabase.UI.Android.csproj" />
+  <Project Path="TrainDatabase.UI.Browser/TrainDatabase.UI.Browser.csproj" />
+  <Project Path="TrainDatabase.UI.Desktop/TrainDatabase.UI.Desktop.csproj" />
+  <Project Path="TrainDatabase.UI.EndToEndTest/TrainDatabase.UI.EndToEndTest.csproj" />
+  <Project Path="TrainDatabase.UI/TrainDatabase.UI.csproj" />
+</Solution>

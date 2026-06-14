@@ -1,0 +1,33 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:TrainDatabase.Presentation.ViewModels"
+             x:Class="TrainDatabase.UI.Views.VehicleManualControlView"
+             x:DataType="vm:VehicleManualControlViewModel">
+
+    <StackPanel Spacing="10">
+        <TextBlock Text="Manual control" FontWeight="Bold" FontSize="15" />
+        <Border Background="#33FF0000" CornerRadius="4" Padding="8" IsVisible="{Binding IsDisconnected}">
+            <TextBlock Text="Command station disconnected" Foreground="#B00000" />
+        </Border>
+        <TextBlock Text="{Binding Speed, StringFormat='Speed step: {0}'}" />
+        <Slider Minimum="0" Maximum="{Binding MaximumSpeedStep}" Value="{Binding Speed}" />
+        <TextBlock Text="Direction" />
+        <ToggleSwitch IsChecked="{Binding Direction}" OnContent="Forward" OffContent="Reverse" />
+
+        <TextBlock Text="Functions" FontWeight="Bold" Margin="0,8,0,0" />
+        <ItemsControl ItemsSource="{Binding Functions}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:VehicleFunctionViewModel">
+                    <ToggleButton Content="{Binding Label}" IsChecked="{Binding IsActive, Mode=OneWay}"
+                                  Command="{Binding ActivateCommand}" Margin="3" MinWidth="64" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+
+</UserControl>

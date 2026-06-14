@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:TrainDatabase.Presentation.ViewModels"
+             x:Class="TrainDatabase.UI.Views.MeasurementView"
+             x:DataType="vm:MeasurementViewModel">
+
+    <StackPanel Spacing="10" MaxWidth="520" HorizontalAlignment="Left">
+        <TextBlock Text="Speed measurement" FontWeight="Bold" FontSize="15" />
+        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" Opacity="0.8" />
+
+        <TextBlock Text="Vehicle" />
+        <ComboBox ItemsSource="{Binding Vehicles}" SelectedItem="{Binding SelectedVehicle}" HorizontalAlignment="Stretch">
+            <ComboBox.ItemTemplate>
+                <DataTemplate x:DataType="vm:VehicleListItem">
+                    <TextBlock Text="{Binding Display}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Button Content="Start measurement" Command="{Binding StartCommand}" />
+        <ProgressBar IsIndeterminate="True" IsVisible="{Binding IsRunning}" />
+    </StackPanel>
+
+</UserControl>

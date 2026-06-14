@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:TrainDatabase.Presentation.ViewModels"
+             xmlns:conv="using:Avalonia.Data.Converters"
+             x:Class="TrainDatabase.UI.Views.ShellView"
+             x:DataType="vm:ShellViewModel">
+
+    <Panel>
+        <DockPanel>
+            <Border DockPanel.Dock="Top" Background="{DynamicResource SystemControlBackgroundChromeMediumBrush}" Padding="12,8">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <TextBlock Text="TrainDatabase" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" Margin="0,0,16,0" />
+                    <Button Content="Home" Command="{Binding GoHomeCommand}" />
+                    <Button Content="Manage" Command="{Binding OpenManagementCommand}" />
+                    <Button Content="Measure" Command="{Binding OpenMeasurementCommand}" />
+                    <Button Content="Import" Command="{Binding OpenImportCommand}" />
+                    <Button Content="Settings" Command="{Binding OpenSettingsCommand}" />
+                </StackPanel>
+            </Border>
+
+            <ContentControl Content="{Binding Current}" Margin="12" />
+        </DockPanel>
+
+        <Border Background="#90000000"
+                IsVisible="{Binding CurrentDialog, Converter={x:Static conv:ObjectConverters.IsNotNull}}">
+            <ContentControl Content="{Binding CurrentDialog}"
+                            HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Border>
+    </Panel>
+
+</UserControl>

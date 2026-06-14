@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <LangVersion>latest</LangVersion>
+        <RootNamespace>TrainDatabase.Composition</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Autofac" Version="8.3.0" />
+        <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="10.0.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.9" />
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.9" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\TrainDatabase.Core\TrainDatabase.Core.csproj" />
+        <ProjectReference Include="..\TrainDatabase.Infrastructure\TrainDatabase.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>

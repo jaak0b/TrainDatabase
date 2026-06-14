@@ -1,0 +1,20 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:TrainDatabase.Presentation.ViewModels"
+             x:Class="TrainDatabase.UI.Views.VehicleTilePanelView"
+             x:DataType="vm:VehicleTilePanelViewModel">
+
+    <DockPanel>
+        <TextBox DockPanel.Dock="Top" Watermark="Search vehicles…" Text="{Binding SearchText}" Margin="0,0,0,8" />
+        <ScrollViewer>
+            <ItemsControl ItemsSource="{Binding Tiles}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+    </DockPanel>
+
+</UserControl>

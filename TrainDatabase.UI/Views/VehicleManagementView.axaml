@@ -1,0 +1,30 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:TrainDatabase.Presentation.ViewModels"
+             x:Class="TrainDatabase.UI.Views.VehicleManagementView"
+             x:DataType="vm:VehicleManagementViewModel">
+
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="8" Margin="0,0,0,8">
+            <TextBlock Text="Manage vehicles" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" />
+            <Button Content="Add vehicle" Command="{Binding AddCommand}" />
+        </StackPanel>
+
+        <ListBox ItemsSource="{Binding Vehicles}">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="vm:VehicleListItem">
+                    <Grid ColumnDefinitions="*,Auto,Auto">
+                        <TextBlock Grid.Column="0" Text="{Binding Display}" VerticalAlignment="Center" />
+                        <Button Grid.Column="1" Content="Edit" Margin="4,0"
+                                Command="{Binding $parent[ListBox].((vm:VehicleManagementViewModel)DataContext).EditCommand}"
+                                CommandParameter="{Binding}" />
+                        <Button Grid.Column="2" Content="Delete"
+                                Command="{Binding $parent[ListBox].((vm:VehicleManagementViewModel)DataContext).DeleteCommand}"
+                                CommandParameter="{Binding}" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </DockPanel>
+
+</UserControl>

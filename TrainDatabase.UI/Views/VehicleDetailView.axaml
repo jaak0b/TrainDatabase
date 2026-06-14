@@ -1,0 +1,16 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:TrainDatabase.Presentation.ViewModels"
+             x:Class="TrainDatabase.UI.Views.VehicleDetailView"
+             x:DataType="vm:VehicleDetailViewModel">
+
+    <DockPanel>
+        <Button DockPanel.Dock="Top" Content="← Back" Command="{Binding BackCommand}"
+                HorizontalAlignment="Left" Margin="0,0,0,12" />
+        <Grid ColumnDefinitions="*,16,*">
+            <ContentControl Grid.Column="0" Content="{Binding Control}" />
+            <ContentControl Grid.Column="2" Content="{Binding Settings}" />
+        </Grid>
+    </DockPanel>
+
+</UserControl>
