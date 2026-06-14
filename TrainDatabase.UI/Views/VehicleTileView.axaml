@@ -5,15 +5,35 @@
              x:Class="TrainDatabase.UI.Views.VehicleTileView"
              x:DataType="vm:VehicleTileViewModel">
 
-    <Button Command="{Binding OpenCommand}" Width="200" Height="120" Margin="4" Padding="8">
-        <DockPanel>
-            <Image DockPanel.Dock="Left" Width="72" Height="72" Margin="0,0,8,0" Stretch="Uniform"
+    <Border x:Name="Card" Width="250" Height="120" Margin="4" CornerRadius="8" BorderThickness="1"
+            Focusable="True"
+            BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"
+            Background="{DynamicResource SystemControlBackgroundBaseLowBrush}"
+            PointerPressed="OnCardPointerPressed" PointerMoved="OnCardPointerMoved"
+            PointerReleased="OnCardPointerReleased" KeyDown="OnCardKeyDown">
+        <Border.Styles>
+            <Style Selector="Button#EditButton">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            <Style Selector="Border#Card:pointerover Button#EditButton">
+                <Setter Property="IsVisible" Value="True" />
+            </Style>
+        </Border.Styles>
+        <Grid RowDefinitions="*,Auto">
+            <Image Grid.Row="0" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,8,8,0"
                    Source="{Binding ImageData, Converter={x:Static conv:BytesToBitmapConverter.Instance}}" />
-            <StackPanel VerticalAlignment="Center">
-                <TextBlock Text="{Binding Name}" FontWeight="Bold" TextWrapping="Wrap" />
-                <TextBlock Text="{Binding Speed, StringFormat='Speed: {0}'}" Opacity="0.7" Margin="0,4,0,0" />
-            </StackPanel>
-        </DockPanel>
-    </Button>
+            <Button x:Name="EditButton" Grid.Row="0" Content="✎" Command="{Binding EditCommand}"
+                    ToolTip.Tip="Edit vehicle" HorizontalAlignment="Right" VerticalAlignment="Top"
+                    Margin="6" Padding="6,2" CornerRadius="6"
+                    Background="#B0000000" Foreground="White" />
+            <Grid Grid.Row="1" ColumnDefinitions="*,Auto" Margin="8,4,8,8">
+                <TextBlock Grid.Column="0" Text="{Binding Name}" FontWeight="Bold"
+                           TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+                <TextBlock Grid.Column="1" Text="{Binding SpeedDisplay}" FontFamily="Consolas"
+                           VerticalAlignment="Center"
+                           Foreground="{Binding Speed, Converter={x:Static conv:SpeedToForegroundConverter.Instance}}" />
+            </Grid>
+        </Grid>
+    </Border>
 
 </UserControl>

@@ -1,4 +1,5 @@
 using TrainDatabase.Core.Domain;
+using TrainDatabase.Core.Ports;
 using TrainDatabase.Infrastructure.Entities;
 using TrainDatabase.Infrastructure.Repositories;
 
@@ -155,6 +156,28 @@ public class VehicleRepositoryTests
     public void GetVehicleByIdRequired_Throws_WhenMissing()
     {
         Assert.Throws<IdNotFoundException>(() => repository.GetVehicleByIdRequired(999));
+    }
+
+    [Test]
+    public void UpdateVehiclePositions_PersistsNewOrder()
+    {
+        VehicleEntity first = new() { Name = "A", Address = 1, Position = 0 };
+        VehicleEntity second = new() { Name = "B", Address = 2, Position = 1 };
+        db.Context.Vehicles.AddRange(first, second);
+        db.Context.SaveChanges();
+
+        repository.UpdateVehiclePositions(new[]
+        {
+            new VehiclePosition(first.Id, 5),
+            new VehiclePosition(second.Id, 3),
+        });
+
+        db.Context.ChangeTracker.Clear();
+        Assert.Multiple(() =>
+        {
+            Assert.That(repository.GetVehicleByIdRequired(first.Id).Position, Is.EqualTo(5));
+            Assert.That(repository.GetVehicleByIdRequired(second.Id).Position, Is.EqualTo(3));
+        });
     }
 
     [Test]

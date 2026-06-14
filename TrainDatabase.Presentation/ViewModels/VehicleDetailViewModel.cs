@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using TrainDatabase.Core.Ports;
 using TrainDatabase.Core.Presenters;
 using TrainDatabase.Presentation.Infrastructure;
 using TrainDatabase.Presentation.Navigation;
@@ -20,6 +21,7 @@ public partial class VehicleDetailViewModel : ViewModelBase
     private readonly INavigationService navigation;
 
     [ObservableProperty] private string title = "";
+    [ObservableProperty] private byte[]? imageData;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HasTraction))]
@@ -33,6 +35,7 @@ public partial class VehicleDetailViewModel : ViewModelBase
         VehicleWorkspaceViewModel workspace,
         VehicleEditViewModelFactory editFactory,
         INavigationService navigation,
+        IVehicleImageStore imageStore,
         IUiDispatcher dispatcher)
     {
         this.workspace = workspace;
@@ -45,6 +48,7 @@ public partial class VehicleDetailViewModel : ViewModelBase
         {
             Title = vehicle.Name;
             TractionCount = vehicle.TractionVehicleIds.Count;
+            ImageData = imageStore.TryGetImage(vehicle.ImageName);
         }));
     }
 

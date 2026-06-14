@@ -30,7 +30,7 @@ public sealed class FakeVehicleRepository : IVehicleRepository
 
     public IReadOnlyCollection<Vehicle> FullTextSearchVehicles(string? searchString) => vehicles.Values.ToList();
 
-    public void UpdateVehiclePositions(IEnumerable<(int vehicleId, int position)> updates)
+    public void UpdateVehiclePositions(IReadOnlyList<VehiclePosition> updates)
     {
     }
 

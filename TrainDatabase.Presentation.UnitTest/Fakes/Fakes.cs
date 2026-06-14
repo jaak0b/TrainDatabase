@@ -75,7 +75,9 @@ public sealed class FakeVehicleRepository : IVehicleRepository
 
     public IReadOnlyCollection<Vehicle> FullTextSearchVehicles(string? searchString) => vehicles.Values.ToList();
 
-    public void UpdateVehiclePositions(IEnumerable<(int vehicleId, int position)> updates) { }
+    public List<VehiclePosition> PositionUpdates { get; } = new();
+
+    public void UpdateVehiclePositions(IReadOnlyList<VehiclePosition> updates) => PositionUpdates.AddRange(updates);
 
     public Task UpdateVehicleAsync(Vehicle vehicle)
     {
@@ -111,7 +113,10 @@ public sealed class FakeVehicleRepository : IVehicleRepository
 
 public sealed class FakeVehicleImageStore : IVehicleImageStore
 {
-    public byte[]? TryGetImage(string imageName) => null;
+    public static readonly byte[] SampleImage = { 1, 2, 3, 4 };
+
+    public byte[]? TryGetImage(string imageName) =>
+        string.IsNullOrWhiteSpace(imageName) ? null : SampleImage;
 }
 
 public sealed class FakeFilePicker(string? path) : TrainDatabase.Presentation.Files.IFilePicker

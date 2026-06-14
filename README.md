@@ -32,7 +32,9 @@ TrainDatabase lets you control your model trains with your PC. Whether you want 
 ## Examples of use
 
 ### Main window
-In the main window you can manage your vehicles and search for them:
+In the main window you can manage your vehicles and search for them. Each vehicle is a card with a large image on top and, along the bottom, its name and a compact speed readout — the current step shown as `SS`, greyed while the loco is stopped, with a `<`/`>` arrow for the direction of travel. Click a card to open the train for driving, or hover over it and use the pencil that appears in the corner to jump straight to its edit screen.
+
+You can **drag the cards to reorder them** — a translucent copy of the card follows your cursor while the others shift to open a gap, and the new order is saved automatically. (Reordering is paused while a search filter is active, since the list you see then isn't the full running order.)
 
 **Note:** In the search bar you can search for any attribute that the vehicle might have. (Like name, railway transport company, epoch, etc)
 

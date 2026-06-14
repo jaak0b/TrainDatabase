@@ -1,5 +1,6 @@
 using TrainDatabase.Core.Domain;
 using TrainDatabase.Presentation.Navigation;
+using TrainDatabase.Presentation.UnitTest.Fakes;
 using TrainDatabase.Presentation.ViewModels;
 
 namespace TrainDatabase.Presentation.UnitTest;
@@ -36,6 +37,15 @@ public class VehicleDetailViewModelTests
 
         Assert.That(navigation.Current, Is.InstanceOf<VehicleEditViewModel>());
         Assert.That(((VehicleEditViewModel)navigation.Current!).VehicleId, Is.EqualTo(7));
+    }
+
+    [Test]
+    public void ImageData_SeededFromImageStore()
+    {
+        using TestContainer test = new(new Vehicle { Id = 7, Name = "BR 218", ImageName = "loco.png" });
+        VehicleDetailViewModel pane = test.Resolve<VehicleDetailViewModelFactory>()(7);
+
+        Assert.That(pane.ImageData, Is.EqualTo(FakeVehicleImageStore.SampleImage));
     }
 
     [Test]

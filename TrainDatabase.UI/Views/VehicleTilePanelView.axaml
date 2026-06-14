@@ -9,15 +9,29 @@
             <Button Content="Add vehicle" Command="{Binding AddCommand}" />
             <TextBox Width="260" Watermark="Search vehicles…" Text="{Binding SearchText}" />
         </StackPanel>
-        <ScrollViewer>
-            <ItemsControl ItemsSource="{Binding Tiles}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-        </ScrollViewer>
+        <Panel>
+            <ScrollViewer>
+                <ItemsControl x:Name="TilesHost" ItemsSource="{Binding Tiles}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel HorizontalAlignment="Center" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
+            <Canvas x:Name="GhostLayer" IsHitTestVisible="False">
+                <Border x:Name="Ghost" IsVisible="False" Opacity="0.7" Width="200" Height="190"
+                        CornerRadius="8" BorderThickness="1"
+                        BorderBrush="{DynamicResource SystemControlForegroundBaseMediumBrush}"
+                        Background="{DynamicResource SystemControlBackgroundBaseLowBrush}">
+                    <Grid RowDefinitions="*,Auto">
+                        <Image x:Name="GhostImage" Grid.Row="0" Stretch="Uniform" Margin="8" />
+                        <TextBlock x:Name="GhostName" Grid.Row="1" FontWeight="Bold"
+                                   TextTrimming="CharacterEllipsis" Margin="8,4,8,8" />
+                    </Grid>
+                </Border>
+            </Canvas>
+        </Panel>
     </DockPanel>
 
 </UserControl>

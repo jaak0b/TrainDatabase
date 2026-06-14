@@ -36,14 +36,14 @@ public class VehicleRepository(TrainDbContext database, IEntityMapper mapper) : 
             .ToList();
     }
 
-    public void UpdateVehiclePositions(IEnumerable<(int vehicleId, int position)> updates)
+    public void UpdateVehiclePositions(IReadOnlyList<VehiclePosition> updates)
     {
-        foreach ((int vehicleId, int position) in updates)
+        foreach (VehiclePosition update in updates)
         {
-            VehicleEntity? entity = database.Vehicles.Find(vehicleId);
+            VehicleEntity? entity = database.Vehicles.Find(update.VehicleId);
             if (entity is not null)
             {
-                entity.Position = position;
+                entity.Position = update.Position;
             }
         }
 

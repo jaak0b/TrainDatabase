@@ -67,9 +67,12 @@ public class RenderSmokeTests
             window.Show();
             Dispatcher.UIThread.RunJobs();
 
-            // Home route (vehicle panel) renders a tile.
+            // Home route (vehicle panel) renders a tile with a large image area.
             ((VehicleTilePanelViewModel)shell.Current!).Refresh();
             Dispatcher.UIThread.RunJobs();
+
+            VehicleTileView tileView = window.GetVisualDescendants().OfType<VehicleTileView>().First();
+            Assert.That(tileView.GetVisualDescendants().OfType<Image>().Any(), Is.True);
 
             // Every top-level route must render (settings, import, management incl. the
             // ListBox item template with the parent-cast command bindings).
@@ -87,6 +90,9 @@ public class RenderSmokeTests
             Dispatcher.UIThread.RunJobs();
 
             VehicleWorkspaceViewModel workspace = (VehicleWorkspaceViewModel)shell.Current!;
+            VehicleDetailView paneView = window.GetVisualDescendants().OfType<VehicleDetailView>().Single();
+            Assert.That(paneView.GetVisualDescendants().OfType<Image>().Any(), Is.True);
+
             workspace.Panes[0].EditCommand.Execute(null);
             Dispatcher.UIThread.RunJobs();
 

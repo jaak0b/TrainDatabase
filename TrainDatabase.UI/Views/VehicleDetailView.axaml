@@ -1,6 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:TrainDatabase.Presentation.ViewModels"
+             xmlns:conv="using:TrainDatabase.UI.Converters"
              x:Class="TrainDatabase.UI.Views.VehicleDetailView"
              x:DataType="vm:VehicleDetailViewModel">
 
@@ -20,6 +21,8 @@
                 <Button Grid.Column="2" Content="✕" Command="{Binding CloseCommand}" ToolTip.Tip="Close"
                         Padding="6,2" Margin="4,0,0,0" />
             </Grid>
+            <Image DockPanel.Dock="Top" Height="120" Stretch="Uniform" Margin="0,0,0,10"
+                   Source="{Binding ImageData, Converter={x:Static conv:BytesToBitmapConverter.Instance}}" />
             <ContentControl Content="{Binding Control}" />
         </DockPanel>
     </Border>

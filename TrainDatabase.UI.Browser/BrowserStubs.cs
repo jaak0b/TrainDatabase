@@ -49,7 +49,7 @@ internal sealed class InMemoryVehicleRepository : IVehicleRepository
     public Vehicle GetVehicleByIdRequired(int vehicleId) => GetVehicleById(vehicleId) ?? throw new IdNotFoundException();
     public Vehicle? GetVehicleById(int vehicleId) => vehicles.TryGetValue(vehicleId, out Vehicle? v) ? v : null;
     public IReadOnlyCollection<Vehicle> FullTextSearchVehicles(string? searchString) => vehicles.Values.ToList();
-    public void UpdateVehiclePositions(IEnumerable<(int vehicleId, int position)> updates) { }
+    public void UpdateVehiclePositions(IReadOnlyList<VehiclePosition> updates) { }
     public Task UpdateVehicleAsync(Vehicle vehicle) { vehicles[vehicle.Id] = vehicle; changed.OnNext(vehicle); return Task.CompletedTask; }
     public Task<int> AddVehicleAsync(Vehicle vehicle)
     {

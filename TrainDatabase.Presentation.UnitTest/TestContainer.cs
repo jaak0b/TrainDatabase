@@ -13,8 +13,11 @@ namespace TrainDatabase.Presentation.UnitTest;
 internal sealed class TestContainer : IDisposable
 {
     private readonly IContainer container;
+    private readonly Dictionary<int, FakeVehiclePresenter> presenters = new();
 
     public FakeVehicleRepository Repository { get; } = new();
+
+    public FakeVehiclePresenter Presenter(int vehicleId) => presenters[vehicleId];
 
     public TestContainer(params Vehicle[] seed)
     {
@@ -23,7 +26,10 @@ internal sealed class TestContainer : IDisposable
         ContainerBuilder builder = new();
         builder.RegisterModule<PresentationModule>();
         builder.RegisterInstance(Repository).As<IVehicleRepository>();
-        builder.Register<VehiclePresenterFactory>(_ => id => new FakeVehiclePresenter(Repository.GetVehicleByIdRequired(id))).SingleInstance();
+        builder.Register<VehiclePresenterFactory>(_ => id =>
+            presenters.TryGetValue(id, out FakeVehiclePresenter? existing)
+                ? existing
+                : presenters[id] = new FakeVehiclePresenter(Repository.GetVehicleByIdRequired(id))).SingleInstance();
         builder.RegisterInstance(new FakeVehicleControlService()).As<IVehicleControlService>();
         builder.RegisterInstance(new FakeClientPresenter()).As<IClientPresenter>();
         builder.RegisterInstance(new FakeSettingsStore()).As<ISettingsStore>();

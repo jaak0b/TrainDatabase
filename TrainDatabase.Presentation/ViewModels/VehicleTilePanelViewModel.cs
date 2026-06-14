@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using TrainDatabase.Core.Domain;
@@ -15,7 +16,9 @@ public partial class VehicleTilePanelViewModel : ViewModelBase
     private readonly INavigationService navigation;
     private readonly VehicleEditViewModelFactory editFactory;
 
-    [ObservableProperty] private string searchText = "";
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CanReorder))]
+    private string searchText = "";
 
     public VehicleTilePanelViewModel(
         IVehicleRepository repository,
@@ -31,6 +34,14 @@ public partial class VehicleTilePanelViewModel : ViewModelBase
     }
 
     public ObservableCollection<VehicleTileViewModel> Tiles { get; } = new();
+
+    public bool CanReorder => string.IsNullOrEmpty(SearchText);
+
+    public void MoveTile(int fromIndex, int toIndex) => Tiles.Move(fromIndex, toIndex);
+
+    public void PersistOrder() =>
+        repository.UpdateVehiclePositions(
+            Tiles.Select((tile, index) => new VehiclePosition(tile.VehicleId, index)).ToList());
 
     [RelayCommand]
     private async Task Add()

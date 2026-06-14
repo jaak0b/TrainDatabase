@@ -21,7 +21,7 @@ public interface IVehicleRepository
     /// <summary>Searches vehicles across most fields.</summary>
     IReadOnlyCollection<Vehicle> FullTextSearchVehicles(string? searchString);
 
-    void UpdateVehiclePositions(IEnumerable<(int vehicleId, int position)> updates);
+    void UpdateVehiclePositions(IReadOnlyList<VehiclePosition> updates);
 
     Task UpdateVehicleAsync(Vehicle vehicle);
 
