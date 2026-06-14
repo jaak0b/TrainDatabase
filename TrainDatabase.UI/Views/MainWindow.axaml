@@ -3,7 +3,7 @@
         xmlns:views="using:TrainDatabase.UI.Views"
         x:Class="TrainDatabase.UI.Views.MainWindow"
         Title="TrainDatabase" Width="1100" Height="720"
-        MinWidth="640" MinHeight="480">
+        MinWidth="320" MinHeight="400">
 
     <views:ShellView />
 
