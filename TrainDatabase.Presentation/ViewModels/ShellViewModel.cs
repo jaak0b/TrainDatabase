@@ -1,6 +1,8 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using TrainDatabase.Core.Presenters;
 using TrainDatabase.Presentation.Dialogs;
+using TrainDatabase.Presentation.Infrastructure;
 using TrainDatabase.Presentation.Navigation;
 
 namespace TrainDatabase.Presentation.ViewModels;
@@ -13,6 +15,7 @@ public partial class ShellViewModel : ViewModelBase
 {
     private readonly NavigationService navigation;
     private readonly VehicleTilePanelViewModel home;
+    private readonly VehicleWorkspaceViewModel workspace;
     private readonly SettingsViewModel settings;
     private readonly DatabaseImportViewModel import;
     private readonly VehicleManagementViewModel management;
@@ -20,18 +23,23 @@ public partial class ShellViewModel : ViewModelBase
 
     [ObservableProperty] private ViewModelBase? current;
     [ObservableProperty] private DialogViewModel? currentDialog;
+    [ObservableProperty] private bool isDisconnected;
 
     public ShellViewModel(
         NavigationService navigation,
         DialogService dialogService,
         VehicleTilePanelViewModel home,
+        VehicleWorkspaceViewModel workspace,
         SettingsViewModel settings,
         DatabaseImportViewModel import,
         VehicleManagementViewModel management,
-        Lazy<MeasurementViewModel> measurement)
+        Lazy<MeasurementViewModel> measurement,
+        IClientPresenter clientPresenter,
+        IUiDispatcher dispatcher)
     {
         this.navigation = navigation;
         this.home = home;
+        this.workspace = workspace;
         this.settings = settings;
         this.import = import;
         this.management = management;
@@ -39,12 +47,16 @@ public partial class ShellViewModel : ViewModelBase
 
         navigation.CurrentChanged += (_, _) => Current = navigation.Current;
         dialogService.CurrentChanged += (_, _) => CurrentDialog = dialogService.Current;
+        clientPresenter.IsDisconnected.Subscribe(value => dispatcher.Post(() => IsDisconnected = value));
 
         navigation.NavigateTo(home);
     }
 
     [RelayCommand]
     private void GoHome() => navigation.NavigateTo(home);
+
+    [RelayCommand]
+    private void OpenWorkspace() => navigation.NavigateTo(workspace);
 
     [RelayCommand]
     private void OpenSettings() => navigation.NavigateTo(settings);

@@ -141,4 +141,18 @@ public class VehicleManualControlViewModelTests
 
         Assert.That(vm.IsDisconnected, Is.True);
     }
+
+    [Test]
+    public void SettingSpeed_WhenDisconnected_DoesNotSend()
+    {
+        FakeClientPresenter client = new();
+        client.IsConnectedValue.SetValue(false);
+        client.IsDisconnectedValue.SetValue(true);
+        FakeVehicleControlService control = new();
+        VehicleManualControlViewModel vm = Create(new FakeVehiclePresenter(new Vehicle { Address = 9 }), control, client);
+
+        vm.Speed = 42;
+
+        Assert.That(control.Calls, Is.Empty);
+    }
 }

@@ -1,4 +1,7 @@
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using TrainDatabase.Core.Presenters;
+using TrainDatabase.Presentation.Infrastructure;
 using TrainDatabase.Presentation.Navigation;
 
 namespace TrainDatabase.Presentation.ViewModels;
@@ -6,32 +9,56 @@ namespace TrainDatabase.Presentation.ViewModels;
 public delegate VehicleDetailViewModel VehicleDetailViewModelFactory(int vehicleId);
 
 /// <summary>
-/// Hosts the per-vehicle control and settings (the WPF VehicleWindow tabs) as a single route.
+/// A control-only pane in the workspace: drives one vehicle and exposes its title and consist
+/// size. Editing opens the full <see cref="VehicleEditViewModel"/> route; closing removes the
+/// pane from the workspace.
 /// </summary>
 public partial class VehicleDetailViewModel : ViewModelBase
 {
+    private readonly VehicleWorkspaceViewModel workspace;
+    private readonly VehicleEditViewModelFactory editFactory;
     private readonly INavigationService navigation;
+
+    [ObservableProperty] private string title = "";
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasTraction))]
+    [NotifyPropertyChangedFor(nameof(TractionLabel))]
+    private int tractionCount;
 
     public VehicleDetailViewModel(
         int vehicleId,
         VehicleManualControlViewModelFactory controlFactory,
-        VehicleSettingsViewModelFactory settingsFactory,
-        INavigationService navigation)
+        VehiclePresenterFactory presenterFactory,
+        VehicleWorkspaceViewModel workspace,
+        VehicleEditViewModelFactory editFactory,
+        INavigationService navigation,
+        IUiDispatcher dispatcher)
     {
+        this.workspace = workspace;
+        this.editFactory = editFactory;
         this.navigation = navigation;
         VehicleId = vehicleId;
         Control = controlFactory(vehicleId);
-        Settings = settingsFactory(vehicleId);
+
+        presenterFactory(vehicleId).Vehicle.Subscribe(vehicle => dispatcher.Post(() =>
+        {
+            Title = vehicle.Name;
+            TractionCount = vehicle.TractionVehicleIds.Count;
+        }));
     }
 
     public int VehicleId { get; }
 
     public VehicleManualControlViewModel Control { get; }
 
-    public VehicleSettingsViewModel Settings { get; }
+    public bool HasTraction => TractionCount > 0;
 
-    public bool CanGoBack => navigation.CanGoBack;
+    public string TractionLabel => $"{TractionCount + 1} locos";
 
     [RelayCommand]
-    private void Back() => navigation.Back();
+    private void Edit() => navigation.NavigateTo(editFactory(VehicleId));
+
+    [RelayCommand]
+    private void Close() => workspace.ClosePane(this);
 }

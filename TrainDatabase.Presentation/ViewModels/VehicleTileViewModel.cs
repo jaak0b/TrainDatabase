@@ -13,7 +13,7 @@ public delegate VehicleTileViewModel VehicleTileViewModelFactory(int vehicleId);
 public partial class VehicleTileViewModel : ViewModelBase
 {
     private readonly INavigationService navigation;
-    private readonly VehicleDetailViewModelFactory detailFactory;
+    private readonly VehicleWorkspaceViewModel workspace;
 
     [ObservableProperty] private string name = "";
     [ObservableProperty] private int speed;
@@ -25,11 +25,11 @@ public partial class VehicleTileViewModel : ViewModelBase
         IVehicleImageStore imageStore,
         IUiDispatcher dispatcher,
         INavigationService navigation,
-        VehicleDetailViewModelFactory detailFactory)
+        VehicleWorkspaceViewModel workspace)
     {
         VehicleId = vehicleId;
         this.navigation = navigation;
-        this.detailFactory = detailFactory;
+        this.workspace = workspace;
 
         IVehiclePresenter presenter = presenterFactory(vehicleId);
         Name = presenter.Vehicle.Value.Name;
@@ -45,5 +45,9 @@ public partial class VehicleTileViewModel : ViewModelBase
     public int VehicleId { get; }
 
     [RelayCommand]
-    private void Open() => navigation.NavigateTo(detailFactory(VehicleId));
+    private void Open()
+    {
+        workspace.OpenVehicle(VehicleId);
+        navigation.NavigateTo(workspace);
+    }
 }

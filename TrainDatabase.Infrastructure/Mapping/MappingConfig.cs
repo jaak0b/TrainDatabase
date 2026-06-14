@@ -21,7 +21,10 @@ public static class MappingConfig
         // recursing forever.
         config.Default.PreserveReference(true);
 
-        config.NewConfig<VehicleEntity, Vehicle>().TwoWays();
+        config.NewConfig<VehicleEntity, Vehicle>()
+            .Map(dest => dest.TractionVehicleIds, src => src.TractionMembers.Select(member => member.MemberVehicleId).ToList());
+        config.NewConfig<Vehicle, VehicleEntity>()
+            .Ignore(dest => dest.TractionMembers);
         config.NewConfig<VehicleFunctionEntity, VehicleFunction>().TwoWays();
         config.NewConfig<VehicleCalibrationDataEntity, VehicleCalibrationData>().TwoWays();
 

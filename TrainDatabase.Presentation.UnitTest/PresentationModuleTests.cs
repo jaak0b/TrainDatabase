@@ -55,4 +55,37 @@ public class PresentationModuleTests
 
         Assert.That(shell.Current, Is.InstanceOf<VehicleTilePanelViewModel>());
     }
+
+    [Test]
+    public void Workspace_ResolvesAsSingleton()
+    {
+        using IContainer container = BuildContainer();
+
+        VehicleWorkspaceViewModel first = container.Resolve<VehicleWorkspaceViewModel>();
+        VehicleWorkspaceViewModel second = container.Resolve<VehicleWorkspaceViewModel>();
+
+        Assert.That(first, Is.SameAs(second));
+    }
+
+    [Test]
+    public void EditFactory_ReturnsCachedInstance_PerVehicleId()
+    {
+        using IContainer container = BuildContainer();
+        VehicleEditViewModelFactory factory = container.Resolve<VehicleEditViewModelFactory>();
+
+        VehicleEditViewModel first = factory(7);
+        VehicleEditViewModel firstAgain = factory(7);
+        Assert.That(first, Is.SameAs(firstAgain));
+    }
+
+    [Test]
+    public void Shell_OpenWorkspace_SetsCurrentToWorkspace()
+    {
+        using IContainer container = BuildContainer();
+        ShellViewModel shell = container.Resolve<ShellViewModel>();
+
+        shell.OpenWorkspaceCommand.Execute(null);
+
+        Assert.That(shell.Current, Is.InstanceOf<VehicleWorkspaceViewModel>());
+    }
 }

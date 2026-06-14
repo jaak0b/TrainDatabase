@@ -22,6 +22,7 @@ public class PresentationModule : Module
         builder.RegisterType<DialogService>().AsSelf().As<IDialogService>().SingleInstance();
 
         builder.RegisterType<ShellViewModel>().AsSelf().SingleInstance();
+        builder.RegisterType<VehicleWorkspaceViewModel>().AsSelf().SingleInstance();
         builder.RegisterType<VehicleTilePanelViewModel>().AsSelf().SingleInstance();
         builder.RegisterType<SettingsViewModel>().AsSelf().SingleInstance();
         builder.RegisterType<DatabaseImportViewModel>().AsSelf().SingleInstance();
@@ -30,11 +31,13 @@ public class PresentationModule : Module
 
         builder.RegisterType<VehicleTileViewModel>().AsSelf().InstancePerDependency();
         builder.RegisterType<VehicleDetailViewModel>().AsSelf().InstancePerDependency();
+        builder.RegisterType<VehicleEditViewModel>().AsSelf().InstancePerDependency();
         builder.RegisterType<VehicleManualControlViewModel>().AsSelf().InstancePerDependency();
         builder.RegisterType<VehicleSettingsViewModel>().AsSelf().InstancePerDependency();
 
         RegisterFactory<VehicleTileViewModel, VehicleTileViewModelFactory>(builder);
         RegisterFactory<VehicleDetailViewModel, VehicleDetailViewModelFactory>(builder);
+        RegisterFactory<VehicleEditViewModel, VehicleEditViewModelFactory>(builder);
         RegisterFactory<VehicleManualControlViewModel, VehicleManualControlViewModelFactory>(builder);
         RegisterFactory<VehicleSettingsViewModel, VehicleSettingsViewModelFactory>(builder);
     }

@@ -11,10 +11,19 @@
                 <StackPanel Orientation="Horizontal" Spacing="8">
                     <TextBlock Text="TrainDatabase" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" Margin="0,0,16,0" />
                     <Button Content="Home" Command="{Binding GoHomeCommand}" />
+                    <Button Content="Trains" Command="{Binding OpenWorkspaceCommand}" />
                     <Button Content="Manage" Command="{Binding OpenManagementCommand}" />
                     <Button Content="Measure" Command="{Binding OpenMeasurementCommand}" />
                     <Button Content="Import" Command="{Binding OpenImportCommand}" />
                     <Button Content="Settings" Command="{Binding OpenSettingsCommand}" />
+                </StackPanel>
+            </Border>
+
+            <Border DockPanel.Dock="Bottom" Background="#33FF0000" Padding="12,6"
+                    IsVisible="{Binding IsDisconnected}">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <TextBlock Text="⚠" Foreground="#B00000" />
+                    <TextBlock Text="Command station disconnected" Foreground="#B00000" />
                 </StackPanel>
             </Border>
 

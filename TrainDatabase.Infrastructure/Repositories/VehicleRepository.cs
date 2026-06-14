@@ -1,4 +1,5 @@
 using System.Reactive.Subjects;
+using Microsoft.EntityFrameworkCore;
 using TrainDatabase.Core.Domain;
 using TrainDatabase.Core.Ports;
 using TrainDatabase.Infrastructure.Database;
@@ -18,7 +19,9 @@ public class VehicleRepository(TrainDbContext database, IEntityMapper mapper) : 
 
     public Vehicle? GetVehicleById(int vehicleId)
     {
-        VehicleEntity? entity = database.Vehicles.Find(vehicleId);
+        VehicleEntity? entity = database.Vehicles
+            .Include(vehicle => vehicle.TractionMembers)
+            .FirstOrDefault(vehicle => vehicle.Id == vehicleId);
         return entity is null ? null : mapper.Map<Vehicle>(entity);
     }
 
@@ -26,6 +29,7 @@ public class VehicleRepository(TrainDbContext database, IEntityMapper mapper) : 
     {
         string search = searchString ?? "";
         return database.Vehicles
+            .Include(vehicle => vehicle.TractionMembers)
             .ToList()
             .Where(entity => Contains(entity.Name, search) || Contains(entity.FullName, search))
             .Select(mapper.Map<Vehicle>)
@@ -48,13 +52,26 @@ public class VehicleRepository(TrainDbContext database, IEntityMapper mapper) : 
 
     public async Task UpdateVehicleAsync(Vehicle vehicle)
     {
-        VehicleEntity entity = await database.Vehicles.FindAsync(vehicle.Id)
+        VehicleEntity entity = await database.Vehicles
+            .Include(candidate => candidate.TractionMembers)
+            .FirstOrDefaultAsync(candidate => candidate.Id == vehicle.Id)
             ?? throw new IdNotFoundException($"Vehicle with ID {vehicle.Id} not found.");
 
         mapper.Map(vehicle, entity);
+        SyncTractionMembers(entity, vehicle.TractionVehicleIds);
         await database.SaveChangesAsync();
 
         NotifyVehicleUpdated(vehicle.Id);
+    }
+
+    private static void SyncTractionMembers(VehicleEntity lead, IEnumerable<int> memberIds)
+    {
+        HashSet<int> desired = memberIds.Where(id => id != lead.Id).ToHashSet();
+        lead.TractionMembers.RemoveAll(member => !desired.Contains(member.MemberVehicleId));
+        foreach (int id in desired.Where(id => lead.TractionMembers.All(member => member.MemberVehicleId != id)))
+        {
+            lead.TractionMembers.Add(new VehicleTractionEntity { LeadVehicleId = lead.Id, MemberVehicleId = id });
+        }
     }
 
     public async Task<int> AddVehicleAsync(Vehicle vehicle)
@@ -63,6 +80,13 @@ public class VehicleRepository(TrainDbContext database, IEntityMapper mapper) : 
         entity.Id = 0;
         await database.Vehicles.AddAsync(entity);
         await database.SaveChangesAsync();
+
+        if (vehicle.TractionVehicleIds.Count > 0)
+        {
+            SyncTractionMembers(entity, vehicle.TractionVehicleIds);
+            await database.SaveChangesAsync();
+        }
+
         database.InvokeCollectionChanged();
         return entity.Id;
     }

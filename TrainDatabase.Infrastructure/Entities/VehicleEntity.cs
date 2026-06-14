@@ -43,7 +43,7 @@ public partial class VehicleEntity : BaseObjectEntity, IEquatable<VehicleEntity>
     [Obsolete]
     public decimal?[] TractionBackward { get; set; } = new decimal?[DccConstants.MaxDccStep + 1];
 
-    public List<int> TractionVehicleIds { get; } = new();
+    public List<VehicleTractionEntity> TractionMembers { get; set; } = new();
 
     public int CompareTo(object? obj) => Id.CompareTo((obj as VehicleEntity)?.Id ?? 0);
 

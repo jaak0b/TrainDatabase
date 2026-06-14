@@ -11,15 +11,38 @@ public interface IVehicleControlService
     Task SetVehicleFunctionAsync(Vehicle vehicle, int functionIndex, bool on);
 }
 
-public class VehicleControlService(IClientAdapter client) : IVehicleControlService
+public class VehicleControlService(IClientAdapter client, IVehicleRepository repository) : IVehicleControlService
 {
-    public Task SetVehicleSpeedAsync(Vehicle vehicle, int speed, bool direction) =>
-        client.SetVehiclesDriveAsync(new LocoSetDriveData
+    public Task SetVehicleSpeedAsync(Vehicle vehicle, int speed, bool direction)
+    {
+        List<LocoSetDriveData> commands = new()
         {
-            VehicleAddress = (ushort)vehicle.Address,
-            Direction = direction,
-            Speed = (ushort)speed,
-        });
+            new LocoSetDriveData
+            {
+                VehicleAddress = (ushort)vehicle.Address,
+                Direction = direction,
+                Speed = (ushort)speed,
+            },
+        };
+
+        foreach (int memberId in vehicle.TractionVehicleIds)
+        {
+            Vehicle? member = repository.GetVehicleById(memberId);
+            if (member is null)
+            {
+                continue;
+            }
+
+            commands.Add(new LocoSetDriveData
+            {
+                VehicleAddress = (ushort)member.Address,
+                Direction = member.InvertTraction ? !direction : direction,
+                Speed = (ushort)speed,
+            });
+        }
+
+        return client.SetVehiclesDriveAsync(commands.ToArray());
+    }
 
     public Task SetVehicleFunctionAsync(Vehicle vehicle, int functionIndex, bool on) =>
         client.SetVehicleFunctionAsync((ushort)vehicle.Address, (ushort)functionIndex, on);

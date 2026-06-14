@@ -81,9 +81,14 @@ public class RenderSmokeTests
             shell.OpenMeasurementCommand.Execute(null);
             Dispatcher.UIThread.RunJobs();
 
-            // Detail route (manual control + settings forms incl. NumericUpDown).
+            // Workspace route (control pane) and the full-screen edit route (settings forms,
+            // multi-traction list, NumericUpDown long↔decimal conversions).
             shell.GoHomeCommand.Execute(null);
             ((VehicleTilePanelViewModel)shell.Current!).Tiles[0].OpenCommand.Execute(null);
+            Dispatcher.UIThread.RunJobs();
+
+            VehicleWorkspaceViewModel workspace = (VehicleWorkspaceViewModel)shell.Current!;
+            workspace.Panes[0].EditCommand.Execute(null);
             Dispatcher.UIThread.RunJobs();
 
             window.CaptureRenderedFrame();

@@ -30,6 +30,8 @@ public partial class VehicleSettingsViewModel : ViewModelBase
 
     public ObservableCollection<FunctionEditViewModel> Functions { get; } = new();
 
+    public ObservableCollection<TractionMemberViewModel> Members { get; } = new();
+
     public static IReadOnlyList<ButtonType> ButtonTypes { get; } = Enum.GetValues<ButtonType>();
 
     private void Load(Vehicle vehicle)
@@ -45,6 +47,12 @@ public partial class VehicleSettingsViewModel : ViewModelBase
         {
             Functions.Add(new FunctionEditViewModel(function));
         }
+
+        Members.Clear();
+        foreach (Vehicle candidate in repository.FullTextSearchVehicles("").Where(v => v.Id != VehicleId).OrderBy(v => v.Position))
+        {
+            Members.Add(new TractionMemberViewModel(candidate.Id, candidate.Name, vehicle.TractionVehicleIds.Contains(candidate.Id)));
+        }
     }
 
     [RelayCommand]
@@ -56,6 +64,7 @@ public partial class VehicleSettingsViewModel : ViewModelBase
         vehicle.Address = Address;
         vehicle.Railway = Railway;
         vehicle.IsActive = IsActive;
+        vehicle.TractionVehicleIds = Members.Where(m => m.IsSelected).Select(m => m.VehicleId).ToList();
         await repository.UpdateVehicleAsync(vehicle);
     }
 

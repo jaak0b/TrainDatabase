@@ -38,6 +38,16 @@ In the main window you can manage your vehicles and search for them:
 
 ![image](https://user-images.githubusercontent.com/53713395/130352358-c94851f8-9904-4193-a374-727b4c68bfb4.png)
 
+### Controlling several trains at once
+
+Open a train from the main window and it joins the **Trains** workspace as its own control pane — speed, direction and function buttons. Open as many as you like: the panes sit side by side and wrap onto new rows, so you can drive a whole yard at the same time without ever leaving the window. Each pane has a close button, and reopening a train brings it back exactly as you left it. This works on every platform (desktop, Android and the browser build), since the panes live inside the app rather than in separate OS windows.
+
+Need to change a train while you drive the others? Click the pencil on its pane to open the full **edit** screen for that train; **Back** returns you to the workspace with everything still running.
+
+### Multi-traction (double heading)
+
+In a train's edit screen you can couple other trains into a consist under **Multi-traction**. Tick the locomotives that run together and save — from then on, driving the lead train drives the whole group as one, sending the same speed step to every member (and flipping direction for any loco you've marked as mounted in reverse). If a coupled train also has its own pane open, it follows along live.
+
 ### Vehicle edit window
 
 In the edit window, the vehicle and its functions can be changed.

@@ -20,6 +20,15 @@
             <Button Content="Revert" Command="{Binding RevertCommand}" />
         </StackPanel>
 
+        <TextBlock Text="Multi-traction" FontWeight="Bold" Margin="0,12,0,0" />
+        <ItemsControl ItemsSource="{Binding Members}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:TractionMemberViewModel">
+                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected}" Margin="0,2" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
         <TextBlock Text="Functions" FontWeight="Bold" Margin="0,12,0,0" />
         <ItemsControl ItemsSource="{Binding Functions}">
             <ItemsControl.ItemTemplate>

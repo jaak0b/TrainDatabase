@@ -42,6 +42,11 @@ public sealed class Z21ClientAdapter : IClientAdapter
 
     public Task SetVehiclesDriveAsync(params LocoSetDriveData[] locoSetDriveDatas)
     {
+        if (!isConnected.Value)
+        {
+            return Task.CompletedTask;
+        }
+
         client.SetLocoDrive(locoSetDriveDatas
             .Select(data => new LokInfoData((int)data.VehicleAddress)
             {
@@ -54,6 +59,11 @@ public sealed class Z21ClientAdapter : IClientAdapter
 
     public Task SetVehicleFunctionAsync(ushort vehicleAddress, ushort functionIndex, bool on)
     {
+        if (!isConnected.Value)
+        {
+            return Task.CompletedTask;
+        }
+
         client.SetLocoFunction(new FunctionData(
             new LokAdresse(vehicleAddress),
             functionIndex,

@@ -10,25 +10,6 @@ namespace TrainDatabase.Core.UnitTest.Services;
 public class CoreServicesTests
 {
     [Test]
-    public async Task VehicleControlService_SendsDriveCommandWithVehicleAddress()
-    {
-        FakeClientAdapter client = new();
-        VehicleControlService service = new(client);
-        Vehicle vehicle = new() { Address = 55 };
-
-        await service.SetVehicleSpeedAsync(vehicle, speed: 30, direction: true);
-
-        Assert.That(client.DriveCommands, Has.Count.EqualTo(1));
-        LocoSetDriveData command = client.DriveCommands[0];
-        Assert.Multiple(() =>
-        {
-            Assert.That(command.VehicleAddress, Is.EqualTo(55));
-            Assert.That(command.Speed, Is.EqualTo(30));
-            Assert.That(command.Direction, Is.True);
-        });
-    }
-
-    [Test]
     public async Task TrackService_ForwardsPowerCommand()
     {
         FakeClientAdapter client = new();

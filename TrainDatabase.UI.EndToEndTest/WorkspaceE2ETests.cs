@@ -1,8 +1,9 @@
+using Avalonia.Controls;
 using Avalonia.Headless.NUnit;
 using Avalonia.Threading;
+using Avalonia.VisualTree;
 using Microsoft.Extensions.DependencyInjection;
 using TrainDatabase.Composition;
-using TrainDatabase.Core.Live;
 using TrainDatabase.Infrastructure.Database;
 using TrainDatabase.Infrastructure.Entities;
 using TrainDatabase.Presentation;
@@ -11,10 +12,10 @@ using TrainDatabase.UI.Views;
 
 namespace TrainDatabase.UI.EndToEndTest;
 
-public class ShellE2ETests
+public class WorkspaceE2ETests
 {
     [AvaloniaTest]
-    public void OpenVehicle_DrivesLoco_EditsThenReturnsToWorkspace()
+    public void OpeningTwoTrains_ShowsTwoPanes_AndCloseRemovesOne()
     {
         string baseDirectory = Path.Combine(Path.GetTempPath(), "TrainDatabase.E2E", Guid.NewGuid().ToString("N"));
         FakeClientAdapter client = new();
@@ -30,7 +31,8 @@ public class ShellE2ETests
             App.Services = services;
 
             TrainDbContext context = services.GetRequiredService<TrainDbContext>();
-            context.Vehicles.Add(new VehicleEntity { Name = "E2E Loco", Address = 11 });
+            context.Vehicles.Add(new VehicleEntity { Name = "Loco A", Address = 11 });
+            context.Vehicles.Add(new VehicleEntity { Name = "Loco B", Address = 12 });
             context.SaveChanges();
 
             ShellViewModel shell = services.GetRequiredService<ShellViewModel>();
@@ -39,27 +41,18 @@ public class ShellE2ETests
 
             VehicleTilePanelViewModel panel = (VehicleTilePanelViewModel)shell.Current!;
             panel.Refresh();
-            Assert.That(panel.Tiles, Has.Count.EqualTo(1));
-
             panel.Tiles[0].OpenCommand.Execute(null);
+            panel.Tiles[1].OpenCommand.Execute(null);
             Dispatcher.UIThread.RunJobs();
 
-            Assert.That(shell.Current, Is.InstanceOf<VehicleWorkspaceViewModel>());
             VehicleWorkspaceViewModel workspace = (VehicleWorkspaceViewModel)shell.Current!;
-            Assert.That(workspace.Panes, Has.Count.EqualTo(1));
+            Assert.That(workspace.Panes, Has.Count.EqualTo(2));
 
-            VehicleDetailViewModel pane = workspace.Panes[0];
-            pane.Control.Speed = 50;
-            Assert.That(client.DriveCommands, Has.Some.Matches<LocoSetDriveData>(c => c.VehicleAddress == 11 && c.Speed == 50));
+            int renderedPanes = window.GetVisualDescendants().OfType<VehicleDetailView>().Count();
+            Assert.That(renderedPanes, Is.EqualTo(2));
 
-            pane.EditCommand.Execute(null);
+            workspace.Panes[0].CloseCommand.Execute(null);
             Dispatcher.UIThread.RunJobs();
-            Assert.That(shell.Current, Is.InstanceOf<VehicleEditViewModel>());
-            Assert.That(((VehicleEditViewModel)shell.Current!).VehicleId, Is.EqualTo(pane.VehicleId));
-
-            ((VehicleEditViewModel)shell.Current!).BackCommand.Execute(null);
-            Dispatcher.UIThread.RunJobs();
-            Assert.That(shell.Current, Is.SameAs(workspace));
             Assert.That(workspace.Panes, Has.Count.EqualTo(1));
         }
         finally

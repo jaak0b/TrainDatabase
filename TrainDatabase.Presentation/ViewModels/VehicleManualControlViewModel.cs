@@ -65,7 +65,7 @@ public partial class VehicleManualControlViewModel : ViewModelBase
 
     partial void OnSpeedChanged(int value)
     {
-        if (!suppressSend)
+        if (!suppressSend && !IsDisconnected)
         {
             _ = SendDriveAsync();
         }
@@ -73,7 +73,7 @@ public partial class VehicleManualControlViewModel : ViewModelBase
 
     partial void OnDirectionChanged(bool value)
     {
-        if (!suppressSend)
+        if (!suppressSend && !IsDisconnected)
         {
             _ = SendDriveAsync();
         }

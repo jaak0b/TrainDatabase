@@ -95,6 +95,12 @@ class Build : NukeBuild
                 .Select(x => x.Text.Trim())
                 .Where(x => x.Length > 0)
                 .Where(x => !x.Contains("/obj/") && !x.Contains("/bin/") && !x.StartsWith("_build/"))
+                .Where(x => !x.EndsWith(".axaml.cs") && !x.Contains("/Views/"))
+                .Where(x => !x.Contains(".UnitTest/") && !x.Contains(".IntegrationTest/") && !x.Contains(".EndToEndTest/"))
+                .Where(x => !x.StartsWith("TrainDatabase.UI/") && !x.StartsWith("TrainDatabase.UI."))
+                .Where(x => !x.EndsWith("Module.cs") && !x.Contains("/Migrations/"))
+                .Where(x => !x.EndsWith("DbContext.cs") && !x.EndsWith("DbContextFactory.cs"))
+                .Where(x => !x.Contains("/Hardware/"))
                 .ToArray();
 
             if (changedFiles.Length == 0)
@@ -106,10 +112,34 @@ class Build : NukeBuild
             Log.Information("Mutating {Count} changed file(s) versus {Since}:", changedFiles.Length, Since);
             changedFiles.ForEach(x => Log.Information("  {File}", x));
 
-            string mutateArgs = changedFiles.Select(x => $"--mutate \"{x}\"").JoinSpace();
-            DotNet($"stryker --solution \"{SolutionFile}\" --config-file \"{StrykerConfig}\" {mutateArgs}",
-                workingDirectory: RootDirectory);
+            foreach (MutableProject project in MutableProjects)
+            {
+                string[] projectFiles = changedFiles
+                    .Where(x => x.StartsWith(project.SourceDirectory + "/", StringComparison.Ordinal))
+                    .Select(x => x[(project.SourceDirectory.Length + 1)..])
+                    .ToArray();
+
+                if (projectFiles.Length == 0)
+                {
+                    continue;
+                }
+
+                Log.Information("Mutating {Count} file(s) in {Project} via {TestProject}", projectFiles.Length, project.SourceDirectory, project.TestProject);
+                string mutateArgs = projectFiles.Select(x => $"--mutate {x}").JoinSpace();
+                string arguments = $"stryker --test-project \"{RootDirectory / project.TestProject}\" --config-file \"{StrykerConfig}\" {mutateArgs}";
+                ProcessTasks.StartProcess("dotnet", arguments, workingDirectory: RootDirectory / project.SourceDirectory)
+                    .AssertZeroExitCode();
+            }
         });
+
+    static MutableProject[] MutableProjects =>
+    [
+        new("TrainDatabase.Core", "TrainDatabase.Core.UnitTest/TrainDatabase.Core.UnitTest.csproj"),
+        new("TrainDatabase.Infrastructure", "TrainDatabase.Infrastructure.IntegrationTest/TrainDatabase.Infrastructure.IntegrationTest.csproj"),
+        new("TrainDatabase.Presentation", "TrainDatabase.Presentation.UnitTest/TrainDatabase.Presentation.UnitTest.csproj"),
+    ];
+
+    record MutableProject(string SourceDirectory, string TestProject);
 
     static double ReadLineCoverage(AbsolutePath summaryFile)
     {

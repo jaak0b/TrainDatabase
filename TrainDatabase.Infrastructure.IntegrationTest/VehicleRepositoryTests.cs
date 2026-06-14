@@ -76,6 +76,76 @@ public class VehicleRepositoryTests
     }
 
     [Test]
+    public async Task UpdateVehicleAsync_PersistsTractionVehicleIds()
+    {
+        VehicleEntity lead = new() { Name = "Lead", Address = 10 };
+        VehicleEntity firstMember = new() { Name = "Member 1", Address = 11 };
+        VehicleEntity secondMember = new() { Name = "Member 2", Address = 12 };
+        db.Context.Vehicles.AddRange(lead, firstMember, secondMember);
+        db.Context.SaveChanges();
+
+        Vehicle leadDomain = repository.GetVehicleByIdRequired(lead.Id);
+        leadDomain.TractionVehicleIds = new List<int> { firstMember.Id, secondMember.Id };
+        await repository.UpdateVehicleAsync(leadDomain);
+
+        db.Context.ChangeTracker.Clear();
+        Vehicle reloaded = repository.GetVehicleByIdRequired(lead.Id);
+        Assert.That(reloaded.TractionVehicleIds, Is.EquivalentTo(new[] { firstMember.Id, secondMember.Id }));
+    }
+
+    [Test]
+    public async Task AddVehicleAsync_PersistsTractionVehicleIds()
+    {
+        VehicleEntity member = new() { Name = "Member", Address = 11 };
+        db.Context.Vehicles.Add(member);
+        db.Context.SaveChanges();
+
+        int newId = await repository.AddVehicleAsync(new Vehicle { Name = "Lead", Address = 10, TractionVehicleIds = { member.Id } });
+
+        db.Context.ChangeTracker.Clear();
+        Assert.That(repository.GetVehicleByIdRequired(newId).TractionVehicleIds, Is.EquivalentTo(new[] { member.Id }));
+    }
+
+    [Test]
+    public async Task UpdateVehicleAsync_RemovesDeselectedMembers()
+    {
+        VehicleEntity lead = new() { Name = "Lead", Address = 10 };
+        VehicleEntity first = new() { Name = "M1", Address = 11 };
+        VehicleEntity second = new() { Name = "M2", Address = 12 };
+        db.Context.Vehicles.AddRange(lead, first, second);
+        db.Context.SaveChanges();
+
+        Vehicle leadDomain = repository.GetVehicleByIdRequired(lead.Id);
+        leadDomain.TractionVehicleIds = new List<int> { first.Id, second.Id };
+        await repository.UpdateVehicleAsync(leadDomain);
+
+        leadDomain = repository.GetVehicleByIdRequired(lead.Id);
+        leadDomain.TractionVehicleIds = new List<int> { first.Id };
+        await repository.UpdateVehicleAsync(leadDomain);
+
+        db.Context.ChangeTracker.Clear();
+        Assert.That(repository.GetVehicleByIdRequired(lead.Id).TractionVehicleIds, Is.EquivalentTo(new[] { first.Id }));
+    }
+
+    [Test]
+    public async Task DeletingMemberVehicle_RemovesItFromLeadConsist()
+    {
+        VehicleEntity lead = new() { Name = "Lead", Address = 10 };
+        VehicleEntity member = new() { Name = "Member", Address = 11 };
+        db.Context.Vehicles.AddRange(lead, member);
+        db.Context.SaveChanges();
+
+        Vehicle leadDomain = repository.GetVehicleByIdRequired(lead.Id);
+        leadDomain.TractionVehicleIds = new List<int> { member.Id };
+        await repository.UpdateVehicleAsync(leadDomain);
+
+        await repository.DeleteVehicleAsync(member.Id);
+
+        db.Context.ChangeTracker.Clear();
+        Assert.That(repository.GetVehicleByIdRequired(lead.Id).TractionVehicleIds, Does.Not.Contain(member.Id));
+    }
+
+    [Test]
     public void GetVehicleById_ReturnsNull_WhenMissing()
     {
         Assert.That(repository.GetVehicleById(999), Is.Null);

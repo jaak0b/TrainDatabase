@@ -59,6 +59,14 @@ public sealed class FakeVehicleRepository : IVehicleRepository
 
     public IObservable<Vehicle> VehicleChangedStream => changed;
 
+    public void Seed(params Vehicle[] toSeed)
+    {
+        foreach (Vehicle vehicle in toSeed)
+        {
+            vehicles[vehicle.Id] = vehicle;
+        }
+    }
+
     public Vehicle GetVehicleByIdRequired(int vehicleId) =>
         GetVehicleById(vehicleId) ?? throw new IdNotFoundException();
 

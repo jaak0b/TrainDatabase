@@ -6,9 +6,6 @@
 
     <StackPanel Spacing="10">
         <TextBlock Text="Manual control" FontWeight="Bold" FontSize="15" />
-        <Border Background="#33FF0000" CornerRadius="4" Padding="8" IsVisible="{Binding IsDisconnected}">
-            <TextBlock Text="Command station disconnected" Foreground="#B00000" />
-        </Border>
         <TextBlock Text="{Binding Speed, StringFormat='Speed step: {0}'}" />
         <Slider Minimum="0" Maximum="{Binding MaximumSpeedStep}" Value="{Binding Speed}" />
         <TextBlock Text="Direction" />

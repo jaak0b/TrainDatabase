@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using TrainDatabase.Core.Ports;
 using TrainDatabase.Infrastructure.Database;
 using TrainDatabase.Infrastructure.Entities;
@@ -52,10 +54,13 @@ public class DatabaseInitializerTests
     [Test]
     public async Task InitializeAsync_StampsBaseline_WhenSchemaAlreadyExists()
     {
-        // Simulate a pre-rewrite database: the schema is already present (created without
-        // our migration history). Initialization must NOT fail trying to recreate tables.
+        // Simulate a pre-rewrite database: the baseline schema is present, but its migration
+        // history was never recorded (the rewrite re-homed the migrations). Initialization must
+        // stamp the baseline and apply the remaining migrations without recreating baseline tables.
         using TempDatabase db = new(initialize: false);
-        db.Context.Database.EnsureCreated();
+        string baseline = db.Context.Database.GetMigrations().First();
+        db.Context.GetService<IMigrator>().Migrate(baseline);
+        db.Context.Database.ExecuteSqlRaw("DELETE FROM \"__EFMigrationsHistory\";");
 
         Assert.DoesNotThrowAsync(() => new DatabaseInitializer(db.Context).InitializeAsync());
 

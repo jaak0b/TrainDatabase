@@ -27,6 +27,8 @@ public class TrainDbContext : DbContext
 
     public virtual DbSet<VehicleCalibrationDataEntity> VehicleCalibrationData => Set<VehicleCalibrationDataEntity>();
 
+    public virtual DbSet<VehicleTractionEntity> VehicleTractions => Set<VehicleTractionEntity>();
+
     public async Task<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity obj) where TEntity : class
     {
         EntityEntry<TEntity> result = await Set<TEntity>().AddAsync(obj);
@@ -76,14 +78,14 @@ public class TrainDbContext : DbContext
         modelBuilder.Entity<VehicleEntity>().Property(e => e.TractionBackward).HasConversion(decimArrayToStringConverter).Metadata.SetValueComparer(decimalArrayValueComparer);
 #pragma warning restore CS0612
 
-        ValueConverter<List<int>, string> intListConverter = new(
-            v => string.Join(";", v.Distinct()),
-            v => v.Split(";", StringSplitOptions.RemoveEmptyEntries).Select(val => val.IsInt() ? int.Parse(val) : int.MinValue).Distinct().ToList());
-        ValueComparer<List<int>> intListValueComparer = new(
-            (a, b) => (a ?? new List<int>()).SequenceEqual(b ?? new List<int>()),
-            v => v.Aggregate(0, (a, i) => HashCode.Combine(a, i.GetHashCode())),
-            v => v.ToList());
-        modelBuilder.Entity<VehicleEntity>().Property(e => e.TractionVehicleIds).HasConversion(intListConverter).Metadata.SetValueComparer(intListValueComparer);
+        modelBuilder.Entity<VehicleTractionEntity>(traction =>
+        {
+            traction.HasKey(t => new { t.LeadVehicleId, t.MemberVehicleId });
+            traction.HasOne(t => t.Lead).WithMany(v => v.TractionMembers)
+                .HasForeignKey(t => t.LeadVehicleId).OnDelete(DeleteBehavior.Cascade);
+            traction.HasOne(t => t.Member).WithMany()
+                .HasForeignKey(t => t.MemberVehicleId).OnDelete(DeleteBehavior.Cascade);
+        });
 
         modelBuilder.Entity<VehicleCalibrationDataEntity>()
             .HasIndex(entity => new { entity.VehicleId, entity.Direction, entity.SpeedStep })
