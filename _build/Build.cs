@@ -101,6 +101,7 @@ class Build : NukeBuild
                 .Where(x => !x.EndsWith("Module.cs") && !x.Contains("/Migrations/"))
                 .Where(x => !x.EndsWith("DbContext.cs") && !x.EndsWith("DbContextFactory.cs"))
                 .Where(x => !x.Contains("/Hardware/"))
+                .Where(x => (RootDirectory / x).FileExists())
                 .ToArray();
 
             if (changedFiles.Length == 0)

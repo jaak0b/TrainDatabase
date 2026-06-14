@@ -3,6 +3,7 @@ using TrainDatabase.Core.Domain;
 using TrainDatabase.Core.Ports;
 using TrainDatabase.Core.Presenters;
 using TrainDatabase.Core.Services;
+using TrainDatabase.Presentation.Dialogs;
 using TrainDatabase.Presentation.Files;
 using TrainDatabase.Presentation.UnitTest.Fakes;
 
@@ -29,6 +30,7 @@ internal sealed class TestContainer : IDisposable
         builder.RegisterInstance(new FakeFilePicker(null)).As<IFilePicker>();
         builder.RegisterInstance(new FakeDatabaseImporter()).As<IDatabaseImporter>();
         builder.RegisterInstance(new FakeVehicleImageStore()).As<IVehicleImageStore>();
+        builder.RegisterInstance(new FakeDialogService()).As<IDialogService>();
 
         container = builder.Build();
     }

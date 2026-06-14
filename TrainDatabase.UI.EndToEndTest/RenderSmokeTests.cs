@@ -76,8 +76,6 @@ public class RenderSmokeTests
             Dispatcher.UIThread.RunJobs();
             shell.OpenImportCommand.Execute(null);
             Dispatcher.UIThread.RunJobs();
-            shell.OpenManagementCommand.Execute(null);
-            Dispatcher.UIThread.RunJobs();
             shell.OpenMeasurementCommand.Execute(null);
             Dispatcher.UIThread.RunJobs();
 

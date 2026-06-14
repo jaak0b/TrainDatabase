@@ -18,7 +18,6 @@ public partial class ShellViewModel : ViewModelBase
     private readonly VehicleWorkspaceViewModel workspace;
     private readonly SettingsViewModel settings;
     private readonly DatabaseImportViewModel import;
-    private readonly VehicleManagementViewModel management;
     private readonly Lazy<MeasurementViewModel> measurement;
 
     [ObservableProperty] private ViewModelBase? current;
@@ -32,7 +31,6 @@ public partial class ShellViewModel : ViewModelBase
         VehicleWorkspaceViewModel workspace,
         SettingsViewModel settings,
         DatabaseImportViewModel import,
-        VehicleManagementViewModel management,
         Lazy<MeasurementViewModel> measurement,
         IClientPresenter clientPresenter,
         IUiDispatcher dispatcher)
@@ -42,7 +40,6 @@ public partial class ShellViewModel : ViewModelBase
         this.workspace = workspace;
         this.settings = settings;
         this.import = import;
-        this.management = management;
         this.measurement = measurement;
 
         navigation.CurrentChanged += (_, _) => Current = navigation.Current;
@@ -63,9 +60,6 @@ public partial class ShellViewModel : ViewModelBase
 
     [RelayCommand]
     private void OpenImport() => navigation.NavigateTo(import);
-
-    [RelayCommand]
-    private void OpenManagement() => navigation.NavigateTo(management);
 
     [RelayCommand]
     private void OpenMeasurement() => navigation.NavigateTo(measurement.Value);

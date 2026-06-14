@@ -1,6 +1,8 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using TrainDatabase.Core.Presenters;
+using TrainDatabase.Core.Ports;
+using TrainDatabase.Presentation.Dialogs;
 using TrainDatabase.Presentation.Infrastructure;
 using TrainDatabase.Presentation.Navigation;
 
@@ -15,6 +17,9 @@ public delegate VehicleEditViewModel VehicleEditViewModelFactory(int vehicleId);
 public partial class VehicleEditViewModel : ViewModelBase
 {
     private readonly INavigationService navigation;
+    private readonly IVehicleRepository repository;
+    private readonly IDialogService dialogs;
+    private readonly VehicleWorkspaceViewModel workspace;
 
     [ObservableProperty] private string title = "";
 
@@ -23,9 +28,15 @@ public partial class VehicleEditViewModel : ViewModelBase
         VehicleSettingsViewModelFactory settingsFactory,
         VehiclePresenterFactory presenterFactory,
         INavigationService navigation,
+        IVehicleRepository repository,
+        IDialogService dialogs,
+        VehicleWorkspaceViewModel workspace,
         IUiDispatcher dispatcher)
     {
         this.navigation = navigation;
+        this.repository = repository;
+        this.dialogs = dialogs;
+        this.workspace = workspace;
         VehicleId = vehicleId;
         Settings = settingsFactory(vehicleId);
         presenterFactory(vehicleId).Vehicle.Subscribe(vehicle => dispatcher.Post(() => Title = vehicle.Name));
@@ -37,4 +48,22 @@ public partial class VehicleEditViewModel : ViewModelBase
 
     [RelayCommand]
     private void Back() => navigation.Back();
+
+    [RelayCommand]
+    private async Task Delete()
+    {
+        if (!await dialogs.ConfirmAsync("Delete vehicle", $"Delete '{Title}'? This cannot be undone."))
+        {
+            return;
+        }
+
+        VehicleDetailViewModel? openPane = workspace.Panes.FirstOrDefault(pane => pane.VehicleId == VehicleId);
+        if (openPane is not null)
+        {
+            workspace.ClosePane(openPane);
+        }
+
+        await repository.DeleteVehicleAsync(VehicleId);
+        navigation.Back();
+    }
 }

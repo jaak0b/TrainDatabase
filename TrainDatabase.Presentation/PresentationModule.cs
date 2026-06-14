@@ -26,7 +26,6 @@ public class PresentationModule : Module
         builder.RegisterType<VehicleTilePanelViewModel>().AsSelf().SingleInstance();
         builder.RegisterType<SettingsViewModel>().AsSelf().SingleInstance();
         builder.RegisterType<DatabaseImportViewModel>().AsSelf().SingleInstance();
-        builder.RegisterType<VehicleManagementViewModel>().AsSelf().SingleInstance();
         builder.RegisterType<MeasurementViewModel>().AsSelf().SingleInstance();
 
         builder.RegisterType<VehicleTileViewModel>().AsSelf().InstancePerDependency();

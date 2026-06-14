@@ -5,7 +5,10 @@
              x:DataType="vm:VehicleTilePanelViewModel">
 
     <DockPanel>
-        <TextBox DockPanel.Dock="Top" Watermark="Search vehicles…" Text="{Binding SearchText}" Margin="0,0,0,8" />
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="8" Margin="0,0,0,8">
+            <Button Content="Add vehicle" Command="{Binding AddCommand}" />
+            <TextBox Width="260" Watermark="Search vehicles…" Text="{Binding SearchText}" />
+        </StackPanel>
         <ScrollViewer>
             <ItemsControl ItemsSource="{Binding Tiles}">
                 <ItemsControl.ItemsPanel>

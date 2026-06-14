@@ -13,8 +13,9 @@ public class DatabaseImportViewModelTests
     {
         FakeVehicleRepository repository = new();
         VehicleTileViewModelFactory tileFactory = _ => throw new InvalidOperationException("no tiles expected");
-        VehicleTilePanelViewModel panel = new(repository, tileFactory);
         NavigationService navigation = new();
+        VehicleEditViewModelFactory editFactory = _ => throw new InvalidOperationException("no edit expected");
+        VehicleTilePanelViewModel panel = new(repository, tileFactory, navigation, editFactory);
         FakeDatabaseImporter importer = new();
         FakeDialogService dialogs = new() { ConfirmResult = confirm };
 

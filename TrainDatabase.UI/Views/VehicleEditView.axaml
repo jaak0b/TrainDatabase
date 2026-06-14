@@ -5,11 +5,12 @@
              x:DataType="vm:VehicleEditViewModel">
 
     <DockPanel>
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="12" Margin="0,0,0,12">
-            <Button Content="← Back to trains" Command="{Binding BackCommand}" />
+        <DockPanel DockPanel.Dock="Top" Margin="0,0,0,12">
+            <Button DockPanel.Dock="Left" Content="← Back to trains" Command="{Binding BackCommand}" />
+            <Button DockPanel.Dock="Right" Content="Delete vehicle" Command="{Binding DeleteCommand}" />
             <TextBlock Text="{Binding Title, StringFormat='Edit · {0}'}" FontWeight="Bold" FontSize="16"
-                       VerticalAlignment="Center" />
-        </StackPanel>
+                       VerticalAlignment="Center" Margin="12,0" />
+        </DockPanel>
         <ScrollViewer>
             <ContentControl Content="{Binding Settings}" />
         </ScrollViewer>
