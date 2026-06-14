@@ -158,6 +158,31 @@ public class VehicleRepositoryTests
     }
 
     [Test]
+    public async Task UpdateVehicleAsync_PersistsGeneralFields()
+    {
+        VehicleEntity entity = new() { Name = "Loco", Address = 5 };
+        db.Context.Vehicles.Add(entity);
+        db.Context.SaveChanges();
+
+        Vehicle domain = repository.GetVehicleByIdRequired(entity.Id);
+        domain.Type = VehicleType.Steuerwagen;
+        domain.RegulationStep = RegulationStep.Step14;
+        domain.InvertTraction = true;
+        domain.Description = "branch line";
+        await repository.UpdateVehicleAsync(domain);
+
+        db.Context.ChangeTracker.Clear();
+        Vehicle reloaded = repository.GetVehicleByIdRequired(entity.Id);
+        Assert.Multiple(() =>
+        {
+            Assert.That(reloaded.Type, Is.EqualTo(VehicleType.Steuerwagen));
+            Assert.That(reloaded.RegulationStep, Is.EqualTo(RegulationStep.Step14));
+            Assert.That(reloaded.InvertTraction, Is.True);
+            Assert.That(reloaded.Description, Is.EqualTo("branch line"));
+        });
+    }
+
+    [Test]
     public async Task UpdateVehicleAsync_PersistsChanges_AndPublishesToStream()
     {
         VehicleEntity entity = new() { Name = "Old", Address = 7 };

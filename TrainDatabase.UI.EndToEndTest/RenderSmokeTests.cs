@@ -3,6 +3,7 @@ using Avalonia.Headless;
 using Avalonia.Headless.NUnit;
 using Avalonia.Logging;
 using Avalonia.Threading;
+using Avalonia.VisualTree;
 using Microsoft.Extensions.DependencyInjection;
 using TrainDatabase.Composition;
 using TrainDatabase.Infrastructure.Database;
@@ -88,6 +89,16 @@ public class RenderSmokeTests
             VehicleWorkspaceViewModel workspace = (VehicleWorkspaceViewModel)shell.Current!;
             workspace.Panes[0].EditCommand.Execute(null);
             Dispatcher.UIThread.RunJobs();
+
+            // The edit route groups settings into a three-tab editor; realize every tab so
+            // each tab's bindings are exercised (Avalonia only realizes the selected tab).
+            TabControl tabs = window.GetVisualDescendants().OfType<TabControl>().Single();
+            Assert.That(tabs.ItemCount, Is.EqualTo(3));
+            for (int index = 0; index < tabs.ItemCount; index++)
+            {
+                tabs.SelectedIndex = index;
+                Dispatcher.UIThread.RunJobs();
+            }
 
             window.CaptureRenderedFrame();
 

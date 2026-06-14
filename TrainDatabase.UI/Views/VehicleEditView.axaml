@@ -11,9 +11,11 @@
             <TextBlock Text="{Binding Title, StringFormat='Edit · {0}'}" FontWeight="Bold" FontSize="16"
                        VerticalAlignment="Center" Margin="12,0" />
         </DockPanel>
-        <ScrollViewer>
-            <ContentControl Content="{Binding Settings}" />
-        </ScrollViewer>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Spacing="8" Margin="0,12,0,0">
+            <Button Content="Save" Command="{Binding Settings.SaveCommand}" />
+            <Button Content="Revert" Command="{Binding Settings.RevertCommand}" />
+        </StackPanel>
+        <ContentControl Content="{Binding Settings}" />
     </DockPanel>
 
 </UserControl>

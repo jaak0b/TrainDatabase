@@ -18,6 +18,10 @@ public partial class VehicleSettingsViewModel : ViewModelBase
     [ObservableProperty] private long address;
     [ObservableProperty] private string railway = "";
     [ObservableProperty] private bool isActive;
+    [ObservableProperty] private VehicleType type;
+    [ObservableProperty] private RegulationStep regulationStep;
+    [ObservableProperty] private bool invertTraction;
+    [ObservableProperty] private string description = "";
 
     public VehicleSettingsViewModel(int vehicleId, IVehicleRepository repository)
     {
@@ -34,6 +38,10 @@ public partial class VehicleSettingsViewModel : ViewModelBase
 
     public static IReadOnlyList<ButtonType> ButtonTypes { get; } = Enum.GetValues<ButtonType>();
 
+    public static IReadOnlyList<VehicleType> VehicleTypes { get; } = Enum.GetValues<VehicleType>();
+
+    public static IReadOnlyList<RegulationStep> RegulationSteps { get; } = Enum.GetValues<RegulationStep>();
+
     private void Load(Vehicle vehicle)
     {
         Name = vehicle.Name;
@@ -41,6 +49,10 @@ public partial class VehicleSettingsViewModel : ViewModelBase
         Address = vehicle.Address;
         Railway = vehicle.Railway;
         IsActive = vehicle.IsActive;
+        Type = vehicle.Type;
+        RegulationStep = vehicle.RegulationStep;
+        InvertTraction = vehicle.InvertTraction;
+        Description = vehicle.Description;
 
         Functions.Clear();
         foreach (VehicleFunction function in vehicle.Functions.OrderBy(f => f.Position))
@@ -64,13 +76,14 @@ public partial class VehicleSettingsViewModel : ViewModelBase
         vehicle.Address = Address;
         vehicle.Railway = Railway;
         vehicle.IsActive = IsActive;
+        vehicle.Type = Type;
+        vehicle.RegulationStep = RegulationStep;
+        vehicle.InvertTraction = InvertTraction;
+        vehicle.Description = Description;
         vehicle.TractionVehicleIds = Members.Where(m => m.IsSelected).Select(m => m.VehicleId).ToList();
         await repository.UpdateVehicleAsync(vehicle);
-    }
-
-    [RelayCommand]
-    private async Task SaveFunctions() =>
         await repository.UpdateVehicleFunctionsAsync(VehicleId, Functions.Select(f => f.ToDomain()).ToList());
+    }
 
     [RelayCommand]
     private void Revert() => Load(repository.GetVehicleByIdRequired(VehicleId));

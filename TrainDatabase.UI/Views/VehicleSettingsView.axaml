@@ -4,46 +4,75 @@
              x:Class="TrainDatabase.UI.Views.VehicleSettingsView"
              x:DataType="vm:VehicleSettingsViewModel">
 
-    <StackPanel Spacing="8">
-        <TextBlock Text="Vehicle settings" FontWeight="Bold" FontSize="15" />
-        <TextBlock Text="Name" />
-        <TextBox Text="{Binding Name}" />
-        <TextBlock Text="Full name" />
-        <TextBox Text="{Binding FullName}" />
-        <TextBlock Text="Address" />
-        <NumericUpDown Value="{Binding Address}" Minimum="1" Maximum="9999" Increment="1" FormatString="0" />
-        <TextBlock Text="Railway" />
-        <TextBox Text="{Binding Railway}" />
-        <CheckBox Content="Active" IsChecked="{Binding IsActive}" />
-        <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,8,0,0">
-            <Button Content="Save" Command="{Binding SaveCommand}" />
-            <Button Content="Revert" Command="{Binding RevertCommand}" />
-        </StackPanel>
+    <TabControl>
+        <TabItem Header="General">
+            <ScrollViewer>
+                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                      Margin="0,8" ColumnSpacing="12" RowSpacing="8">
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Name" VerticalAlignment="Center" />
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" />
 
-        <TextBlock Text="Multi-traction" FontWeight="Bold" Margin="0,12,0,0" />
-        <ItemsControl ItemsSource="{Binding Members}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="vm:TractionMemberViewModel">
-                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected}" Margin="0,2" />
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Full name" VerticalAlignment="Center" />
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FullName}" />
 
-        <TextBlock Text="Functions" FontWeight="Bold" Margin="0,12,0,0" />
-        <ItemsControl ItemsSource="{Binding Functions}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="vm:FunctionEditViewModel">
-                    <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,2">
-                        <NumericUpDown Grid.Column="0" Value="{Binding Address}" Minimum="0" Maximum="68"
-                                       FormatString="0" Width="96" Watermark="F#" />
-                        <TextBox Grid.Column="1" Text="{Binding Name}" Margin="6,0" Watermark="Name" />
-                        <ComboBox Grid.Column="2" ItemsSource="{Binding Source={x:Static vm:VehicleSettingsViewModel.ButtonTypes}}"
-                                  SelectedItem="{Binding ButtonType}" Width="130" />
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-        <Button Content="Save functions" Command="{Binding SaveFunctionsCommand}" HorizontalAlignment="Left" />
-    </StackPanel>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Address" VerticalAlignment="Center" />
+                    <NumericUpDown Grid.Row="2" Grid.Column="1" Value="{Binding Address}" Minimum="1" Maximum="9999"
+                                   Increment="1" FormatString="0" HorizontalAlignment="Left" Width="160" />
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Railway" VerticalAlignment="Center" />
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Railway}" />
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Type" VerticalAlignment="Center" />
+                    <ComboBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Width="200"
+                              ItemsSource="{Binding Source={x:Static vm:VehicleSettingsViewModel.VehicleTypes}}"
+                              SelectedItem="{Binding Type}" />
+
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Regulation step" VerticalAlignment="Center" />
+                    <ComboBox Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="200"
+                              ItemsSource="{Binding Source={x:Static vm:VehicleSettingsViewModel.RegulationSteps}}"
+                              SelectedItem="{Binding RegulationStep}" />
+
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Description" VerticalAlignment="Top" />
+                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Description}" AcceptsReturn="True"
+                             TextWrapping="Wrap" MinHeight="72" />
+
+                    <CheckBox Grid.Row="7" Grid.Column="1" Content="Active" IsChecked="{Binding IsActive}" />
+                </Grid>
+            </ScrollViewer>
+        </TabItem>
+
+        <TabItem Header="Functions">
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding Functions}" Margin="0,8">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="vm:FunctionEditViewModel">
+                            <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,2">
+                                <NumericUpDown Grid.Column="0" Value="{Binding Address}" Minimum="0" Maximum="68"
+                                               FormatString="0" Width="96" Watermark="F#" />
+                                <TextBox Grid.Column="1" Text="{Binding Name}" Margin="6,0" Watermark="Name" />
+                                <ComboBox Grid.Column="2" ItemsSource="{Binding Source={x:Static vm:VehicleSettingsViewModel.ButtonTypes}}"
+                                          SelectedItem="{Binding ButtonType}" Width="130" />
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </TabItem>
+
+        <TabItem Header="Multi-traction">
+            <ScrollViewer>
+                <StackPanel Spacing="8" Margin="0,8">
+                    <CheckBox Content="Invert direction when used in a consist" IsChecked="{Binding InvertTraction}" />
+                    <ItemsControl ItemsSource="{Binding Members}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="vm:TractionMemberViewModel">
+                                <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected}" Margin="0,2" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+        </TabItem>
+    </TabControl>
 
 </UserControl>

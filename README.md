@@ -50,9 +50,7 @@ In a train's edit screen you can couple other trains into a consist under **Mult
 
 ### Vehicle edit window
 
-In the edit window, the vehicle and its functions can be changed.
-
-**Note:** The shown fields are not yet final. 
+The edit screen is organised into three tabs so related settings stay together instead of one long list. **General** holds the basics — name, full name, address, railway, vehicle type, regulation step (14/28/128), a free-text description and the active flag. **Functions** lists the decoder functions, each with its F-number, name and button type. **Multi-traction** is where you couple other trains into a consist (and flip this loco's direction if it runs in reverse). One **Save** button at the bottom commits the whole screen at once, and **Revert** discards your pending edits.
 
 ![image](https://user-images.githubusercontent.com/53713395/140822639-1f07bcd9-de62-45f9-afd3-61c8f13acb3f.png)
 ![image](https://user-images.githubusercontent.com/53713395/140822682-2b9de754-85eb-48f0-8cbd-5c29560fdb69.png)
